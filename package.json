@@ -1,13 +1,43 @@
 {
 	"name": "tabular-data-viewer",
-	"displayName": "Tabular Data Viewer",
+	"displayName": "Tabular Data Viewer 中",
 	"description": "VSCode extension for viewing very large (1-8 GB) tabular data files with CSV, JSON Lines, and Arrow data formats support.",
 	"version": "0.1.0",
 	"engines": {
 		"vscode": "^1.62.0"
 	},
+	"icon": "resources/icons/tabular-data-viewer.png",
+	"publisher": "RandomFractalsInc",
+	"author": "Taras Novak",
+	"contributors": [
+		"Taras Novak"
+	],
+	"license": "Apache-2.0",
+	"readme": "README.md",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/RandomFractals/tabular-data-viewer"
+	},
+	"bugs": "https://github.com/RandomFractals/tabular-data-viewer/issues",
+	"homepage": "https://github.com/RandomFractals/tabular-data-viewer/README.md",
+	"galleryBanner": {
+		"color": "#333",
+		"theme": "dark"
+	},
 	"categories": [
-		"Other"
+		"Data Science",
+		"Visualization"
+	],
+	"keywords": [
+		"tabular data",
+		"data grid 中",
+		"data viewer",
+		"Arrow data",
+		"CSV",
+		"JSON Lines",
+		"flat data",
+		"text data",
+		"table view"
 	],
 	"activationEvents": [
 		"onCommand:tabular-data-viewer.helloWorld"
