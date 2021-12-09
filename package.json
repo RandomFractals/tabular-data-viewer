@@ -40,14 +40,15 @@
 		"table view"
 	],
 	"activationEvents": [
-		"onCommand:tabular-data-viewer.helloWorld"
+		"onCommand:tabular.data.viewTable"
 	],
 	"main": "./dist/extension.js",
 	"contributes": {
 		"commands": [
 			{
-				"command": "tabular-data-viewer.helloWorld",
-				"title": "Hello World"
+				"command": "tabular.data.viewTable",
+				"title": "View Table",
+				"category": "Tabular Data"
 			}
 		]
 	},
