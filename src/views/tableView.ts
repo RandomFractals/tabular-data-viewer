@@ -1,4 +1,3 @@
-
 import {
   Disposable,
   ViewColumn,
@@ -9,6 +8,8 @@ import {
   window,
   Webview
 } from 'vscode';
+
+import * as path from 'path';
 
 import { getUri } from '../utils/fileUtils';
 
@@ -62,6 +63,11 @@ export class TableView {
           enableCommandUris: true // ???
         }
       );
+
+      // set custom table view panel icon
+      webviewPanel.iconPath = Uri.file(path.join(extensionUri.fsPath, './resources/icons/tabular-data-viewer.svg'));
+
+      // set as current table view for now
       TableView.currentView = new TableView(webviewPanel, extensionUri);
     }
   }
