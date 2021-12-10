@@ -50,6 +50,95 @@
 				"title": "View Table",
 				"category": "Tabular Data"
 			}
+		],
+		"languages": [
+			{
+				"id": "csv",
+				"extensions": [
+					".csv"
+				],
+				"aliases": [
+					"CSV"
+				]
+			},
+			{
+				"id": "tsv",
+				"extensions": [
+					".tsv",
+					".tab"
+				],
+				"aliases": [
+					"TSV"
+				]
+			}
+		],
+		"menus": {
+			"explorer/context": [
+				{
+					"when": "resourceLangId == csv",
+					"command": "tabular.data.viewTable",
+					"group": "navigation"
+				},
+				{
+					"when": "resourceLangId == tsv",
+					"command": "tabular.data.viewTable",
+					"group": "navigation"
+				}
+			],
+			"editor/title/context": [
+				{
+					"when": "resourceLangId == csv",
+					"command": "tabular.data.viewTable",
+					"group": "navigation"
+				},
+				{
+					"when": "resourceLangId == tsv",
+					"command": "tabular.data.viewTable",
+					"group": "navigation"
+				}
+			],
+			"editor/title": [
+				{
+					"when": "editorLangId == csv",
+					"command": "tabular.data.viewTable",
+					"group": "navigation"
+				},
+				{
+					"when": "editorLangId == tsv",
+					"command": "tabular.data.viewTable",
+					"group": "navigation"
+				}
+			],
+			"commandPalette": [
+				{
+					"when": "editorLangId == csv",
+					"command": "tabular.data.viewTable",
+					"group": "navigation"
+				},
+				{
+					"when": "editorLangId == tsv",
+					"command": "tabular.data.viewTable",
+					"group": "navigation"
+				}
+			]
+		},
+		"customEditors": [
+			{
+				"viewType": "tabular.data.tableView",
+				"displayName": "Table View",
+				"priority": "default",
+				"selector": [
+					{
+						"filenamePattern": "*.csv"
+					},
+					{
+						"filenamePattern": "*.tsv"
+					},
+					{
+						"filenamePattern": "*.tab"
+					}
+				]
+			}
 		]
 	},
 	"scripts": {

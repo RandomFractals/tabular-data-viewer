@@ -52,7 +52,7 @@ export class TableView {
     }
     else {
       const webviewPanel = window.createWebviewPanel(
-        'tableView', // webview panel type
+        'tabular.data.tableView', // webview panel view type
         'Table View', // webview panel title
         {
           viewColumn: ViewColumn.Active, // use active view column for display
