@@ -10,50 +10,75 @@ import {
 } from 'vscode';
 
 import * as path from 'path';
+import * as fileUtils from '../utils/fileUtils';
 
-import { getUri } from '../utils/fileUtils';
+import { ViewTypes } from './viewTypes';
+
 
 /**
  * Defines Table view class for managing state and behaviour of Table webview panels.
  */
 export class TableView {
   public static currentView: TableView | undefined;
+  private static _views: Map<string, TableView> = new Map<string, TableView>();
+
   private readonly _webviewPanel: WebviewPanel;
+  private readonly _extensionUri: Uri;
+  private readonly _documentUri: Uri;
+  private readonly _viewUri: Uri;
+  private readonly _fileName: string;
   private _disposables: Disposable[] = [];
 
   /**
    * Creates new TableView instance for the initial table data rendering.
    * 
-   * @param webviewPanel Reference to the webview panel
-   * @param extensionUri Extension directory Uri
+   * @param webviewPanel Reference to the webview panel.
+   * @param extensionUri Extension directory Uri.
+   * @param documentUri Data document Uri.
    */
-  private constructor(webviewPanel: WebviewPanel, extensionUri: Uri) {
+  private constructor(webviewPanel: WebviewPanel, extensionUri: Uri, documentUri: Uri) {
     this._webviewPanel = webviewPanel;
+    this._extensionUri = extensionUri;
+    this._documentUri = documentUri;
+
+    // create custom table view Uri
+    this._viewUri = documentUri.with({ scheme: 'tabular-data' });
+
+    // extract data file name from the data source document path
+    this._fileName = fileUtils.getFileName(documentUri);
 
     // dispose table view resources when table view panel is closed by the user or via vscode apis
     this._webviewPanel.onDidDispose(this.dispose, null, this._disposables);
 
-    // set table view html content for the webview panel
-    this._webviewPanel.webview.html = this.getWebviewContent(this._webviewPanel.webview, extensionUri);
+    // configure webview panel
+    this.configure();
 
     // add webview messaging and commands handler
     this.addWebviewMessageListener(this._webviewPanel.webview);
+
+    // add it to the tracked table webviews
+    TableView._views.set(this._viewUri.toString(), this);
   }
 
   /**
    * Reveals current table view or creates new table webview panel for table data display.
    * 
-   * @param extensionUri Extension directory Uri
+   * @param extensionUri Extension directory Uri.
+   * @param documentUri Data document Uri.
    */
-  public static render(extensionUri: Uri) {
-    if (TableView.currentView) {
-      // show current table webview panel
-      TableView.currentView._webviewPanel.reveal(ViewColumn.Active);
+  public static render(extensionUri: Uri, documentUri: Uri) {
+    const viewUri: Uri = documentUri.with({ scheme: 'tabular-data' });
+    const tableView: TableView | undefined = TableView._views.get(viewUri.toString());
+    if (tableView) {
+      // show loaded table webview panel
+      tableView.webviewPanel.reveal(ViewColumn.Active);
+      TableView.currentView = tableView;
     }
     else {
+      // create new webview panel for the table view
       const webviewPanel = window.createWebviewPanel(
-        'tabular.data.tableView', // webview panel view type
-        'Table View', // webview panel title
+        ViewTypes.TableView, // webview panel view type
+        fileUtils.getFileName(documentUri), // webview panel title
         {
           viewColumn: ViewColumn.Active, // use active view column for display
           preserveFocus: true
@@ -67,8 +92,8 @@ export class TableView {
       // set custom table view panel icon
       webviewPanel.iconPath = Uri.file(path.join(extensionUri.fsPath, './resources/icons/tabular-data-viewer.svg'));
 
-      // set as current table view for now
-      TableView.currentView = new TableView(webviewPanel, extensionUri);
+      // set as current table view
+      TableView.currentView = new TableView(webviewPanel, extensionUri, documentUri);
     }
   }
 
@@ -87,14 +112,54 @@ export class TableView {
   }
 
   /**
+   * Configures webview html for view display.
+   */
+  public configure(): void {
+    // set table view html content for the webview panel
+    this.webviewPanel.webview.html = this.getWebviewContent(this.webviewPanel.webview, this._extensionUri);
+    // NOTE: let webview fire refresh message
+    // when map view DOM content is initialized
+    // see: this.refresh();
+  }
+
+  /**
+   * Gets the underlying webview panel instance for this view.
+   */
+  get webviewPanel(): WebviewPanel {
+    return this._webviewPanel;
+  }
+
+  /**
+   * Gets view panel visibility status.
+   */
+  get visible(): boolean {
+    return this._webviewPanel.visible;
+  }
+
+
+  /**
+   * Gets the source data uri for this view.
+   */
+  get documentUri(): Uri {
+    return this._documentUri;
+  }
+
+  /**
+   * Gets the view uri to load on tabular data view command triggers or vscode IDE reload. 
+   */
+  get viewUri(): Uri {
+    return this._viewUri;
+  }
+
+  /**
    * Creates webview html content for the webview panel display.
    * 
-   * @param webview Reference to the extensions webview
-   * @param extensionUri Extension directory Uri
-   * @returns Html string for the webview content
+   * @param webview Reference to the extensions webview.
+   * @param extensionUri Extension directory Uri.
+   * @returns Html string for the webview content.
    */
   private getWebviewContent(webview: Webview, extensionUri: Uri): string {
-    const webviewUiToolkitUri: Uri = getUri(webview, extensionUri, [
+    const webviewUiToolkitUri: Uri = fileUtils.getWebviewUri(webview, extensionUri, [
       'node_modules',
       '@vscode',
       'webview-ui-toolkit',
@@ -102,7 +167,7 @@ export class TableView {
       'toolkit.js',
     ]);
 
-    const tableViewUri: Uri = getUri(webview, extensionUri, ['web', 'scripts', 'tableView.js']);
+    const tableViewUri: Uri = fileUtils.getWebviewUri(webview, extensionUri, ['web', 'scripts', 'tableView.js']);
 
     // Tip: Install the es6-string-html VS Code extension 
     // to enable html code highlighting below
@@ -128,7 +193,7 @@ export class TableView {
   * Adds webivew messaging support and executes commands
   * based on the message command received.
   *
-  * @param webview Reference to the extension webview
+  * @param webview Reference to the extension webview.
   */
   private addWebviewMessageListener(webview: Webview) {
     webview.onDidReceiveMessage((message: any) => {
@@ -144,4 +209,5 @@ export class TableView {
       this._disposables
     );
   }
+
 }
