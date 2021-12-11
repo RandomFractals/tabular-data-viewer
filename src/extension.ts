@@ -8,6 +8,8 @@ import {
 } from 'vscode';
 
 import { TableView } from './views/tableView';
+import { TableViewSerializer } from './views/tableViewSerializer';
+import { ViewTypes } from './views/viewTypes';
 
 /**
  * Activates this extension per rules set in package.json.
@@ -19,12 +21,17 @@ export function activate(context: ExtensionContext) {
 	
 	console.log('tabular.data.viewer:activate(): activated!');
 
+	// register view table command
 	let viewTableCommand: Disposable = 
 		commands.registerCommand('tabular.data.viewTable', (documentUri: Uri) => {
 			TableView.render(context.extensionUri, documentUri);
 		});
 
 	context.subscriptions.push(viewTableCommand);
+
+	// register table view serializer for restore on vscode restart
+	window.registerWebviewPanelSerializer(ViewTypes.TableView, 
+		new TableViewSerializer(context.extensionUri));
 }
 
 /**

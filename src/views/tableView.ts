@@ -4,6 +4,8 @@ import {
   WebviewOptions,
   WebviewPanel,
   WebviewPanelOptions,
+  WebviewPanelOnDidChangeViewStateEvent,
+  WebviewPanelSerializer,
   Uri,
   window,
   Webview
@@ -13,7 +15,6 @@ import * as path from 'path';
 import * as fileUtils from '../utils/fileUtils';
 
 import { ViewTypes } from './viewTypes';
-
 
 /**
  * Defines Table view class for managing state and behaviour of Table webview panels.
@@ -53,9 +54,6 @@ export class TableView {
     // configure webview panel
     this.configure();
 
-    // add webview messaging and commands handler
-    this.addWebviewMessageListener(this._webviewPanel.webview);
-
     // add it to the tracked table webviews
     TableView._views.set(this._viewUri.toString(), this);
   }
@@ -66,7 +64,7 @@ export class TableView {
    * @param extensionUri Extension directory Uri.
    * @param documentUri Data document Uri.
    */
-  public static render(extensionUri: Uri, documentUri: Uri) {
+  public static render(extensionUri: Uri, documentUri: Uri, webviewPanel?: WebviewPanel) {
     const viewUri: Uri = documentUri.with({ scheme: 'tabular-data' });
     const tableView: TableView | undefined = TableView._views.get(viewUri.toString());
     if (tableView) {
@@ -75,26 +73,39 @@ export class TableView {
       TableView.currentView = tableView;
     }
     else {
-      // create new webview panel for the table view
-      const webviewPanel = window.createWebviewPanel(
-        ViewTypes.TableView, // webview panel view type
-        fileUtils.getFileName(documentUri), // webview panel title
-        {
-          viewColumn: ViewColumn.Active, // use active view column for display
-          preserveFocus: true
-        }, 
-        { // weview panel options
-          enableScripts: true, // enable JavaScript in webview
-          enableCommandUris: true // ???
-        }
-      );
+      if (!webviewPanel) {
+        // create new webview panel for the table view
+        webviewPanel = TableView.createWebviewPanel(documentUri);
 
-      // set custom table view panel icon
-      webviewPanel.iconPath = Uri.file(path.join(extensionUri.fsPath, './resources/icons/tabular-data-viewer.svg'));
+        // set custom table view panel icon
+        webviewPanel.iconPath = Uri.file(path.join(extensionUri.fsPath, './resources/icons/tabular-data-viewer.svg'));
+      }
 
       // set as current table view
       TableView.currentView = new TableView(webviewPanel, extensionUri, documentUri);
     }
+  }
+
+  /**
+   * Creates new webview panel for the given data source document Uri.
+   * 
+   * @param documentUri Data source document Uri.
+   * @returns New webview panel instance.
+   */
+  private static createWebviewPanel(documentUri: Uri): WebviewPanel {
+    // create new webview panel for the table view
+    return window.createWebviewPanel(
+      ViewTypes.TableView, // webview panel view type
+      fileUtils.getFileName(documentUri), // webview panel title
+      {
+        viewColumn: ViewColumn.Active, // use active view column for display
+        preserveFocus: true
+      },
+      { // weview panel options
+        enableScripts: true, // enable JavaScript in webview
+        enableCommandUris: true // ???
+      }
+    );
   }
 
   /**
@@ -117,9 +128,32 @@ export class TableView {
   public configure(): void {
     // set table view html content for the webview panel
     this.webviewPanel.webview.html = this.getWebviewContent(this.webviewPanel.webview, this._extensionUri);
-    // NOTE: let webview fire refresh message
-    // when map view DOM content is initialized
-    // see: this.refresh();
+
+    // process webview messages
+    this.webviewPanel.webview.onDidReceiveMessage((message: any) => {
+      const command: string = message.command;
+      const text = message.text;
+      switch (command) {
+        case 'hello':
+          window.showInformationMessage(text);
+          break;
+        case 'refresh':
+          // relad data view and config
+          this.refresh();
+      }
+    }, undefined, this._disposables);
+  }
+
+  /**
+   * Reloads tablue view on data save chances or vscode IDE realod.
+   */
+  public async refresh(): Promise<void> {
+    // update webview
+    this.webviewPanel.webview.postMessage({
+      command: 'refresh',
+      fileName: this._fileName,
+      documentUrl: this._documentUri.toString()
+    });
   }
 
   /**
@@ -188,26 +222,4 @@ export class TableView {
       </html>
     `;
   }
-
-  /**
-  * Adds webivew messaging support and executes commands
-  * based on the message command received.
-  *
-  * @param webview Reference to the extension webview.
-  */
-  private addWebviewMessageListener(webview: Webview) {
-    webview.onDidReceiveMessage((message: any) => {
-        const command: string = message.command;
-        const text = message.text;
-        switch (command) {
-          case 'hello':
-            window.showInformationMessage(text);
-            break;
-        }
-      }, 
-      undefined, // args
-      this._disposables
-    );
-  }
-
 }

@@ -40,7 +40,8 @@
 		"table view"
 	],
 	"activationEvents": [
-		"onCommand:tabular.data.viewTable"
+		"onCommand:tabular.data.viewTable",
+		"onWebviewPanel:tabular.data.tableView"
 	],
 	"main": "./dist/extension.js",
 	"contributes": {
