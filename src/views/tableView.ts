@@ -31,6 +31,66 @@ export class TableView {
   private _disposables: Disposable[] = [];
 
   /**
+   * Reveals current table view or creates new table webview panel for tabular data display.
+   * 
+   * @param extensionUri Extension directory Uri.
+   * @param documentUri Data document Uri.
+   * @param webviewPanel Optional webview panel instance.
+   */
+  public static render(extensionUri: Uri, documentUri: Uri, webviewPanel?: WebviewPanel) {
+    const viewUri: Uri = documentUri.with({ scheme: 'tabular-data' });
+    const tableView: TableView | undefined = TableView._views.get(viewUri.toString());
+    if (tableView) {
+      // show loaded table webview panel
+      tableView.webviewPanel.reveal(ViewColumn.Active);
+      TableView.currentView = tableView;
+    }
+    else {
+      if (!webviewPanel) {
+        // create new webview panel for the table view
+        webviewPanel = TableView.createWebviewPanel(documentUri);
+      }
+      else {
+        // enable scripts for existing webview panel from table editor
+        webviewPanel.webview.options = {
+          enableScripts: true,
+          enableCommandUris: true
+        };
+      }
+
+      // set custom table view panel icon
+      webviewPanel.iconPath = Uri.file(path.join(extensionUri.fsPath, './resources/icons/tabular-data-viewer.svg'));
+
+      // set as current table view
+      TableView.currentView = new TableView(webviewPanel, extensionUri, documentUri);
+    }
+  }
+
+  /**
+   * Creates new webview panel for the given data source document Uri.
+   * 
+   * @param documentUri Data source document Uri.
+   * @returns New webview panel instance.
+   */
+  private static createWebviewPanel(documentUri: Uri): WebviewPanel {
+    // create new webview panel for the table view
+    return window.createWebviewPanel(
+      ViewTypes.TableView, // webview panel view type
+      fileUtils.getFileName(documentUri), // webview panel title
+      {
+        viewColumn: ViewColumn.Active, // use active view column for display
+        preserveFocus: true
+      },
+      { // webview panel options
+        enableScripts: true, // enable JavaScript in webview
+        enableCommandUris: true,
+        enableFindWidget: true,
+        retainContextWhenHidden: true
+      }
+    );
+  }
+
+  /**
    * Creates new TableView instance for tabular data rendering.
    * 
    * @param webviewPanel Reference to the webview panel.
@@ -56,58 +116,6 @@ export class TableView {
 
     // add it to the tracked table webviews
     TableView._views.set(this._viewUri.toString(), this);
-  }
-
-  /**
-   * Reveals current table view or creates new table webview panel for table data display.
-   * 
-   * @param extensionUri Extension directory Uri.
-   * @param documentUri Data document Uri.
-   */
-  public static render(extensionUri: Uri, documentUri: Uri, webviewPanel?: WebviewPanel) {
-    const viewUri: Uri = documentUri.with({ scheme: 'tabular-data' });
-    const tableView: TableView | undefined = TableView._views.get(viewUri.toString());
-    if (tableView) {
-      // show loaded table webview panel
-      tableView.webviewPanel.reveal(ViewColumn.Active);
-      TableView.currentView = tableView;
-    }
-    else {
-      if (!webviewPanel) {
-        // create new webview panel for the table view
-        webviewPanel = TableView.createWebviewPanel(documentUri);
-
-        // set custom table view panel icon
-        webviewPanel.iconPath = Uri.file(path.join(extensionUri.fsPath, './resources/icons/tabular-data-viewer.svg'));
-      }
-
-      // set as current table view
-      TableView.currentView = new TableView(webviewPanel, extensionUri, documentUri);
-    }
-  }
-
-  /**
-   * Creates new webview panel for the given data source document Uri.
-   * 
-   * @param documentUri Data source document Uri.
-   * @returns New webview panel instance.
-   */
-  private static createWebviewPanel(documentUri: Uri): WebviewPanel {
-    // create new webview panel for the table view
-    return window.createWebviewPanel(
-      ViewTypes.TableView, // webview panel view type
-      fileUtils.getFileName(documentUri), // webview panel title
-      {
-        viewColumn: ViewColumn.Active, // use active view column for display
-        preserveFocus: true
-      },
-      { // weview panel options
-        enableScripts: true, // enable JavaScript in webview
-        enableCommandUris: true,
-        enableFindWidget: true,
-        retainContextWhenHidden: true
-      }
-    );
   }
 
   /**

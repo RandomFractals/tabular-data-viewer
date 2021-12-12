@@ -56,7 +56,7 @@ export class TableEditor implements CustomTextEditorProvider {
     document: TextDocument,
     webviewPanel: WebviewPanel,
     token: CancellationToken
-  ): Promise<void> {
+  ): Promise<void> {    
     // create new table view for the given tabular text data document and render it
     TableView.render(this.context.extensionUri, document.uri, webviewPanel);
   }
