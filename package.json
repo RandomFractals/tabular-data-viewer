@@ -41,6 +41,7 @@
 	],
 	"activationEvents": [
 		"onCommand:tabular.data.viewTable",
+		"onCustomEditor:tabular.data.tableEditor",
 		"onWebviewPanel:tabular.data.tableView"
 	],
 	"main": "./dist/extension.js",
@@ -125,7 +126,7 @@
 		},
 		"customEditors": [
 			{
-				"viewType": "tabular.data.tableView",
+				"viewType": "tabular.data.tableEditor",
 				"displayName": "Table View",
 				"priority": "default",
 				"selector": [

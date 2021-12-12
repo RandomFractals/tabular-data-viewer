@@ -1,10 +1,14 @@
 import {
+  window,
+  Disposable,
+  ExtensionContext,
   WebviewPanel,
   WebviewPanelSerializer,
-  Uri,
+  Uri
 } from 'vscode';
 
 import { TableView } from './tableView';
+import { ViewTypes } from './viewTypes';
 
 /**
  * Table webview panel serializer for restoring table views on vscode reload.
@@ -12,7 +16,19 @@ import { TableView } from './tableView';
 export class TableViewSerializer implements WebviewPanelSerializer {
 
   /**
-   * Creates new webview serializer.
+   * Registers table view serializer.
+   * 
+   * @param context Extension context.
+   * @returns Disposable object for this webview panel serializer.
+   */
+  public static register(context: ExtensionContext): Disposable {
+    return window.registerWebviewPanelSerializer(ViewTypes.TableView,
+      new TableViewSerializer(context.extensionUri));
+  }
+
+  /**
+   * Creates new Table webview serializer.
+   * 
    * @param extensionUri Extension directory Uri.
    */
   constructor(private extensionUri: Uri) {

@@ -1,12 +1,12 @@
 import {
 	commands,
 	window,
-	workspace,
 	ExtensionContext,
 	Disposable,
 	Uri
 } from 'vscode';
 
+import { TableEditor } from './views/tableEditor';
 import { TableView } from './views/tableView';
 import { TableViewSerializer } from './views/tableViewSerializer';
 import { ViewTypes } from './views/viewTypes';
@@ -14,24 +14,27 @@ import { ViewTypes } from './views/viewTypes';
 /**
  * Activates this extension per rules set in package.json.
  * 
- * @param context vscode extension context.
- * @see https://code.visualstudio.com/api/references/activation-events for more info.
+ * @param context Extension context.
+ * 
+ * @see https://code.visualstudio.com/api/references/vscode-api#extensions
+ * @see https://code.visualstudio.com/api/references/activation-events
  */
 export function activate(context: ExtensionContext) {
 	
 	console.log('tabular.data.viewer:activate(): activated!');
 
 	// register view table command
-	let viewTableCommand: Disposable = 
+	const viewTableCommand: Disposable = 
 		commands.registerCommand('tabular.data.viewTable', (documentUri: Uri) => {
 			TableView.render(context.extensionUri, documentUri);
 		});
-
 	context.subscriptions.push(viewTableCommand);
 
-	// register table view serializer for restore on vscode restart
-	window.registerWebviewPanelSerializer(ViewTypes.TableView, 
-		new TableViewSerializer(context.extensionUri));
+	// register table view serializer for restore on vscode reload
+	context.subscriptions.push(TableViewSerializer.register(context));
+
+	// register table editor
+	context.subscriptions.push(TableEditor.register(context));
 }
 
 /**

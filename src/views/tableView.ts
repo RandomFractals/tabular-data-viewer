@@ -31,7 +31,7 @@ export class TableView {
   private _disposables: Disposable[] = [];
 
   /**
-   * Creates new TableView instance for the initial table data rendering.
+   * Creates new TableView instance for tabular data rendering.
    * 
    * @param webviewPanel Reference to the webview panel.
    * @param extensionUri Extension directory Uri.
@@ -103,7 +103,9 @@ export class TableView {
       },
       { // weview panel options
         enableScripts: true, // enable JavaScript in webview
-        enableCommandUris: true // ???
+        enableCommandUris: true,
+        enableFindWidget: true,
+        retainContextWhenHidden: true
       }
     );
   }
@@ -113,6 +115,7 @@ export class TableView {
    */
   public dispose() {
     TableView.currentView = undefined;
+    TableView._views.delete(this._viewUri.toString());
     this._webviewPanel.dispose();
     while (this._disposables.length) {
       const disposable: Disposable | undefined = this._disposables.pop();
