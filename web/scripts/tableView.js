@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/naming-convention */
+
 // initialize vscode api
 const vscode = acquireVsCodeApi();
 
@@ -21,18 +23,37 @@ window.addEventListener('message', event => {
 function initializeView() {
   // notify webview
   vscode.postMessage({ command: 'refresh' });
-  const testButton = document.getElementById('test-button');
-  testButton.addEventListener('click', onTestClick);
+
+  // wire refresh button for testing
+  const refreshButton = document.getElementById('refresh-button');
+  refreshButton.addEventListener('click', onRefresh);
+
+  // display some test data in Tabulator for now
+  let tableData = [
+    { id: 1, name: "Billy Bob", age: "12", gender: "male", height: 1, col: "red", dob: "", cheese: 1 },
+    { id: 2, name: "Mary May", age: "1", gender: "female", height: 2, col: "blue", dob: "14/05/1982", cheese: true },
+  ];
+  let table = new Tabulator('#table-container', {
+    data: tableData,
+    columns: [
+      { title: "Name", field: "name" },
+      { title: "Age", field: "age" },
+      { title: "Gender", field: "gender" },
+      { title: "Height", field: "height" },
+      { title: "Favourite Color", field: "col" },
+      { title: "Date Of Birth", field: "dob" },
+      { title: "Cheese Preference", field: "cheese" },
+    ]
+  });
 }
 
 /**
- * Handles test button click.
+ * Reloads webview data.
  * 
  * @see https://code.visualstudio.com/api/extension-guides/webview#passing-messages-from-an-extension-to-a-webview
  */
-function onTestClick() {
+function onRefresh() {
   vscode.postMessage({
-    command: 'hello',
-    text: 'Hey there partner! 🤠'
+    command: 'refresh',
   });
 }

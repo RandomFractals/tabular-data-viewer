@@ -145,9 +145,6 @@ export class TableView {
       const command: string = message.command;
       const text = message.text;
       switch (command) {
-        case 'hello':
-          window.showInformationMessage(text);
-          break;
         case 'refresh':
           // relad data view and config
           this.refresh();
@@ -204,6 +201,7 @@ export class TableView {
    * @returns Html string for the webview content.
    */
   private getWebviewContent(webview: Webview, extensionUri: Uri): string {
+    // create webview UI toolkitUri
     const webviewUiToolkitUri: Uri = fileUtils.getWebviewUri(webview, extensionUri, [
       'node_modules',
       '@vscode',
@@ -212,7 +210,11 @@ export class TableView {
       'toolkit.js',
     ]);
 
+    // create main teable view script Uri
     const tableViewUri: Uri = fileUtils.getWebviewUri(webview, extensionUri, ['web', 'scripts', 'tableView.js']);
+
+    // get CSP (Content-Security-Policy) source link for this webview
+    const cspSource: string = this.webviewPanel.webview.cspSource;
 
     // Tip: Install the es6-string-html VS Code extension 
     // to enable html code highlighting below
@@ -222,13 +224,26 @@ export class TableView {
         <head>
           <meta charset="UTF-8">
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <meta http-equiv="Content-Security-Policy" 
+            content="default-src 'self' ${cspSource} https://*;
+              script-src ${cspSource} https: 'unsafe-inline' 'unsafe-eval';
+              style-src ${cspSource} https: 'unsafe-inline';
+              img-src ${cspSource} 'self' https://* blob: data:;
+              font-src 'self' ${cspSource} https://* blob: data:;
+              connect-src 'self' https://* wss://*;
+              worker-src 'self' https://* blob: data:">
+          <link href="https://unpkg.com/tabulator-tables@5.0.7/dist/css/tabulator.min.css" rel="stylesheet">
+          <script type="text/javascript" src="https://unpkg.com/tabulator-tables@5.0.7/dist/js/tabulator.min.js"></script>
           <script type="module" src="${webviewUiToolkitUri}"></script>
           <script type="module" src="${tableViewUri}"></script>
           <title>Table View</title>
         </head>
         <body>
-          <h1>Hello World!</h1>
-          <vscode-button id="test-button">Hi!</vscode-button>
+          <vscode-button id="refresh-button"
+            appearance="icon" aria-label="Refresh">
+	          <span class="codicon codicon-refresh"></span>
+          </vscode-button>
+          <div id="table-container" />
         </body>
       </html>
     `;
