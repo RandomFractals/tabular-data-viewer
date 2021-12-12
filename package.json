@@ -40,6 +40,8 @@
 		"table view"
 	],
 	"activationEvents": [
+		"onLanguage:csv",
+		"onLanguage:tsv",
 		"onCommand:tabular.data.viewTable",
 		"onCustomEditor:tabular.data.tableEditor",
 		"onWebviewPanel:tabular.data.tableView"
