@@ -210,8 +210,9 @@ export class TableView {
       'toolkit.js',
     ]);
 
-    // create main teable view script Uri
-    const tableViewUri: Uri = fileUtils.getWebviewUri(webview, extensionUri, ['web', 'scripts', 'tableView.js']);
+    // create table view script and styles Uris
+    const tableViewScriptUri: Uri = fileUtils.getWebviewUri(webview, extensionUri, ['web', 'scripts', 'tableView.js']);
+    const tableViewStylesUri: Uri = fileUtils.getWebviewUri(webview, extensionUri, ['web', 'styles', 'table-view.css']);
 
     // get CSP (Content-Security-Policy) source link for this webview
     const cspSource: string = this.webviewPanel.webview.cspSource;
@@ -233,17 +234,23 @@ export class TableView {
               connect-src 'self' https://* wss://*;
               worker-src 'self' https://* blob: data:">
           <link href="https://unpkg.com/tabulator-tables@5.0.7/dist/css/tabulator.min.css" rel="stylesheet">
+          <link href="${tableViewStylesUri}" rel="stylesheet">
           <script type="text/javascript" src="https://unpkg.com/tabulator-tables@5.0.7/dist/js/tabulator.min.js"></script>
           <script type="module" src="${webviewUiToolkitUri}"></script>
-          <script type="module" src="${tableViewUri}"></script>
+          <script type="module" src="${tableViewScriptUri}"></script>
           <title>Table View</title>
         </head>
         <body>
-          <vscode-button id="refresh-button"
-            appearance="icon" aria-label="Refresh">
-	          <span class="codicon codicon-refresh"></span>
-          </vscode-button>
-          <div id="table-container" />
+          <div id="toolbar">
+            <div id="toolbar-left"></div>
+            <div id="toolbar-right">
+              <vscode-button id="refresh-button"
+                appearance="icon" aria-label="Refresh">
+	              <span class="codicon codicon-refresh">↺</span>
+              </vscode-button>
+            </div>
+          </div>
+          <div id="tabulator-table" />
         </body>
       </html>
     `;

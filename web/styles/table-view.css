@@ -1,0 +1,90 @@
+
+/* toolbar styles */
+#toolbar {
+  margin: 0px;
+  margin-top: 5px;
+  padding: 0px;
+  padding-left: 15px;
+  font-size: 10pt;
+  font-weight: normal;
+  display: inline-block;
+  white-space: nowrap;
+  height: 36px;
+}
+
+#toolbar-left {
+  display: inline-block;
+  padding-top: 5px;
+  width: calc(100% - 120);
+}
+
+#toolbar-right {
+  position: absolute;
+  top: 12px;
+  right: 5px;
+  width: 36px;
+  height: 32px;
+  padding-left: 5px;
+  background-color: var(--vscode-editor-background);
+}
+
+#toolbar a {
+	border: none;
+	padding: var(--input-padding-vertical) 10px var(--input-padding-vertical) 10px;
+	font-family: var(--vscode-font-family);
+	text-align: center;
+	text-decoration: none;
+	outline: 1px solid transparent;
+	outline-offset: 2px !important;
+	color: var(--vscode-button-foreground);
+	background: var(--vscode-button-background);
+}
+
+#toolbar a:hover {
+	cursor: pointer;
+	background: var(--vscode-button-hoverBackground);
+}
+
+#toolbar a:focus {
+	outline-color: var(--vscode-focusBorder);
+}
+
+/* tabulator table styles */
+#tabulator-table {
+	background-color: var(--vscode-editor-background);
+	border-right: none;
+	border-bottom: 1px solid var(--vscode-panel-border);
+	border-radius: 0px;
+	margin-left: 15px;
+	margin-right: 15px;
+	overflow-x: hidden;
+}
+
+#tabulator-table .tabulator-header {
+	background-color: var(--vscode-editor-background);
+	color: var(--vscode-editor-foreground);
+	border: none;
+}
+
+/* allow column header names to wrap lines */
+#tabulator-table .tabulator-header .tabulator-col,
+#tabulator-table .tabulator-header .tabulator-col-row-handle {
+	background-color: var(--vscode-editor-background);
+	border: 1px solid var(--vscode-panel-border);
+	font-weight: normal;
+	white-space: normal;
+	min-height: 24px;
+}
+
+/* table rows */
+#tabulator-table .tabulator-tableHolder .tabulator-table .tabulator-row {
+	color: var(--vscode-editor-foreground);
+	background-color: var(--vscode-editor-background);
+	border: none;
+}
+
+/* even rows */
+#tabulator-table .tabulator-tableHolder .tabulator-table .tabulator-row:nth-child(even) {
+	background-color: var(--vscode-editor-background);
+	border: none;
+}

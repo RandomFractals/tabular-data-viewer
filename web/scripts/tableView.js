@@ -33,7 +33,7 @@ function initializeView() {
     { id: 1, name: "Billy Bob", age: "12", gender: "male", height: 1, col: "red", dob: "", cheese: 1 },
     { id: 2, name: "Mary May", age: "1", gender: "female", height: 2, col: "blue", dob: "14/05/1982", cheese: true },
   ];
-  let table = new Tabulator('#table-container', {
+  let table = new Tabulator('#tabulator-table', {
     data: tableData,
     columns: [
       { title: "Name", field: "name" },
