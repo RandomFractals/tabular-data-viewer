@@ -8,12 +8,14 @@ import {
   WebviewPanelSerializer,
   Uri,
   window,
-  Webview
+  Webview,
+  workspace
 } from 'vscode';
 
 import * as path from 'path';
-import * as fileUtils from '../utils/fileUtils';
+import { TextDecoder } from 'util';
 
+import * as fileUtils from '../utils/fileUtils';
 import { ViewTypes } from './viewTypes';
 
 /**
@@ -153,15 +155,35 @@ export class TableView {
   }
 
   /**
-   * Reloads tablue view on data save chances or vscode IDE realod.
+   * Reloads table view on data save changes or vscode IDE realod.
    */
   public async refresh(): Promise<void> {
-    // update webview
-    this.webviewPanel.webview.postMessage({
-      command: 'refresh',
-      fileName: this._fileName,
-      documentUrl: this._documentUri.toString()
+    // load data
+    workspace.fs.readFile(this._documentUri).then((binaryData: Uint8Array) => {
+      const textData: string = new TextDecoder().decode(binaryData);
+      this.logData(textData);
+
+      // update webview
+      this.webviewPanel.webview.postMessage({
+        command: 'refresh',
+        fileName: this._fileName,
+        documentUrl: this._documentUri.toString()
+      });      
+    }, reason => {
+      window.showErrorMessage(`Could not load \`${this._documentUri}\` content. Reason: \n ${reason}`);
     });
+  }
+
+  /**
+   * Logs truncated text data for debug.
+   * 
+   * @param textData Text data to log.
+   * @param maxChars Max characters to log.
+   */
+  private logData(textData: string, maxChars: number = 1000): void {
+    const contentLength: number = textData.length;
+    console.log('tabular.data.view:refresh(): data:\n',
+      textData.substring(0, contentLength > maxChars ? maxChars : contentLength), ' ...');
   }
 
   /**
