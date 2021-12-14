@@ -18,6 +18,8 @@ import { TextDecoder } from 'util';
 import * as fileUtils from '../utils/fileUtils';
 import { ViewTypes } from './viewTypes';
 
+const d3 = require('d3-dsv');
+
 /**
  * Defines Table view class for managing state and behaviour of Table webview panels.
  */
@@ -30,6 +32,7 @@ export class TableView {
   private readonly _documentUri: Uri;
   private readonly _viewUri: Uri;
   private readonly _fileName: string;
+  private readonly _fileExtension: string;
   private _disposables: Disposable[] = [];
 
   /**
@@ -109,6 +112,7 @@ export class TableView {
 
     // extract data file name from the data source document path
     this._fileName = fileUtils.getFileName(documentUri);
+    this._fileExtension = path.extname(this._fileName);
 
     // dispose table view resources when table view panel is closed by the user or via vscode apis
     this._webviewPanel.onDidDispose(this.dispose, null, this._disposables);
@@ -161,13 +165,19 @@ export class TableView {
     // load data
     workspace.fs.readFile(this._documentUri).then((binaryData: Uint8Array) => {
       const textData: string = new TextDecoder().decode(binaryData);
-      this.logData(textData);
+      this.logTextData(textData);
+
+      // parse dsv data for now
+      const dsvParser = d3.dsvFormat(this.delimiter);
+      let tableData: any = dsvParser.parse(textData, d3.autoType);
+      this.logTableData(tableData);
 
       // update webview
       this.webviewPanel.webview.postMessage({
         command: 'refresh',
         fileName: this._fileName,
-        documentUrl: this._documentUri.toString()
+        documentUrl: this._documentUri.toString(),
+        tableData: tableData
       });      
     }, reason => {
       window.showErrorMessage(`Could not load \`${this._documentUri}\` content. Reason: \n ${reason}`);
@@ -180,10 +190,21 @@ export class TableView {
    * @param textData Text data to log.
    * @param maxChars Max characters to log.
    */
-  private logData(textData: string, maxChars: number = 1000): void {
+  private logTextData(textData: string, maxChars: number = 1000): void {
     const contentLength: number = textData.length;
-    console.log('tabular.data.view:refresh(): data:\n',
+    console.log('tabular.data.view:data:\n',
       textData.substring(0, contentLength > maxChars ? maxChars : contentLength), ' ...');
+  }
+
+  /**
+   * Logs parsed table data for debug.
+   * 
+   * @param tableData Parsed table data.
+   */
+  private logTableData(tableData: any): void {
+    console.log('tabular.data.view:rowCount:', tableData.length);
+    console.log('columns:', tableData.columns);
+    console.log('1st 10 rows:', tableData.slice(0, 10));
   }
 
   /**
@@ -213,6 +234,23 @@ export class TableView {
    */
   get viewUri(): Uri {
     return this._viewUri;
+  }
+
+  /**
+   * Gets data file deleimiter based on file extension.
+   */
+  get delimiter(): string {
+    let delimiter: string = '';
+    switch (this._fileExtension) {
+      case '.csv':
+        delimiter = ',';
+        break;
+      case '.tsv':
+      case '.tab':
+        delimiter = '\t';
+        break;
+    }
+    return delimiter;
   }
 
   /**

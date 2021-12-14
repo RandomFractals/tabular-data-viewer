@@ -162,6 +162,7 @@
 		"test": "node ./out/test/runTest.js"
 	},
 	"devDependencies": {
+		"@types/d3-dsv": "^3.0.0",
 		"@types/vscode": "^1.63.0",
 		"@types/glob": "^7.2.0",
 		"@types/mocha": "^9.0.0",
