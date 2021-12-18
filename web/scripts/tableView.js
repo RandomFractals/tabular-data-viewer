@@ -3,6 +3,11 @@
 // initialize vscode api
 const vscode = acquireVsCodeApi();
 
+// table view vars
+let table;
+let tableColumns = [];
+let tableData = [];
+
 // add page load handler
 window.addEventListener('load', initializeView);
 
@@ -12,7 +17,8 @@ window.addEventListener('message', event => {
     case 'refresh':
       console.log('refreshing table view ...');
       vscode.setState({ documentUrl: event.data.documentUrl });
-      // TODO: add table view display with Tabulator
+      tableData = event.data.tableData;
+      loadData(tableData);
       break;
   }
 });
@@ -27,24 +33,6 @@ function initializeView() {
   // wire refresh button for testing
   const refreshButton = document.getElementById('refresh-button');
   refreshButton.addEventListener('click', onRefresh);
-
-  // display some test data in Tabulator for now
-  let tableData = [
-    { id: 1, name: "Billy Bob", age: "12", gender: "male", height: 1, col: "red", dob: "", cheese: 1 },
-    { id: 2, name: "Mary May", age: "1", gender: "female", height: 2, col: "blue", dob: "14/05/1982", cheese: true },
-  ];
-  let table = new Tabulator('#tabulator-table', {
-    data: tableData,
-    columns: [
-      { title: "Name", field: "name" },
-      { title: "Age", field: "age" },
-      { title: "Gender", field: "gender" },
-      { title: "Height", field: "height" },
-      { title: "Favourite Color", field: "col" },
-      { title: "Date Of Birth", field: "dob" },
-      { title: "Cheese Preference", field: "cheese" },
-    ]
-  });
 }
 
 /**
@@ -56,4 +44,64 @@ function onRefresh() {
   vscode.postMessage({
     command: 'refresh',
   });
+}
+
+/**
+ * Loads and displays table data.
+ * 
+ * @param {*} tableData Data array to display in tabulator columns and rows.
+ */
+function loadData(tableData) {
+  logTableData(tableData);
+  if (table === undefined) {
+    table = new Tabulator('#tabulator-table', {
+      height: '100%',
+      autoColumns: true,
+      layout: 'fitColumns',
+      reactiveData: true,
+      data: tableData
+    });
+  }
+  else {
+    // reload table data
+    clearTable(table);
+    addData(table, tableData);
+  }
+}
+
+/**
+ * Removes all table data.
+ */
+function clearTable(table) {
+  if (table) {
+    table.clearData();  
+  }
+}
+
+/**
+ * Adds data to the table.
+ * 
+ * @param {*} table Tabulator table instance.
+ * @param {*} tableData Data array for the table rows.
+ */
+function addData(table, tableData) {
+  if (table && tableData) {
+    table.addData(tableData, true)
+      .then(function (rows) { //rows - array of the row components for the rows updated or added
+      })
+      .catch(function (error) {
+        // handle error updating data
+        console.error(error);
+      });
+  }
+}
+
+/**
+ * Logs table data for debug.
+ * 
+ * @param tableData Loaded able data.
+ */
+function logTableData(tableData) {
+  console.log('tabular.data.view:rowCount:', tableData.length);
+  console.log('1st 10 rows:', tableData.slice(0, 10));
 }

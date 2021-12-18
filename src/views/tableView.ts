@@ -237,7 +237,7 @@ export class TableView {
   }
 
   /**
-   * Gets data file deleimiter based on file extension.
+   * Gets data file delimiter based on file extension.
    */
   get delimiter(): string {
     let delimiter: string = '';
