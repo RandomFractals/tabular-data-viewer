@@ -310,7 +310,7 @@ export class TableView {
               </vscode-button>
             </div>
           </div>
-          <div id="tabulator-table" />
+          <div id="table-container" />
         </body>
       </html>
     `;

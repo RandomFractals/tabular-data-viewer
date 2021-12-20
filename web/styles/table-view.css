@@ -59,26 +59,22 @@ body {
 }
 
 /* tabulator table styles */
-#tabulator-table {
+#table-container {
 	background-color: var(--vscode-editor-background);
-	border-right: none;
-	border-bottom: 1px solid var(--vscode-panel-border);
-	border-radius: 0px;
-	margin-left: 0px;
-	margin-right: 0px;
+	border: 1px solid var(--vscode-panel-border);
   height: calc(100% - 40);
-	overflow-x: hidden;
+	overflow: hidden;
 }
 
-#tabulator-table .tabulator-header {
+#table-container .tabulator-header {
 	background-color: var(--vscode-editor-background);
 	color: var(--vscode-editor-foreground);
 	border: none;
 }
 
 /* allow column header names to wrap lines */
-#tabulator-table .tabulator-header .tabulator-col,
-#tabulator-table .tabulator-header .tabulator-col-row-handle {
+#table-container .tabulator-header .tabulator-col,
+#table-container .tabulator-header .tabulator-col-row-handle {
 	background-color: var(--vscode-editor-background);
 	border: 1px solid var(--vscode-panel-border);
 	font-weight: normal;
@@ -87,14 +83,14 @@ body {
 }
 
 /* table rows */
-#tabulator-table .tabulator-tableHolder .tabulator-table .tabulator-row {
+#table-container .tabulator-tableHolder .tabulator-table .tabulator-row {
 	color: var(--vscode-editor-foreground);
 	background-color: var(--vscode-editor-background);
 	border: none;
 }
 
 /* even rows */
-#tabulator-table .tabulator-tableHolder .tabulator-table .tabulator-row:nth-child(even) {
+#table-container .tabulator-tableHolder .tabulator-table .tabulator-row:nth-child(even) {
 	background-color: var(--vscode-editor-background);
 	border: none;
 }
