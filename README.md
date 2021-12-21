@@ -14,7 +14,7 @@ See [Data Preview](https://github.com/RandomFractals/vscode-data-preview) 🈸 v
 
 # Tabular Data Viewer 
 
-Tabular Data Viewer provides custom Table View 🀄 for `.csv`, `.tab` and `.tsv` data files using [Tabulator](http://tabulator.info/) ![Tabulator Table](http://olifolkerd.github.io/tabulator/images/tabulator_small.png)
+Tabular Data 🀄 Viewer provides a custom Table View for `.csv`, `.tab` and `.tsv` data files with <a title="Tabulator" href="http://tabulator.info"><img width="95" height="20" src="docs/images/tabulator.png" /></a>
 
 ![Tabular Data 中 View](https://github.com/RandomFractals/tabular-data-viewer/blob/main/docs/images/tabular-data-view.png?raw=true 
  "Tabular Data 中 View")
