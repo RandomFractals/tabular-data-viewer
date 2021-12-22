@@ -29,6 +29,13 @@ Tabular Data Viewer 🀄 provides custom Table View for `.csv`, `.tsv` and `.tab
 
 ...
 
+# Contributions
+
+Commands, languages, editor/view types and activation events contributed to VSCode IDE by Tabular Data Viewer 中:
+
+![Tabular Data Viewer 中 Feature Contributions](https://github.com/RandomFractals/tabular-data-viewer/blob/main/docs/images/tabular-data-viewer-feature-contributions.png?raw=true 
+ "Tabular Data Viewer 中 Feature Contributions")
+
 # Dev Log
 
 See [#TabularDataViewer 🀄 tag on Twitter](https://twitter.com/hashtag/TabularDataViewer?src=hashtag_click&f=live) for the latest and greatest updates on this vscode extension and what's in store next.
