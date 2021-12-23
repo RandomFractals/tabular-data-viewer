@@ -24,10 +24,10 @@ Tabular Data Viewer 🀄 provides custom Table View for `.csv`, `.tsv` and `.tab
 - Sort data by multiple columns
 - Resize table columns
 - Rearrange table columns and rows
-- Copy data to Clipboard
-- Delete table rows
-- Freeze table rows
-
+- Hide, freeze, or delete table columns
+- Freeze or delete table rows
+- Perisist table settings per data file
+- Copy table data to Clipboard
 ...
 
 # Contributions

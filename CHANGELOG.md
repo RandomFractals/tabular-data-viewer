@@ -40,3 +40,7 @@ Add .github/FUNDING.yml for project sponsors
 Add proper CHANGELOG.md for MVP release
 - [#21](https://github.com/RandomFractals/tabular-data-viewer/issues/21)
 Add Freeze Row context menu option
+- [#22](https://github.com/RandomFractals/tabular-data-viewer/issues/22)
+Persist and load table view config per data file
+- [#23](https://github.com/RandomFractals/tabular-data-viewer/issues/23)
+Add hide, freeze, and delete column context menu options
