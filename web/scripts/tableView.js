@@ -3,6 +3,10 @@
 // initialize vscode api
 const vscode = acquireVsCodeApi();
 
+// data document vars
+let documentUrl = '';
+let fileName = '';
+
 // table view vars
 let tableContainer, table;
 let tableColumns = [];
@@ -55,9 +59,11 @@ window.addEventListener('message', event => {
   switch (event.data.command) {
     case 'refresh':
       console.log('refreshing table view ...');
-      vscode.setState({ documentUrl: event.data.documentUrl });
+      documentUrl = event.data.documentUrl;
+      fileName = event.data.fileName;
+      vscode.setState({ documentUrl: documentUrl });
       tableData = event.data.tableData;
-      loadData(tableData);
+      loadData(tableData, fileName);
       break;
   }
 });
@@ -92,9 +98,10 @@ function onRefresh() {
 /**
  * Loads and displays table data.
  * 
- * @param {*} tableData Data array to display in tabulator columns and rows.
+ * @param {*} tableData Data array to display in tabulator table.
+ * @param {*} fileName Data file name for table config persistence and reload.
  */
-function loadData(tableData) {
+function loadData(tableData, documentUrl) {
   logTableData(tableData);
   if (table === undefined) {
     table = new Tabulator('#table-container', {
@@ -115,7 +122,16 @@ function loadData(tableData) {
       renderVerticalBuffer: renderVerticalBuffer,
       debugInvalidOptions: debugInvalidOptions, // log invalid tabulator config warnings
       debugEventsExternal: debugEventsExternal,
-      debugEventsInternal: debugEventsInternal
+      debugEventsInternal: debugEventsInternal,
+      persistenceMode: 'local',
+      persistenceID: fileName,
+      persistentLayout: true,
+      persistence: {
+        sort: true,
+        filter: true,
+        group: true,
+        columns: true,
+      }
     });
   }
   else {
