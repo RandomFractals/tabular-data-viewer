@@ -38,3 +38,5 @@ Refine package.json for MVP release
 Add .github/FUNDING.yml for project sponsors
 - [#20](https://github.com/RandomFractals/tabular-data-viewer/issues/20)
 Add proper CHANGELOG.md for MVP release
+- [#21](https://github.com/RandomFractals/tabular-data-viewer/issues/21)
+Add Freeze Row context menu option

@@ -32,6 +32,10 @@ const rowContextMenu = [
   {
     label: "<i class='fas fa-trash'></i> Delete Row",
     action: function (e, row) { row.delete(); }
+  },
+  {
+    label: "Freeze Row",
+    action: function (e, row) { row.freeze(); }
   }
 ];
 

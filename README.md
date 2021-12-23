@@ -26,6 +26,7 @@ Tabular Data Viewer 🀄 provides custom Table View for `.csv`, `.tsv` and `.tab
 - Rearrange table columns and rows
 - Copy data to Clipboard
 - Delete table rows
+- Freeze table rows
 
 ...
 
