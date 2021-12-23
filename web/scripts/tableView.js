@@ -182,7 +182,6 @@ function loadData(tableData, documentUrl) {
     table.on('tableBuilt', function () {
       const columns = table.getColumns();
       console.log('tableView.columns:', columns);
-      // addColumnHeaderMenuOptions(columns);
     });
   }
   else {
@@ -227,40 +226,4 @@ function addData(table, tableData) {
 function logTableData(tableData) {
   console.log('tabular.data.view:rowCount:', tableData.length);
   console.log('1st 10 rows:', tableData.slice(0, 10));
-}
-
-
-/**
- * Adds table column header context menu to the table columns after table load.
- * 
- * @param {*} columns Table columns.
- */
-function addColumnHeaderMenuOptions(columns) {
-  const menu = [];
-  for (let column of columns) {
-
-    // create show/hide column label and checkbox
-    const showHideColumnLabel = document.createElement('label');
-    showHideColumnLabel.textContent = column.getDefinition().title;
-    const showHideColumnCheckbox = document.createElement('input');
-    showHideColumnCheckbox.setAttribute('type', 'checkbox');
-    showHideColumnCheckbox.setAttribute('name', column.getDefinition().title);
-    showHideColumnCheckbox.setAttribute('checked', column.isVisible());
-    showHideColumnLabel.appendChild(showHideColumnCheckbox);
-
-    // create show/hide column menu item
-    menu.push({
-      label: showHideColumnLabel,
-      action: function (e, column) {
-        // prevent menu closing
-        e.stopPropagation();
-
-        // toggle column visibility
-        column.toggle();
-      }
-    });
-
-    // update column header menu definition
-    column.updateDefinition({ headerMenu: menu });
-  }
 }
