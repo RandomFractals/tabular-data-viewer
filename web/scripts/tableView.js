@@ -43,6 +43,15 @@ const rowContextMenu = [
   }
 ];
 
+const columnHeaderMenu = [
+  {
+    label: 'Hide Column',
+    action: function (e, column) {
+      column.hide();
+    }
+  },
+];
+
 // add page load handler
 window.addEventListener('load', initializeView);
 
@@ -109,6 +118,9 @@ function loadData(tableData, documentUrl) {
       maxHeight: '100%',
       autoResize: autoResize,
       autoColumns: autoColumns,
+      columnDefaults: {
+        headerMenu: columnHeaderMenu
+      },
       clipboard: enableClipboard, // enable clipboard copy and paste
       clipboardPasteAction: clipboardPasteAction,
       layout: 'fitDataStretch', // 'fitColumns',
@@ -145,6 +157,13 @@ function loadData(tableData, documentUrl) {
         console.log('tableOptions:', tableOptions);
         return tableOptions ? JSON.parse(tableOptions) : false;
       },
+    });
+
+    // add column context menus
+    table.on('tableBuilt', function () {
+      const columns = table.getColumns();
+      console.log('tableView.columns:', columns);
+      // addTableColumnHeaderMenuOptions(columns);
     });
   }
   else {
@@ -189,4 +208,51 @@ function addData(table, tableData) {
 function logTableData(tableData) {
   console.log('tabular.data.view:rowCount:', tableData.length);
   console.log('1st 10 rows:', tableData.slice(0, 10));
+}
+
+
+/**
+ * Adds table column header context menu to the table columns after table load.
+ * 
+ * @param {*} columns Table columns.
+ */
+function getColumnHeaderMenuOptions(columns) {
+  const menu = [];
+  for (let column of columns) {
+
+    // create checkbox element using font awesome icons
+    let icon = document.createElement('i');
+    icon.classList.add('fas');
+    icon.classList.add(column.isVisible() ? 'fa-check-square' : 'fa-square');
+
+    // build label
+    let label = document.createElement('span');
+    let title = document.createElement('span');
+    title.textContent = " " + column.getDefinition().title;
+    label.appendChild(icon);
+    label.appendChild(title);
+
+    // create menu item
+    menu.push({
+      label: label,
+      action: function (e) {
+        // prevent menu closing
+        e.stopPropagation();
+
+        //toggle current column visibility
+        column.toggle();
+
+        // change menu item icon
+        if (column.isVisible()) {
+          icon.classList.remove('fa-square');
+          icon.classList.add('fa-check-square');
+        }
+        else {
+          icon.classList.remove('fa-check-square');
+          icon.classList.add('fa-square');
+        }
+      }
+    });
+    return menu;
+  }
 }
