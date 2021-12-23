@@ -35,11 +35,15 @@ const debugEventsInternal = false; // log all internal tabulator events
 const rowContextMenu = [
   {
     label: "<i class='fas fa-trash'></i> Delete Row",
-    action: function (e, row) { row.delete(); }
+    action: function (e, row) {
+      row.delete();
+    }
   },
   {
     label: "Freeze Row",
-    action: function (e, row) { row.freeze(); }
+    action: function (e, row) {
+      row.freeze();
+    }
   }
 ];
 
@@ -50,6 +54,18 @@ const columnHeaderMenu = [
       column.hide();
     }
   },
+  {
+    label: "Freeze Column",
+    action: function (e, column) {
+      column.updateDefinition({ frozen: true });
+    }
+  },
+  {
+    label: 'Delete Column',
+    action: function (e, column) {
+      column.delete();
+    }
+  }
 ];
 
 // add page load handler
@@ -163,7 +179,7 @@ function loadData(tableData, documentUrl) {
     table.on('tableBuilt', function () {
       const columns = table.getColumns();
       console.log('tableView.columns:', columns);
-      // addTableColumnHeaderMenuOptions(columns);
+      // addColumnHeaderMenuOptions(columns);
     });
   }
   else {
@@ -216,43 +232,32 @@ function logTableData(tableData) {
  * 
  * @param {*} columns Table columns.
  */
-function getColumnHeaderMenuOptions(columns) {
+function addColumnHeaderMenuOptions(columns) {
   const menu = [];
   for (let column of columns) {
 
-    // create checkbox element using font awesome icons
-    let icon = document.createElement('i');
-    icon.classList.add('fas');
-    icon.classList.add(column.isVisible() ? 'fa-check-square' : 'fa-square');
+    // create show/hide column label and checkbox
+    const showHideColumnLabel = document.createElement('label');
+    showHideColumnLabel.textContent = column.getDefinition().title;
+    const showHideColumnCheckbox = document.createElement('input');
+    showHideColumnCheckbox.setAttribute('type', 'checkbox');
+    showHideColumnCheckbox.setAttribute('name', column.getDefinition().title);
+    showHideColumnCheckbox.setAttribute('checked', column.isVisible());
+    showHideColumnLabel.appendChild(showHideColumnCheckbox);
 
-    // build label
-    let label = document.createElement('span');
-    let title = document.createElement('span');
-    title.textContent = " " + column.getDefinition().title;
-    label.appendChild(icon);
-    label.appendChild(title);
-
-    // create menu item
+    // create show/hide column menu item
     menu.push({
-      label: label,
-      action: function (e) {
+      label: showHideColumnLabel,
+      action: function (e, column) {
         // prevent menu closing
         e.stopPropagation();
 
-        //toggle current column visibility
+        // toggle column visibility
         column.toggle();
-
-        // change menu item icon
-        if (column.isVisible()) {
-          icon.classList.remove('fa-square');
-          icon.classList.add('fa-check-square');
-        }
-        else {
-          icon.classList.remove('fa-check-square');
-          icon.classList.add('fa-square');
-        }
       }
     });
-    return menu;
+
+    // update column header menu definition
+    column.updateDefinition({ headerMenu: menu });
   }
 }
