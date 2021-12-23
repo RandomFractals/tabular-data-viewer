@@ -131,7 +131,20 @@ function loadData(tableData, documentUrl) {
         filter: true,
         group: true,
         columns: true,
-      }
+      },
+      persistenceWriterFunc: function (id, type, data) {
+        // id - table config persistence id
+        // type - type of data being persisted ("sort", "filter", "group", "page" or "columns")
+        // data - array or object of data for the table options config
+        const tableOptionKey = `${id}-${type}`;
+        console.log(`tableOption:${tableOptionKey}`, data);
+        localStorage.setItem(tableOptionKey, JSON.stringify(data));
+      },
+      persistenceReaderFunc: function (id, type) {
+        let tableOptions = localStorage.getItem(`${id}-${type}`);
+        console.log('tableOptions:', tableOptions);
+        return tableOptions ? JSON.parse(tableOptions) : false;
+      },
     });
   }
   else {
