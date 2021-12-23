@@ -73,7 +73,7 @@ window.addEventListener('load', initializeView);
 
 // redraw table on window resize
 window.addEventListener('resize', function () {
-  console.log('tableView.height:', window.innerHeight);
+  // console.log('tableView.height:', window.innerHeight);
   if (table) {
     table.setHeight(window.innerHeight - toolbarHeight);
   }
@@ -99,7 +99,7 @@ window.addEventListener('message', event => {
 function initializeView() {
   // initialize table container
   tableContainer = document.getElementById('table-container');
-  console.log('tableView.height:', window.innerHeight);
+  // console.log('tableView.height:', window.innerHeight);
 
   // notify webview
   vscode.postMessage({ command: 'refresh' });
@@ -162,16 +162,19 @@ function loadData(tableData, documentUrl) {
       },
       persistenceWriterFunc: function (id, type, data) {
         // id - table config persistence id
-        // type - type of data being persisted ("sort", "filter", "group", "page" or "columns")
+        // type - type of table setting being persisted ("sort", "filter", "group", "page" or "columns")
         // data - array or object of data for the table options config
-        const tableOptionKey = `${id}-${type}`;
-        console.log(`tableOption:${tableOptionKey}`, data);
-        localStorage.setItem(tableOptionKey, JSON.stringify(data));
+        const tableSettingKey = `${id}-${type}`;
+        console.log(`tableSetting:${tableSettingKey}:`, data);
+        localStorage.setItem(tableSettingKey, JSON.stringify(data));
       },
       persistenceReaderFunc: function (id, type) {
-        let tableOptions = localStorage.getItem(`${id}-${type}`);
-        console.log('tableOptions:', tableOptions);
-        return tableOptions ? JSON.parse(tableOptions) : false;
+        const tableSettingKey = `${id}-${type}`;
+        const tableSettings = localStorage.getItem(tableSettingKey);
+        if (tableSettings) {
+          console.log(`tableSetting:${tableSettingKey}:`, tableSettings);
+        }
+        return tableSettings ? JSON.parse(tableSettings) : false;
       },
     });
 
