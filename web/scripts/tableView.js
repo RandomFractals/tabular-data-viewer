@@ -8,7 +8,7 @@ let documentUrl = '';
 let fileName = '';
 
 // table view vars
-let tableContainer, table;
+let tableContainer, table, progressRing;
 let tableColumns = [];
 let tableData = [];
 
@@ -97,8 +97,9 @@ window.addEventListener('message', event => {
  * Initializes table webview.
  */
 function initializeView() {
-  // initialize table container
+  // initialize table view elements
   tableContainer = document.getElementById('table-container');
+  progressRing = document.getElementById('progress-ring');
   // console.log('tableView.height:', window.innerHeight);
 
   // notify webview
@@ -115,6 +116,7 @@ function initializeView() {
  * @see https://code.visualstudio.com/api/extension-guides/webview#passing-messages-from-an-extension-to-a-webview
  */
 function onRefresh() {
+  progressRing.style.visibility = 'visible';
   vscode.postMessage({
     command: 'refresh',
   });
@@ -180,6 +182,7 @@ function loadData(tableData, documentUrl) {
 
     // add column context menus
     table.on('tableBuilt', function () {
+      progressRing.style.visibility = 'hidden';
       const columns = table.getColumns();
       console.log('tableView.columns:', columns);
     });
@@ -188,6 +191,7 @@ function loadData(tableData, documentUrl) {
     // reload table data
     clearTable(table);
     addData(table, tableData);
+    progressRing.style.visibility = 'hidden';
   }
 }
 

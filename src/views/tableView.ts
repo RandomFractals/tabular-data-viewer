@@ -44,10 +44,13 @@ export class TableView {
    */
   public static render(extensionUri: Uri, documentUri: Uri, webviewPanel?: WebviewPanel) {
     const viewUri: Uri = documentUri.with({ scheme: 'tabular-data' });
+    console.log('tabular.data.view:render(): loading table view:', viewUri.toString());
+    console.log('\tdocumentUri:', documentUri);
     const tableView: TableView | undefined = TableView._views.get(viewUri.toString());
     if (tableView) {
-      // show loaded table webview panel
-      tableView.webviewPanel.reveal(ViewColumn.Active);
+      // show loaded table webview panel in the active editor view column
+      const viewColumn: ViewColumn = ViewColumn.Active ? ViewColumn.Active : ViewColumn.One;
+      tableView.webviewPanel.reveal(viewColumn);
       TableView.currentView = tableView;
     }
     else {
@@ -302,7 +305,9 @@ export class TableView {
         </head>
         <body>
           <div id="toolbar">
-            <div id="toolbar-left"></div>
+            <div id="toolbar-left">
+              <vscode-progress-ring id="progress-ring"></vscode-progress-ring>
+            </div>
             <div id="toolbar-right">
               <vscode-button id="refresh-button"
                 appearance="icon" aria-label="Refresh">
