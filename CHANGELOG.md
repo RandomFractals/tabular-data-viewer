@@ -44,3 +44,7 @@ Add Freeze Row context menu option
 Persist and load table view config per data file
 - [#23](https://github.com/RandomFractals/tabular-data-viewer/issues/23)
 Add hide, freeze, and delete column context menu options
+- [#24](https://github.com/RandomFractals/tabular-data-viewer/issues/24)
+Add data loading progress ring display
+- [#25](https://github.com/RandomFractals/tabular-data-viewer/issues/25)
+Add Save as CSV or JSON data UI options
