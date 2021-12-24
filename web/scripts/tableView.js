@@ -97,18 +97,23 @@ window.addEventListener('message', event => {
  * Initializes table webview.
  */
 function initializeView() {
-  // initialize table view elements
+  // initialize table container
   tableContainer = document.getElementById('table-container');
-  progressRing = document.getElementById('progress-ring');
-  saveFileTypeSelector = document.getElementById('save-file-type-selector');
   // console.log('tableView.height:', window.innerHeight);
+
+  // data progress loading indicator
+  progressRing = document.getElementById('progress-ring');
+
+  // save file selector
+  saveFileTypeSelector = document.getElementById('save-file-type-selector');
+  saveFileTypeSelector.onchange = saveData;
+
+  // reload data UI
+  const reloadButton = document.getElementById('reload-button');
+  reloadButton.addEventListener('click', reloadData);
 
   // notify webview
   vscode.postMessage({ command: 'refresh' });
-
-  // wire data refresh
-  const refreshButton = document.getElementById('refresh-button');
-  refreshButton.addEventListener('click', onRefresh);
 }
 
 /**
@@ -116,7 +121,7 @@ function initializeView() {
  * 
  * @see https://code.visualstudio.com/api/extension-guides/webview#passing-messages-from-an-extension-to-a-webview
  */
-function onRefresh() {
+function reloadData() {
   progressRing.style.visibility = 'visible';
   vscode.postMessage({
     command: 'refresh',
@@ -228,14 +233,9 @@ function addData(table, tableData) {
  */
 function saveData() {
   const dataFileType = saveFileTypeSelector.value;
-  switch (dataFileType) {
-    case '.csv':
-
-      break;
-    case '.json':
-
-      break;
-  }
+  const dataFileName = fileName.substring(0, fileName.lastIndexOf('.') + 1);
+  console.log('tabView:saveData(): saving data:', dataFileName + dataFileType);
+  table.download(dataFileType, dataFileName + dataFileType);
 }
 
 /**
