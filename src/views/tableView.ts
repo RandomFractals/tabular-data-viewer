@@ -155,8 +155,12 @@ export class TableView {
       const text = message.text;
       switch (command) {
         case 'refresh':
-          // relad data view and config
+          // reload data view and config
           this.refresh();
+          break;
+        case 'saveData':
+          this.saveData(message.data, message.dataFileName, message.dataFileType);
+          break;
       }
     }, undefined, this._disposables);
   }
@@ -185,6 +189,14 @@ export class TableView {
     }, reason => {
       window.showErrorMessage(`Could not load \`${this._documentUri}\` content. Reason: \n ${reason}`);
     });
+  }
+
+  /**
+   * Saves table data in a new data file.
+   */
+  public async saveData(data: any, dataFileName: string, dataFileType: string): Promise<void> {
+    console.log('tabView:saveData(): saving data:', dataFileName);
+    this.logTextData(data);
   }
 
   /**

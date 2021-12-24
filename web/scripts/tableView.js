@@ -6,6 +6,7 @@ const vscode = acquireVsCodeApi();
 // data document vars
 let documentUrl = '';
 let fileName = '';
+let saveDataFileName = '';
 
 // table view vars
 let tableContainer, table, progressRing, saveFileTypeSelector;
@@ -187,9 +188,15 @@ function loadData(tableData, documentUrl) {
       downloadReady: function (fileContents, blob) {
         // fileContents - unencoded contents of the file to save
         // blob - blob object for data file download/save
-        console.log(fileContents);
+        // console.log(fileContents);
 
-        // TODO: save data via vscode workspace.fs api
+        // request data file save
+        vscode.postMessage({
+          command: 'saveData',
+          data: fileContents,
+          dataFileType: saveFileTypeSelector.value,
+          dataFileName: saveDataFileName
+        });
 
         // Note: this must return a blob to proceed with the download in a browser,
         // or false to abort download and handle it in table view extension with workspace.fs
@@ -240,13 +247,14 @@ function addData(table, tableData) {
 }
 
 /**
- * Saves table data.
+ * Saves table data as CSV or JSON for now.
  */
 function saveData() {
   const dataFileType = saveFileTypeSelector.value;
   const dataFileName = fileName.substring(0, fileName.lastIndexOf('.') + 1);
-  console.log('tabView:saveData(): saving data:', dataFileName + dataFileType);
-  table.download(dataFileType, dataFileName + dataFileType);
+  saveDataFileName = dataFileName + dataFileType;
+  console.log('tabView:saveData(): saving data:', saveDataFileName);
+  table.download(dataFileType, saveDataFileName);
 }
 
 /**
