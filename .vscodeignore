@@ -3,10 +3,13 @@
 out/**
 node_modules/**
 src/**
+data/**
+docs/images/**
+
 .gitignore
-.yarnrc
+.github
+
 webpack.config.js
-vsc-extension-quickstart.md
 **/tsconfig.json
 **/.eslintrc.json
 **/*.map
