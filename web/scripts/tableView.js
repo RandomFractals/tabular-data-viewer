@@ -184,6 +184,17 @@ function loadData(tableData, documentUrl) {
         }
         return tableSettings ? JSON.parse(tableSettings) : false;
       },
+      downloadReady: function (fileContents, blob) {
+        // fileContents - unencoded contents of the file to save
+        // blob - blob object for data file download/save
+        console.log(fileContents);
+
+        // TODO: save data via vscode workspace.fs api
+
+        // Note: this must return a blob to proceed with the download in a browser,
+        // or false to abort download and handle it in table view extension with workspace.fs
+        return false; // blob; 
+      }
     });
 
     // add column context menus
