@@ -50,3 +50,5 @@ Add data loading progress ring display
 Add Save as CSV or JSON data UI options
 - [#26](https://github.com/RandomFractals/tabular-data-viewer/issues/26)
 Add Save as HTML data table UI option
+- [#27](https://github.com/RandomFractals/tabular-data-viewer/issues/27)
+Add Save as semicolon delimited CSV data UI option

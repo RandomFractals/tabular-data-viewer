@@ -350,6 +350,7 @@ export class TableView {
               <select id="save-file-type-selector" title="Save Data">
                 <option value="">📥&nbsp;Save</option>
                 <option value="csv">,,, csv</option>
+                <option value="ssv">;;; csv</option>
                 <option value="json">{} &nbsp;json</option>
                 <option value="html">&lt;&gt; &nbsp;html</option>
               </select>
