@@ -8,7 +8,7 @@ let documentUrl = '';
 let fileName = '';
 
 // table view vars
-let tableContainer, table, progressRing;
+let tableContainer, table, progressRing, saveFileTypeSelector;
 let tableColumns = [];
 let tableData = [];
 
@@ -100,6 +100,7 @@ function initializeView() {
   // initialize table view elements
   tableContainer = document.getElementById('table-container');
   progressRing = document.getElementById('progress-ring');
+  saveFileTypeSelector = document.getElementById('save-file-type-selector');
   // console.log('tableView.height:', window.innerHeight);
 
   // notify webview
@@ -219,6 +220,21 @@ function addData(table, tableData) {
         // handle error updating data
         console.error(error);
       });
+  }
+}
+
+/**
+ * Saves table data.
+ */
+function saveData() {
+  const dataFileType = saveFileTypeSelector.value;
+  switch (dataFileType) {
+    case '.csv':
+
+      break;
+    case '.json':
+
+      break;
   }
 }
 

@@ -309,6 +309,13 @@ export class TableView {
               <vscode-progress-ring id="progress-ring"></vscode-progress-ring>
             </div>
             <div id="toolbar-right">
+              <select id="save-file-type-selector" 
+                title="Save Data" 
+                onChange="saveData()">
+                <option value="">📥&nbsp;Save</option>
+                <option value=".csv">,,, csv</option>
+                <option value=".json">{} &nbsp;json</option>
+              </select>
               <vscode-button id="refresh-button"
                 appearance="icon" aria-label="Refresh">
 	              <span class="codicon codicon-refresh">↺</span>
