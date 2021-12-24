@@ -254,7 +254,15 @@ function saveData() {
   const dataFileName = fileName.substring(0, fileName.lastIndexOf('.') + 1);
   saveDataFileName = dataFileName + dataFileType;
   console.log('tabView:saveData(): saving data:', saveDataFileName);
-  table.download(dataFileType, saveDataFileName);
+  switch (dataFileType) {
+    case 'csv':
+    case 'json':
+      table.download(dataFileType, saveDataFileName);
+      break;
+    case 'html':
+      table.download(dataFileType, saveDataFileName, { style: true});
+      break;
+  }
 }
 
 /**

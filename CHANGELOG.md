@@ -48,3 +48,5 @@ Add hide, freeze, and delete column context menu options
 Add data loading progress ring display
 - [#25](https://github.com/RandomFractals/tabular-data-viewer/issues/25)
 Add Save as CSV or JSON data UI options
+- [#26](https://github.com/RandomFractals/tabular-data-viewer/issues/26)
+Add Save as HTML data table UI option

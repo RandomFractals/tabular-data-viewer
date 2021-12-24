@@ -28,7 +28,7 @@ Tabular Data Viewer 🀄 provides custom Table View for `.csv`, `.tsv` and `.tab
 - Freeze or delete table rows
 - Perisist table settings per data file
 - Copy table data to Clipboard
-- Save table data in `CSV` or `JSON` data array format
+- Save table data in `CSV`, `HTML` table, or `JSON` data array format
 
 ...
 
