@@ -9,9 +9,11 @@ import {
   Uri,
   window,
   Webview,
-  workspace
+  workspace,
+  commands
 } from 'vscode';
 
+import * as fs from 'fs';
 import * as path from 'path';
 import { TextDecoder } from 'util';
 
@@ -172,7 +174,7 @@ export class TableView {
     // load data
     workspace.fs.readFile(this._documentUri).then((binaryData: Uint8Array) => {
       const textData: string = new TextDecoder().decode(binaryData);
-      this.logTextData(textData);
+      // this.logTextData(textData);
 
       // parse dsv data for now
       const dsvParser = d3.dsvFormat(this.delimiter);
@@ -195,8 +197,32 @@ export class TableView {
    * Saves table data in a new data file.
    */
   public async saveData(data: any, dataFileName: string, dataFileType: string): Promise<void> {
-    console.log('tabView:saveData(): saving data:', dataFileName);
-    this.logTextData(data);
+    console.log('tableView:saveData(): saving data:', dataFileName);
+    // this.logTextData(data);
+
+    // create full data file path for saving data
+    let dataFilePath: string = path.dirname(this._documentUri.fsPath);
+    dataFilePath = path.join(dataFilePath, dataFileName);
+
+    // display save file dialog
+    const dataFileUri: Uri | undefined = await window.showSaveDialog({
+      defaultUri: Uri.parse(dataFilePath).with({ scheme: 'file' })
+    });
+
+    if (dataFileUri) {
+      // save data
+      // TODO: switch to using workspace.fs for data save
+      // workspace.fs.writeFile(dataFileUri, data); 
+      fs.writeFile(dataFileUri.fsPath, data, (error) => {
+        if (error) {
+          window.showErrorMessage(`Unable to save data file: '${dataFileUri.fsPath}'. \n\t Error: ${error.message}`);
+        }
+        else {
+          // show saved data file
+          commands.executeCommand('vscode.open', dataFileUri);
+        }
+      });
+    }
   }
 
   /**
