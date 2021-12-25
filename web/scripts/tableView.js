@@ -162,7 +162,7 @@ function loadData(tableData, documentUrl) {
       debugEventsInternal: debugEventsInternal,
       persistenceMode: 'local',
       persistenceID: fileName,
-      persistentLayout: true,
+      // persistentLayout: true,
       persistence: {
         sort: true,
         filter: true,
@@ -204,11 +204,30 @@ function loadData(tableData, documentUrl) {
       }
     });
 
-    // add column context menus
     table.on('tableBuilt', function () {
+      // hide data loading progress ring
       progressRing.style.visibility = 'hidden';
+
+      // get table columns for debug
       const columns = table.getColumns();
       console.log('tableView.columns:', columns);
+
+      // add row selection column
+      table.addColumn({
+        formatter: 'rowSelection',
+        titleFormatter: 'rowSelection',
+        headerMenu: [], // don't show header context menu
+        headerSort: false,
+        download: false // don't include it in data save
+      }, true) // add as 1st column
+      .then(function (column) {
+        // column - the component for the newly created column
+        // run code after column has been added
+      })
+      .catch(function (error) {
+        // log adding row selection column error for now
+        console.error('tableView.addRowSelectionCollumn: Error\n', error);
+      });
     });
   }
   else {
