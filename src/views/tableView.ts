@@ -351,8 +351,9 @@ export class TableView {
                 <option value="">📥&nbsp;Save</option>
                 <option value="csv">,,, csv</option>
                 <option value="ssv">;;; csv</option>
+                <option value="tsv">⇥ tsv</option>
                 <option value="json">{} &nbsp;json</option>
-                <option value="html">&lt;&gt; &nbsp;html</option>
+                <option value="html">&lt;/&gt; &nbsp;html</option>
               </select>
               <vscode-button id="reload-button"
                 appearance="icon" aria-label="Reload Data">

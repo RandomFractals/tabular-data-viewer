@@ -247,36 +247,42 @@ function addData(table, tableData) {
 }
 
 /**
- * Saves table data as CSV or JSON for now.
+ * Saves table data as CSV, TSV, or JSON data array document.
  */
 function saveData() {
   // get requested data file format
   let dataFileType = saveFileTypeSelector.value;
 
-  // adjust CSV delimiter and file type
-  let delimiter = ',';
-  switch (dataFileType) {
-    case 'ssv':
-      delimiter = ';';
-      dataFileType = 'csv';
-      break;
-  }
-
-  // construct new file name
+  // construct save data file name
   const dataFileName = fileName.substring(0, fileName.lastIndexOf('.') + 1);
   saveDataFileName = dataFileName + dataFileType;
   console.log('tabView:saveData(): saving data:', saveDataFileName);
 
+  // adjust text data delimiter and file type
+  let delimiter = ',';
+  switch (dataFileType) {
+    case 'ssv': // semicolon delimited CSV
+      delimiter = ';';
+      dataFileType = 'csv';
+      saveDataFileName = `${dataFileName}.csv`;
+      break;
+    case 'tsv':
+      delimiter = '\t';
+      dataFileType = 'csv'; // download file type
+      break;
+  }
+
   // use Tabulator download data API for now to generate data blob to save
   switch (dataFileType) {
     case 'csv':
+    case 'tsv':
       table.download(dataFileType, saveDataFileName, { delimiter: delimiter });
       break;    
     case 'json':
       table.download(dataFileType, saveDataFileName);
       break;
     case 'html':
-      table.download(dataFileType, saveDataFileName, { style: true});
+      table.download(dataFileType, saveDataFileName, { style: true });
       break;
   }
 }
