@@ -19,7 +19,7 @@
 		"url": "https://github.com/RandomFractals/tabular-data-viewer"
 	},
 	"bugs": "https://github.com/RandomFractals/tabular-data-viewer/issues",
-	"homepage": "https://github.com/RandomFractals/tabular-data-viewer/README.md",
+	"homepage": "https://github.com/RandomFractals/tabular-data-viewer",
 	"galleryBanner": {
 		"color": "#333",
 		"theme": "dark"
