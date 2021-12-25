@@ -2,7 +2,7 @@
 	"name": "tabular-data-viewer",
 	"displayName": "Tabular Data Viewer 中",
 	"description": "Tabular Data Viewer 🀄 provides custom Table View for .csv, .tsv and .tab data files with Tabulator.",
-	"version": "1.0.0",
+	"version": "1.1.0",
 	"engines": {
 		"vscode": "^1.63.0"
 	},
@@ -135,7 +135,7 @@
 			{
 				"viewType": "tabular.data.tableEditor",
 				"displayName": "Table View",
-				"priority": "default",
+				"priority": "option",
 				"selector": [
 					{
 						"filenamePattern": "*.csv"
