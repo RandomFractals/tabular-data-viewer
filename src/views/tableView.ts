@@ -347,6 +347,18 @@ export class TableView {
               <vscode-progress-ring id="progress-ring"></vscode-progress-ring>
             </div>
             <div id="toolbar-right">
+              <vscode-button id="reload-button"
+                appearance="icon" aria-label="Reload Data">
+	              <span class="codicon codicon-refresh">↺</span>
+              </vscode-button>
+              <vscode-button id="scroll-to-last-row-button"
+                appearance="icon" aria-label="Scroll to Last Row">
+	              <span class="codicon codicon-arrow-down">⤓</span>
+              </vscode-button>
+              <vscode-button id="scroll-to-first-row-button"
+                appearance="icon" aria-label="Scroll to First Row">
+	              <span class="codicon codicon-arrow-up">⤒</span>
+              </vscode-button>
               <select id="save-file-type-selector" title="Save Data">
                 <option value="">📥&nbsp;Save</option>
                 <option value="csv">,,, csv</option>
@@ -355,10 +367,6 @@ export class TableView {
                 <option value="json">{} &nbsp;json</option>
                 <option value="html">&lt;/&gt; &nbsp;html</option>
               </select>
-              <vscode-button id="reload-button"
-                appearance="icon" aria-label="Reload Data">
-	              <span class="codicon codicon-refresh">↺</span>
-              </vscode-button>
             </div>
           </div>
           <div id="table-container" />

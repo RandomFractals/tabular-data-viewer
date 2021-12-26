@@ -113,6 +113,13 @@ function initializeView() {
   const reloadButton = document.getElementById('reload-button');
   reloadButton.addEventListener('click', reloadData);
 
+  // scroll to rows UI
+  const scrollToFirstRowButton = document.getElementById('scroll-to-first-row-button');
+  scrollToFirstRowButton.addEventListener('click', scrollToFirstRow);
+
+  const scrollToLastRowButton = document.getElementById('scroll-to-last-row-button');
+  scrollToLastRowButton.addEventListener('click', scrollToLastRow);
+
   // notify webview
   vscode.postMessage({ command: 'refresh' });
 }
@@ -245,6 +252,22 @@ function clearTable(table) {
   if (table) {
     table.clearData();  
   }
+}
+
+/**
+ * Scrolls table data display to the first table row.
+ */
+function scrollToFirstRow() {
+  const rows = table.getRows();
+  table.scrollToRow(rows[0], 'top', true);
+}
+
+/**
+ * Scrolls table data display to the last table row.
+ */
+function scrollToLastRow() {
+  const rows = table.getRows();
+  table.scrollToRow(rows[rows.length-1], 'top', true);
 }
 
 /**
