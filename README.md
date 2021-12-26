@@ -50,6 +50,21 @@ You can try [Tabular Data Viewer 🀄 Observable Notebook 📓](https://observab
 ![Tabular Data Viewer 中 Observable Notebook 📓](https://github.com/RandomFractals/tabular-data-viewer/blob/main/docs/images/tabular-data-viewer-observable-notebook.png?raw=true 
  "Tabular Data Viewer 中 Observable Notebook 📓")
 
+# Recommended Extensions
+
+Recommended custom dataViz extensions produced by [Random Fractals Inc.](https://marketplace.visualstudio.com/publishers/RandomFractalsInc) and other 3rd party vscode extension devs for working with data 🈸 charts 📈 geo 🗺️ data formats and Interactive Notebooks 📚 in [VSCode](https://code.visualstudio.com/):
+
+| Extension | Description |
+| --- | --- |
+| [Rainbow CSV 🌈](https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv) | Highlight CSV and TSV files, Run SQL-like queries |
+| [Data Preivew 🈸](https://marketplace.visualstudio.com/items?itemName=RandomFractalsInc.vscode-data-preview) | Data Preview 🈸 extension for importing 📤 viewing 🔎 slicing 🔪 dicing 🎲 charting 📊 & exporting 📥 large JSON array/config, YAML, Apache Arrow, Avro & Excel data files |
+| [Geo Data Viewer 🗺️](https://marketplace.visualstudio.com/items?itemName=RandomFractalsInc.geo-data-viewer) | [kepler.gl](https://kepler.gl) Geo Data Analytics tool to gen. some snazzy 🗺️s  w/0 `Py` 🐍 `pyWidgets` ⚙️ `pandas` 🐼 or `react` ⚛️ |
+| [Vega Viewer 📈](https://marketplace.visualstudio.com/items?itemName=RandomFractalsInc.vscode-vega-viewer) | Provides Interactive Preview of Vega & Vega-Lite maps 🗺️ & graphs 📈 |
+| [Observable JS](https://marketplace.visualstudio.com/items?itemName=GordonSmith.observable-js) | Observable JS compiler with [Observable](https://observablehq.com/@observablehq/observable-for-jupyter-users?collection=@observablehq/observable-for-jupyter-users) `js` and `md` code outline and previews. |
+| [JS Notebook 📓 Inspector 🕵️](https://marketplace.visualstudio.com/items?itemName=RandomFractalsInc.js-notebook-inspector) | Provides Interactive Preview of [Observable JS Notebooks](https://observablehq.com/documentation#notebook-fundamentals) 📚, Notebook 📓 nodes ⎇ & cells ⌗ source code |
+| [Data Table 🈸](hhttps://marketplace.visualstudio.com/items?itemName=RandomFractalsInc.vscode-data-table) | Data Table 🈸 renderer for Notebook 📓 cell ⌗ data outputs |
+| [Leaflet Map 🌿 🗺️](https://marketplace.visualstudio.com/items?itemName=RandomFractalsInc.vscode-leaflet) | Leaflet Map 🗺️ for Notebook 📓 cell ⌗ data outputs |
+
 # Dev Log
 
 See [#TabularDataViewer 🀄 tag on Twitter](https://twitter.com/hashtag/TabularDataViewer?src=hashtag_click&f=live) for the latest and greatest updates on this vscode extension and what's in store next.
