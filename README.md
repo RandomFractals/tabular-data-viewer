@@ -1,6 +1,9 @@
 # tabular-data-viewer
 
 [![Apache-2.0 License](https://img.shields.io/badge/license-Apache2-brightgreen.svg)](http://opensource.org/licenses/Apache-2.0)
+[![Version](https://vsmarketplacebadge.apphb.com/version-short/RandomFractalsInc.tabular-data-viewer.svg?color=orange)](https://marketplace.visualstudio.com/items?itemName=RandomFractalsInc.tabular-data-viewer)
+[![Installs](https://vsmarketplacebadge.apphb.com/installs/RandomFractalsInc.tabular-data-viewer.svg?color=orange)](https://marketplace.visualstudio.com/items?itemName=RandomFractalsInc.tabular-data-viewer)
+[![Downloads](https://vsmarketplacebadge.apphb.com/downloads/RandomFractalsInc.tabular-data-viewer.svg?color=orange)](https://marketplace.visualstudio.com/items?itemName=RandomFractalsInc.tabular-data-viewer)
 <a href='https://ko-fi.com/dataPixy' target='_blank' title='support: https://ko-fi.com/dataPixy'>
   <img height='24' style='border:0px;height:20px;' src='https://az743702.vo.msecnd.net/cdn/kofi3.png?v=2' alt='https://ko-fi.com/dataPixy' /></a>
 
