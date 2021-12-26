@@ -40,6 +40,13 @@ Commands, languages, editor/view types and activation events contributed to VSCo
 ![Tabular Data Viewer 中 Feature Contributions](https://github.com/RandomFractals/tabular-data-viewer/blob/main/docs/images/tabular-data-viewer-feature-contributions.png?raw=true 
  "Tabular Data Viewer 中 Feature Contributions")
 
+# Observable JS Notebook
+
+You can try [Tabular Data Viewer 🀄 Observable Notebook 📓](https://observablehq.com/@randomfractals/tabular-data-viewer) with public datasets and supported data formats in a browser:
+
+![Tabular Data Viewer 中 Observable Notebook 📓](https://github.com/RandomFractals/tabular-data-viewer/blob/main/docs/images/tabular-data-viewer-observable-notebook.png?raw=true 
+ "Tabular Data Viewer 中 Observable Notebook 📓")
+
 # Dev Log
 
 See [#TabularDataViewer 🀄 tag on Twitter](https://twitter.com/hashtag/TabularDataViewer?src=hashtag_click&f=live) for the latest and greatest updates on this vscode extension and what's in store next.
