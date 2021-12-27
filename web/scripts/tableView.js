@@ -12,6 +12,9 @@ let saveDataFileName = '';
 let tableContainer, table, progressRing, saveFileTypeSelector;
 let tableColumns = [];
 let tableData = [];
+let loadedRows = 0;
+let totalRows = 0;
+let dataPage = 0;
 
 // table view settings
 const toolbarHeight = 40; // table view toolbar height offset
@@ -89,7 +92,11 @@ window.addEventListener('message', event => {
       fileName = event.data.fileName;
       vscode.setState({ documentUrl: documentUrl });
       tableData = event.data.tableData;
+      totalRows = event.data.totalRows;
       loadData(tableData, fileName);
+      break;
+    case 'addData':
+      addData(table, event.data.dataRows);
       break;
   }
 });
@@ -140,10 +147,26 @@ function reloadData() {
  * Loads and displays table data.
  * 
  * @param {*} tableData Data array to display in tabulator table.
- * @param {*} fileName Data file name for table config persistence and reload.
  */
-function loadData(tableData, documentUrl) {
+function loadData(tableData) {
   logTableData(tableData);
+  if (table === undefined) {
+    createTable(tableData);
+  }
+  else {
+    // reload table data
+    clearTable(table);
+    addData(table, tableData);
+    progressRing.style.visibility = 'hidden';
+  }
+}
+
+/**
+ * Creates new Tabulator table with initial set of data to display.
+ * 
+ * @param {*} tableData Data array to display in tabulator table.
+ */
+function createTable(tableData) {
   if (table === undefined) {
     table = new Tabulator('#table-container', {
       height: window.innerHeight - toolbarHeight,
@@ -211,46 +234,97 @@ function loadData(tableData, documentUrl) {
       }
     });
 
-    table.on('tableBuilt', function () {
-      // hide data loading progress ring
-      progressRing.style.visibility = 'hidden';
-
-      // get table columns for debug
-      const columns = table.getColumns();
-      console.log('tableView.columns:', columns);
-
-      // add row selection column
-      table.addColumn({
-        formatter: 'rowSelection',
-        titleFormatter: 'rowSelection',
-        headerMenu: [], // don't show header context menu
-        headerSort: false,
-        download: false // don't include it in data save
-      }, true) // add as 1st column
-      .then(function (column) {
-        // column - the component for the newly created column
-        // run code after column has been added
-      })
-      .catch(function (error) {
-        // log adding row selection column error for now
-        console.error('tableView.addRowSelectionCollumn: Error\n', error);
-      });
-    });
-  }
-  else {
-    // reload table data
-    clearTable(table);
-    addData(table, tableData);
-    progressRing.style.visibility = 'hidden';
+    // update table settings after initial data rows load
+    table.on('tableBuilt', onTableBuilt);
   }
 }
 
 /**
- * Removes all table data.
+ * Updates Tabulator table after initial set of data rows is loaded.
+ */
+function onTableBuilt () {
+  // hide data loading progress ring
+  progressRing.style.visibility = 'hidden';
+
+  // get table columns for debug
+  const columns = table.getColumns();
+  console.log('tableView.columns:', columns);
+
+  // add row selection column
+  table.addColumn({
+    formatter: 'rowSelection',
+    titleFormatter: 'rowSelection',
+    headerMenu: [], // don't show header context menu
+    headerSort: false,
+    download: false // don't include it in data save
+  }, true) // add as 1st column
+    .then(function (column) {
+      // column - the component for the newly created column
+      // run code after column has been added
+    })
+    .catch(function (error) {
+      // log adding row selection column error for now
+      console.error('tableView.addRowSelectionCollumn: Error\n', error);
+    });
+
+  // request more data for incremental data loading
+  loadedRows = table.getRows().length;
+  if (loadedRows < totalRows) {
+    dataPage++;
+    progressRing.style.visibility = 'visible';
+    vscode.postMessage({
+      command: 'addData',
+      dataPage: dataPage
+    });
+  }
+}
+
+/**
+ * Clears displayed table data.
  */
 function clearTable(table) {
   if (table) {
-    table.clearData();  
+    // clear displayed table view
+    table.clearData();
+
+    // reset rows and data page counters
+    loadedRows = 0;
+    totalRows = 0;
+    dataPage = 0;
+  }
+}
+
+/**
+ * Adds data to the table.
+ * 
+ * @param {*} table Tabulator table instance.
+ * @param {*} tableData Data array for the table rows.
+ */
+function addData(table, tableData) {
+  if (table && tableData) {
+    table.addData(tableData, true)
+      .then(function (rows) { // rows - array of the row components for the rows updated or added
+        // update loaded rows counter
+        loadedRows += rows.length;
+        if (loadedRows < totalRows) {
+          // request more data to load and display
+          dataPage++;
+          progressRing.style.visibility = 'visible';
+          vscode.postMessage({
+            command: 'addData',
+            dataPage: dataPage
+          });
+        }
+        else {
+          // hide data loading progress ring
+          progressRing.style.visibility = 'hidden';
+          console.log('tableView:rowCount:', loadedRows);
+        }
+      })
+      .catch(function (error) {
+        // handle error updating data
+        console.error(error);
+      });
   }
 }
 
@@ -268,24 +342,6 @@ function scrollToFirstRow() {
 function scrollToLastRow() {
   const rows = table.getRows();
   table.scrollToRow(rows[rows.length-1], 'top', true);
-}
-
-/**
- * Adds data to the table.
- * 
- * @param {*} table Tabulator table instance.
- * @param {*} tableData Data array for the table rows.
- */
-function addData(table, tableData) {
-  if (table && tableData) {
-    table.addData(tableData, true)
-      .then(function (rows) { //rows - array of the row components for the rows updated or added
-      })
-      .catch(function (error) {
-        // handle error updating data
-        console.error(error);
-      });
-  }
 }
 
 /**
@@ -335,6 +391,6 @@ function saveData() {
  * @param tableData Loaded able data.
  */
 function logTableData(tableData) {
-  console.log('tabular.data.view:rowCount:', tableData.length);
+  console.log('tableView:rowCount:', tableData.length);
   console.log('1st 10 rows:', tableData.slice(0, 10));
 }

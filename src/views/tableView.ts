@@ -26,9 +26,11 @@ const d3 = require('d3-dsv');
  * Defines Table view class for managing state and behaviour of Table webview panels.
  */
 export class TableView {
+  // table view tracking vars
   public static currentView: TableView | undefined;
   private static _views: Map<string, TableView> = new Map<string, TableView>();
 
+  // table view instance vars
   private readonly _webviewPanel: WebviewPanel;
   private readonly _extensionUri: Uri;
   private readonly _documentUri: Uri;
@@ -36,6 +38,15 @@ export class TableView {
   private readonly _fileName: string;
   private readonly _fileExtension: string;
   private _disposables: Disposable[] = [];
+
+  // tabular data vars
+  private _tableData: [] = [];
+  private _currentDataPage: number = 0;
+  private _totalRows: number = 0;
+
+  // default page data size for data streaming setup
+  // TODO: move this to tabular data viewer config options later
+  private readonly _pageDataSize: number = 1000;
 
   /**
    * Reveals current table view or creates new table webview panel for tabular data display.
@@ -154,12 +165,13 @@ export class TableView {
     // process webview messages
     this.webviewPanel.webview.onDidReceiveMessage((message: any) => {
       const command: string = message.command;
-      const text = message.text;
       switch (command) {
         case 'refresh':
           // reload data view and config
           this.refresh();
           break;
+        case 'addData':
+          this.addData(message.dataPage);
         case 'saveData':
           this.saveData(message.data, message.dataFileName, message.dataFileType);
           break;
@@ -171,6 +183,11 @@ export class TableView {
    * Reloads table view on data save changes or vscode IDE realod.
    */
   public async refresh(): Promise<void> {
+    // clear loaded data info
+    this._totalRows = 0;
+    this._currentDataPage = 0;
+    this._tableData = [];
+
     // load data
     workspace.fs.readFile(this._documentUri).then((binaryData: Uint8Array) => {
       const textData: string = new TextDecoder().decode(binaryData);
@@ -181,16 +198,42 @@ export class TableView {
       let tableData: any = dsvParser.parse(textData, d3.autoType);
       this.logTableData(tableData);
 
-      // update webview
+      // save table data for data streaming later
+      this._tableData = tableData;
+      this._totalRows = this._tableData.length;
+
+      // send initial data rows to table view for display
+      const initialDataRows: Array<any> = tableData.slice(0, Math.min(this._pageDataSize, this._totalRows));
       this.webviewPanel.webview.postMessage({
         command: 'refresh',
         fileName: this._fileName,
         documentUrl: this._documentUri.toString(),
-        tableData: tableData
-      });      
+        tableData: initialDataRows,
+        totalRows: this._totalRows
+      });
     }, reason => {
       window.showErrorMessage(`Could not load \`${this._documentUri}\` content. Reason: \n ${reason}`);
     });
+  }
+
+  /**
+   * Sends more data rows to the table view for incremental data loading and display.
+   * 
+   * @param dataPage Requested data page index for loading the next set of data rows.
+   */
+  public async addData(dataPage: number): Promise<void> {
+    const nextRows: number = dataPage * this._pageDataSize;
+    if (nextRows < this._totalRows) {
+      // get the next set of data rows to load in table view
+      const dataRows: Array<any> =
+        this._tableData.slice(nextRows, Math.min(nextRows + this._pageDataSize, this._totalRows));
+
+      // send the next set of data rows to display
+      this.webviewPanel.webview.postMessage({
+        command: 'addData',
+        dataRows: dataRows,
+      });
+    }
   }
 
   /**
