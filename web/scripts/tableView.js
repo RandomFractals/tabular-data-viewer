@@ -127,7 +127,7 @@ function initializeView() {
   const scrollToLastRowButton = document.getElementById('scroll-to-last-row-button');
   scrollToLastRowButton.addEventListener('click', scrollToLastRow);
 
-  // notify webview
+  // request initial rows data load
   vscode.postMessage({ command: 'refresh' });
 }
 
@@ -223,6 +223,7 @@ function onTableBuilt () {
   console.log('tableView.columns:', columns);
 
   // add row selection column
+  // TODO: make this optional via tabular data viewer config setting
   table.addColumn({
     formatter: 'rowSelection',
     titleFormatter: 'rowSelection',
@@ -230,9 +231,7 @@ function onTableBuilt () {
     headerSort: false,
     download: false // don't include it in data save
   }, true) // add as 1st column
-    .then(function (column) {
-      // column - the component for the newly created column
-      // run code after column has been added
+    .then(function (column) { // column - row selection colulmn component
     })
     .catch(function (error) {
       // log adding row selection column error for now
@@ -324,19 +323,20 @@ function clearTable(table) {
 }
 
 /**
- * Adds data to the table.
+ * Adds data rows to the table.
  * 
  * @param {*} table Tabulator table instance.
- * @param {*} tableData Data array for the table rows.
+ * @param {*} dataRows Data array for the table rows to add.
  */
-function addData(table, tableData) {
-  if (table && tableData) {
-    table.addData(tableData, true)
+function addData(table, dataRows) {
+  if (table && dataRows) {
+    table.addData(dataRows, true)
       .then(function (rows) { // rows - array of the row components for the rows updated or added
-        // update loaded rows counter
+        // update loaded table data array and rows counter
+        tableData.push(dataRows.shift());
         loadedRows += rows.length;
         if (loadedRows < totalRows) {
-          // request more data to load and display
+          // request more data rows to load and display
           dataPage++;
           progressRing.style.visibility = 'visible';
           vscode.postMessage({
