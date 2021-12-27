@@ -172,6 +172,7 @@ export class TableView {
           break;
         case 'addData':
           this.addData(message.dataPage);
+          break;
         case 'saveData':
           this.saveData(message.data, message.dataFileName, message.dataFileType);
           break;

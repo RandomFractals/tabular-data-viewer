@@ -385,11 +385,6 @@ function saveData() {
   saveDataFileName = dataFileName + dataFileType;
   console.log('tabView:saveData(): saving data:', saveDataFileName);
 
-  if (saveDataFileName === undefined) {
-    // TODO: investigate why we end up here on initial incremental data load
-    return;
-  }
-
   // adjust text data delimiter and file type
   let delimiter = ',';
   switch (dataFileType) {
