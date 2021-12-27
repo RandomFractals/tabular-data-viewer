@@ -96,6 +96,7 @@ window.addEventListener('message', event => {
       loadData(tableData, fileName);
       break;
     case 'addData':
+      totalRows = event.data.totalRows;
       addData(table, event.data.dataRows);
       break;
   }
@@ -132,11 +133,12 @@ function initializeView() {
 }
 
 /**
- * Reloads webview data.
+ * Reloads table view data.
  * 
  * @see https://code.visualstudio.com/api/extension-guides/webview#passing-messages-from-an-extension-to-a-webview
  */
 function reloadData() {
+  clearTable(table);
   progressRing.style.visibility = 'visible';
   vscode.postMessage({
     command: 'refresh',
@@ -151,11 +153,11 @@ function reloadData() {
 function loadData(tableData) {
   logTableData(tableData);
   if (table === undefined) {
+    // create table and load initial set of data rows
     createTable(tableData);
   }
   else {
-    // reload table data
-    clearTable(table);
+    // add new data rows to existing tabulator table
     addData(table, tableData);
     progressRing.style.visibility = 'hidden';
   }
@@ -315,7 +317,7 @@ function clearTable(table) {
     // clear displayed table view
     table.clearData();
 
-    // reset rows and data page counters
+    // reset loaded table data row/page counters
     loadedRows = 0;
     totalRows = 0;
     dataPage = 0;
@@ -347,7 +349,7 @@ function addData(table, dataRows) {
         else {
           // hide data loading progress ring
           progressRing.style.visibility = 'hidden';
-          console.log('tableView:rowCount:', loadedRows);
+          console.log('tableView:rowCount:', loadedRows, 'totalRows:', totalRows);
         }
       })
       .catch(function (error) {

@@ -233,6 +233,7 @@ export class TableView {
       this.webviewPanel.webview.postMessage({
         command: 'addData',
         dataRows: dataRows,
+        totalRows: this._totalRows
       });
     }
   }
@@ -288,8 +289,8 @@ export class TableView {
    */
   private logTableData(tableData: any): void {
     console.log('tabular.data.view:rowCount:', tableData.length);
-    console.log('columns:', tableData.columns);
-    console.log('1st 10 rows:', tableData.slice(0, 10));
+    console.log('\tcolumns:', tableData.columns);
+    // console.log('1st 10 rows:', tableData.slice(0, 10));
   }
 
   /**
