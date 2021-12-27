@@ -199,39 +199,11 @@ function createTable(tableData) {
         group: true,
         columns: true,
       },
-      persistenceWriterFunc: function (id, type, data) {
-        // id - table config persistence id
-        // type - type of table setting being persisted ("sort", "filter", "group", "page" or "columns")
-        // data - array or object of data for the table options config
-        const tableSettingKey = `${id}-${type}`;
-        console.log(`tableSetting:${tableSettingKey}:`, data);
-        localStorage.setItem(tableSettingKey, JSON.stringify(data));
-      },
-      persistenceReaderFunc: function (id, type) {
-        const tableSettingKey = `${id}-${type}`;
-        const tableSettings = localStorage.getItem(tableSettingKey);
-        if (tableSettings) {
-          console.log(`tableSetting:${tableSettingKey}:`, tableSettings);
-        }
-        return tableSettings ? JSON.parse(tableSettings) : false;
-      },
-      downloadReady: function (fileContents, blob) {
-        // fileContents - unencoded contents of the file to save
-        // blob - blob object for data file download/save
-        // console.log(fileContents);
-
-        // request data file save
-        vscode.postMessage({
-          command: 'saveData',
-          data: fileContents,
-          dataFileType: saveFileTypeSelector.value,
-          dataFileName: saveDataFileName
-        });
-
-        // Note: this must return a blob to proceed with the download in a browser,
-        // or false to abort download and handle it in table view extension with workspace.fs
-        return false; // blob; 
-      }
+      // add table setting save/restore handlers
+      persistenceWriterFunc: (id, type, data) => saveTableSetting(id, type, data),
+      persistenceReaderFunc: (id, type) => restoreTableSetting(id, type),
+      // add table data download handler
+      downloadReady: (fileContents, blob) => downloadData(fileContents, blob)
     });
 
     // update table settings after initial data rows load
@@ -277,6 +249,63 @@ function onTableBuilt () {
       dataPage: dataPage
     });
   }
+}
+
+/**
+ * Saves updated table setting/config for table view reload and restore later.
+ * 
+ * @param {*} id Table config persistence id.
+ * @param {*} type Type of table setting to save: sort, filter, group, page or columns.
+ * @param {*} data Array or object of data for the table options config save.
+ */
+function saveTableSetting(id, type, data) {
+  // create table setting key
+  const tableSettingKey = `${id}-${type}`;
+  console.log(`tableSetting:${tableSettingKey}:`, data);
+
+  // save table settings in local storage for now
+  localStorage.setItem(tableSettingKey, JSON.stringify(data));
+}
+
+/**
+ * Restores table setting on table view reload.
+ * 
+ * @param {*} id Table config persistence id.
+ * @param {*} type Type of table setting to restore: sort, filter, group, page or columns.
+ * @returns 
+ */
+function restoreTableSetting(id, type) {
+  // create table setting key
+  const tableSettingKey = `${id}-${type}`;
+
+  // try to get requested table setting from local storage
+  const tableSetting = localStorage.getItem(tableSettingKey);
+  if (tableSetting) {
+    console.log(`tableSetting:${tableSettingKey}:`, tableSetting);
+  }
+  return tableSetting ? JSON.parse(tableSetting) : false;
+}
+
+/**
+ * Download data handler.
+ * 
+ * @param {*} fileContents Unencoded contents of the file to save.
+ * @param {*} blob Download data blob object.
+ * @returns Data blob to save or false to skip download via typical browser api.
+ */
+function downloadData(fileContents, blob) {
+  // console.log(fileContents);
+  // request data file save
+  vscode.postMessage({
+    command: 'saveData',
+    data: fileContents,
+    dataFileType: saveFileTypeSelector.value,
+    dataFileName: saveDataFileName
+  });
+
+  // Note: this must return a blob to proceed with the download in a browser,
+  // or false to abort download and handle it in table view extension with workspace.fs
+  return false; // blob; 
 }
 
 /**
@@ -355,6 +384,11 @@ function saveData() {
   const dataFileName = fileName.substring(0, fileName.lastIndexOf('.') + 1);
   saveDataFileName = dataFileName + dataFileType;
   console.log('tabView:saveData(): saving data:', saveDataFileName);
+
+  if (saveDataFileName === undefined) {
+    // TODO: investigate why we end up here on initial incremental data load
+    return;
+  }
 
   // adjust text data delimiter and file type
   let delimiter = ',';
