@@ -2,6 +2,34 @@
 
 See [releases](https://github.com/RandomFractals/tabular-data-viewer/releases) for source code and `tabular-data-viewer-x.x.x.vsix` extension package download.
 
+## v1.1.0 - [2021-12-27]
+- [#29](https://github.com/RandomFractals/tabular-data-viewer/issues/29)
+Add Save as TSV data UI option
+- [#30](https://github.com/RandomFractals/tabular-data-viewer/issues/30)
+Change Tabular Data Text Editor default
+- [#32](https://github.com/RandomFractals/tabular-data-viewer/issues/32)
+Add Scroll to table row UI option to table view toolbar
+- [#34](https://github.com/RandomFractals/tabular-data-viewer/issues/34)
+Add table row selection column
+- [#35](https://github.com/RandomFractals/tabular-data-viewer/issues/35)
+Add Tabular Data Viewer to Tabulator Developer Tools repo and docs
+- [#36](https://github.com/RandomFractals/tabular-data-viewer/issues/36)
+Link homepage in package.json to Tabular Data Viewer github repo
+- [#37](https://github.com/RandomFractals/tabular-data-viewer/issues/37)
+Add Tabular Data Viewer Observable Notebook to docs
+- [#38](https://github.com/RandomFractals/tabular-data-viewer/issues/38)
+Add VS Marketplace badge, installs and downloads counters to docs
+- [#39](https://github.com/RandomFractals/tabular-data-viewer/issues/39)
+Add Rainbow CSV and Random Fractals Inc. dataViz extensions to recommendations in .vscode/extensions.json
+- [#40](https://github.com/RandomFractals/tabular-data-viewer/issues/40)
+Add Recommended Extensions section to docs
+- [#41](https://github.com/RandomFractals/tabular-data-viewer/issues/41)
+Split data load/refresh into separate create table and add data transfer operations
+- [#42](https://github.com/RandomFractals/tabular-data-viewer/issues/42)
+Refactor data download and table settings persistence handlers
+- [#43](https://github.com/RandomFractals/tabular-data-viewer/issues/43)
+Package and publish Tabular data viewer docs, data table loading, view and toolbar enhancements release
+
 ## v1.0.0 - [2021-12-24]
 
 - [#1](https://github.com/RandomFractals/tabular-data-viewer/issues/1)
