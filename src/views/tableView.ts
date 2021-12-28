@@ -347,18 +347,15 @@ export class TableView {
    * @returns Html string for the webview content.
    */
   private getWebviewContent(webview: Webview, extensionUri: Uri): string {
-    // create webview UI toolkitUri
-    const webviewUiToolkitUri: Uri = fileUtils.getWebviewUri(webview, extensionUri, [
-      'node_modules',
-      '@vscode',
-      'webview-ui-toolkit',
-      'dist',
-      'toolkit.js',
-    ]);
+    // create webview UI toolkit Uri
+    const webviewUiToolkitUri: Uri =
+      fileUtils.getWebviewUri(webview, extensionUri, ['web', 'scripts', 'toolkit.min.js']);
 
     // create table view script and styles Uris
-    const tableViewScriptUri: Uri = fileUtils.getWebviewUri(webview, extensionUri, ['web', 'scripts', 'tableView.js']);
-    const tableViewStylesUri: Uri = fileUtils.getWebviewUri(webview, extensionUri, ['web', 'styles', 'table-view.css']);
+    const tableViewScriptUri: Uri =
+      fileUtils.getWebviewUri(webview, extensionUri, ['web', 'scripts', 'tableView.js']);
+    const tableViewStylesUri: Uri =
+      fileUtils.getWebviewUri(webview, extensionUri, ['web', 'styles', 'table-view.css']);
 
     // get CSP (Content-Security-Policy) source link for this webview
     const cspSource: string = this.webviewPanel.webview.cspSource;
