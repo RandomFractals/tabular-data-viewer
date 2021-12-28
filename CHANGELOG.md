@@ -2,6 +2,10 @@
 
 See [releases](https://github.com/RandomFractals/tabular-data-viewer/releases) for source code and `tabular-data-viewer-x.x.x.vsix` extension package download.
 
+## v1.2.0 - [2021-12-28]
+- [#44](https://github.com/RandomFractals/tabular-data-viewer/issues/44)
+Resolve webview UI toolkit bundling and loading
+
 ## v1.1.0 - [2021-12-27]
 - [#29](https://github.com/RandomFractals/tabular-data-viewer/issues/29)
 Add Save as TSV data UI option
