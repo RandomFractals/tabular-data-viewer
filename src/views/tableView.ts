@@ -21,7 +21,8 @@ import * as fileUtils from '../utils/fileUtils';
 import { FileTypes } from './fileTypes';
 import { ViewTypes } from './viewTypes';
 
-const d3 = require('d3-dsv');
+// eslint-disable-next-line @typescript-eslint/naming-convention
+const {Table} = require('tableschema');
 
 /**
  * Defines Table view class for managing state and behaviour of Table webview panels.
@@ -57,9 +58,12 @@ export class TableView {
    * @param webviewPanel Optional webview panel instance.
    */
   public static render(extensionUri: Uri, documentUri: Uri, webviewPanel?: WebviewPanel) {
+    // create table view Uri
     const viewUri: Uri = documentUri.with({ scheme: 'tabular-data' });
-    console.log('tabular.data.view:render(): loading table view:', viewUri.toString());
-    console.log('\tdocumentUri:', documentUri);
+    console.log('tabular.data.view:render(): loading table view:', viewUri.toString(true)); // skip encoding
+    // console.log('\tdocumentUri:', documentUri);
+
+    // check for open table view
     const tableView: TableView | undefined = TableView._views.get(viewUri.toString());
     if (tableView) {
       // show loaded table webview panel in the active editor view column
@@ -190,31 +194,29 @@ export class TableView {
     this._currentDataPage = 0;
     this._tableData = [];
 
-    // load data
-    workspace.fs.readFile(this._documentUri).then((binaryData: Uint8Array) => {
-      const textData: string = new TextDecoder().decode(binaryData);
-      // this.logTextData(textData);
+    // load tabular data file
+    const table = await Table.load(this._documentUri.fsPath);
 
-      // parse dsv data for now
-      const dsvParser = d3.dsvFormat(this.delimiter);
-      let tableData: any = dsvParser.parse(textData, d3.autoType);
-      this.logTableData(tableData);
+    // infer table shema
+    const tableInfo = await table.infer();
+    console.log('tabular.data.view:tableInfo:', tableInfo);
 
-      // save table data for data streaming later
-      this._tableData = tableData;
-      this._totalRows = this._tableData.length;
+    // read all table data rows
+    const tableData: [] = await table.read({keyed: true});
+    this.logTableData(tableData, table.headers);
 
-      // send initial data rows to table view for display
-      const initialDataRows: Array<any> = tableData.slice(0, Math.min(this._pageDataSize, this._totalRows));
-      this.webviewPanel.webview.postMessage({
-        command: 'refresh',
-        fileName: this._fileName,
-        documentUrl: this._documentUri.toString(),
-        tableData: initialDataRows,
-        totalRows: this._totalRows
-      });
-    }, reason => {
-      window.showErrorMessage(`Could not load \`${this._documentUri}\` content. Reason: \n ${reason}`);
+    // save table data for incrementally loading into table view later
+    this._tableData = tableData;
+    this._totalRows = this._tableData.length;
+
+    // send initial set of data rows to table view for display
+    const initialDataRows: Array<any> = tableData.slice(0, Math.min(this._pageDataSize, this._totalRows));
+    this.webviewPanel.webview.postMessage({
+      command: 'refresh',
+      fileName: this._fileName,
+      documentUrl: this._documentUri.toString(),
+      tableData: initialDataRows,
+      totalRows: this._totalRows
     });
   }
 
@@ -288,10 +290,12 @@ export class TableView {
    * 
    * @param tableData Parsed table data.
    */
-  private logTableData(tableData: any): void {
+  private logTableData(tableData: any, columns?: []): void {
     console.log('tabular.data.view:rowCount:', tableData.length);
-    console.log('\tcolumns:', tableData.columns);
-    // console.log('1st 10 rows:', tableData.slice(0, 10));
+    if (columns) {
+      console.log('\tcolumns:', columns );
+    }
+    console.log('1st 10 rows:', tableData.slice(0, 10));
   }
 
   /**
