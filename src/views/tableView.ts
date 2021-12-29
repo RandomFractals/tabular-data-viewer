@@ -42,13 +42,17 @@ export class TableView {
   private _disposables: Disposable[] = [];
 
   // tabular data vars
+  private _tableSchema: any;
   private _tableData: [] = [];
   private _currentDataPage: number = 0;
   private _totalRows: number = 0;
 
-  // default page data size for data streaming setup
-  // TODO: move this to tabular data viewer config options later
+  // TODO: move the settings below to tabular data viewer config options later
+  // default page data size for incremental data loading into table view
   private readonly _pageDataSize: number = 1000;
+
+  // infer table schema rows sample size limit
+  private readonly _inferDataSize = 100;
 
   /**
    * Reveals current table view or creates new table webview panel for tabular data display.
@@ -198,14 +202,14 @@ export class TableView {
     const table = await Table.load(this._documentUri.fsPath);
 
     // infer table shema
-    const tableInfo = await table.infer();
-    console.log('tabular.data.view:tableInfo:', tableInfo);
+    this._tableSchema = await table.infer(this._inferDataSize);
+    console.log('tabular.data.view:tableInfo:', this._tableSchema);
 
     // read all table data rows
     const tableData: [] = await table.read({keyed: true});
     this.logTableData(tableData, table.headers);
 
-    // save table data for incrementally loading into table view later
+    // save table data for incremental load into table view later
     this._tableData = tableData;
     this._totalRows = this._tableData.length;
 
