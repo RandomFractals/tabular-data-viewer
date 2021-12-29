@@ -18,6 +18,7 @@ import * as path from 'path';
 import { TextDecoder } from 'util';
 
 import * as fileUtils from '../utils/fileUtils';
+import { FileTypes } from './fileTypes';
 import { ViewTypes } from './viewTypes';
 
 const d3 = require('d3-dsv');
@@ -328,11 +329,11 @@ export class TableView {
   get delimiter(): string {
     let delimiter: string = '';
     switch (this._fileExtension) {
-      case '.csv':
+      case FileTypes.csv:
         delimiter = ',';
         break;
-      case '.tsv':
-      case '.tab':
+      case FileTypes.tsv:
+      case FileTypes.tab:
         delimiter = '\t';
         break;
     }
