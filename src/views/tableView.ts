@@ -96,7 +96,7 @@ export class TableView {
   private static createWebviewPanel(documentUri: Uri): WebviewPanel {
     // create new webview panel for the table view
     return window.createWebviewPanel(
-      ViewTypes.TableView, // webview panel view type
+      ViewTypes.tableView, // webview panel view type
       fileUtils.getFileName(documentUri), // webview panel title
       {
         viewColumn: ViewColumn.Active, // use active view column for display

@@ -28,7 +28,7 @@ export class TableEditor implements CustomTextEditorProvider {
    */
   public static register(context: ExtensionContext): Disposable {
     return window.registerCustomEditorProvider(
-      ViewTypes.TableEditor, new TableEditor(context), {
+      ViewTypes.tableEditor, new TableEditor(context), {
       webviewOptions: {
         enableFindWidget: true,
         retainContextWhenHidden: true
