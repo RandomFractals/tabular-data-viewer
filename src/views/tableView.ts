@@ -20,6 +20,7 @@ import { TextDecoder } from 'util';
 import * as fileUtils from '../utils/fileUtils';
 import { FileTypes } from './fileTypes';
 import { ViewTypes } from './viewTypes';
+import { Stream } from 'stream';
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const {Table} = require('tableschema');
@@ -43,7 +44,7 @@ export class TableView {
 
   // tabular data vars
   private _tableSchema: any;
-  private _tableData: [] = [];
+  private _tableData: Array<any> = [];
   private _currentDataPage: number = 0;
   private _totalRows: number = 0;
 
@@ -196,7 +197,7 @@ export class TableView {
     // clear loaded data info
     this._totalRows = 0;
     this._currentDataPage = 0;
-    this._tableData = [];
+    this._tableData.length = 0;
 
     // load tabular data file
     const table = await Table.load(this._documentUri.fsPath);
@@ -205,16 +206,43 @@ export class TableView {
     this._tableSchema = await table.infer(this._inferDataSize);
     console.log('tabular.data.view:tableInfo:', this._tableSchema);
 
-    // read all table data rows
-    const tableData: [] = await table.read({keyed: true});
-    this.logTableData(tableData, table.headers);
+    // open data stream and read tabular row data
+    const dataStream = await table.iter({stream: true, keyed: true});
+    const tableRows: Array<any> = [];
+    let rowCount: number = 0;
+    dataStream.on('data', (row: any) => {
+      tableRows.push(row);
+      rowCount++;
+      if (rowCount % this._pageDataSize === 0) {
+        // console.log('rows:', rowCount);
+      }
+      if (rowCount === this._pageDataSize) {
+        // send initial set of data rows to table view for display
+        this.loadData(tableRows);
+      }
+    });
 
-    // save table data for incremental load into table view later
-    this._tableData = tableData;
+    dataStream.on('end', () => {
+      this.logTableData(tableRows, table.headers);
+      if (tableRows.length < this._pageDataSize) {
+        // load first page of data
+        this.loadData(tableRows);
+      }
+    });
+  }
+
+  /**
+   * Loads initial set of table rows into table view.
+   * 
+   * @param tableRows Table data rows array.
+   */
+  public async loadData(tableRows: Array<any>) {
+    // save table data for incremental load into table view
+    this._tableData = tableRows;
     this._totalRows = this._tableData.length;
 
     // send initial set of data rows to table view for display
-    const initialDataRows: Array<any> = tableData.slice(0, Math.min(this._pageDataSize, this._totalRows));
+    const initialDataRows: Array<any> = tableRows.slice(0, Math.min(this._pageDataSize, this._totalRows));
     this.webviewPanel.webview.postMessage({
       command: 'refresh',
       fileName: this._fileName,
