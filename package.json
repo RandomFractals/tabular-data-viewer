@@ -42,6 +42,7 @@
 	"activationEvents": [
 		"onLanguage:csv",
 		"onLanguage:tsv",
+		"onCommand:tabular.data.openDataFile",
 		"onCommand:tabular.data.viewTable",
 		"onCustomEditor:tabular.data.tableEditor",
 		"onWebviewPanel:tabular.data.tableView"
@@ -55,9 +56,20 @@
 	"contributes": {
 		"commands": [
 			{
+				"command": "tabular.data.openDataFile",
+				"title": "Open Data File",
+				"category": "Tabular Data"
+			},
+			{
 				"command": "tabular.data.viewTable",
 				"title": "View Table",
 				"category": "Tabular Data"
+			}
+		],
+		"keybindings": [
+			{
+				"command": "tabular.data.openDataFile",
+				"key": "alt+shift+o"
 			}
 		],
 		"languages": [

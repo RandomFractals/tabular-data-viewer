@@ -1,8 +1,10 @@
 import { ExtensionContext } from 'vscode';
 
+import { registerOpenDataFileCommand } from './commands/openDataFile';
+import { registerViewTableCommand } from './commands/viewTable';
+
 import { TableEditor } from './views/tableEditor';
 import { TableViewSerializer } from './views/tableViewSerializer';
-import { registerViewTableCommands } from './commands/viewTable';
 
 /**
  * Activates this extension per rules set in package.json.
@@ -16,8 +18,9 @@ export function activate(context: ExtensionContext) {
 	
 	console.log('tabular.data.viewer:activate(): activated!');
 
-	// register view table commands
-	registerViewTableCommands(context);
+	// register tabular data viewer commands
+	registerOpenDataFileCommand(context);
+	registerViewTableCommand(context);
 
 	// register table view serializer for restore on vscode reload
 	context.subscriptions.push(TableViewSerializer.register(context));
