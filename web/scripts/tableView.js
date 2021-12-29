@@ -10,6 +10,7 @@ let saveDataFileName = '';
 
 // table view vars
 let tableContainer, table, progressRing, saveFileTypeSelector;
+let tableSchema;
 let tableColumns = [];
 let tableData = [];
 let loadedRows = 0;
@@ -91,6 +92,7 @@ window.addEventListener('message', event => {
       documentUrl = event.data.documentUrl;
       fileName = event.data.fileName;
       vscode.setState({ documentUrl: documentUrl });
+      tableSchema = event.data.tableSchema;
       tableData = event.data.tableData;
       totalRows = event.data.totalRows;
       loadData(tableData, fileName);

@@ -219,8 +219,9 @@ export class TableView {
       command: 'refresh',
       fileName: this._fileName,
       documentUrl: this._documentUri.toString(),
-      tableData: initialDataRows,
-      totalRows: this._totalRows
+      tableShema: this._tableSchema,
+      totalRows: this._totalRows,
+      tableData: initialDataRows
     });
   }
 
