@@ -207,7 +207,7 @@ export class TableView {
     console.log('tabular.data.view:tableInfo:', this._tableSchema);
 
     // open data stream and read tabular row data
-    const dataStream = await table.iter({stream: true, keyed: true});
+    const dataStream: Stream = await table.iter({stream: true, keyed: true, cast: false});
     const tableRows: Array<any> = [];
     let rowCount: number = 0;
     dataStream.on('data', (row: any) => {
