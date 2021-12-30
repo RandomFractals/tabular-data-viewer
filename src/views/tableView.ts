@@ -50,7 +50,7 @@ export class TableView {
 
   // TODO: move the settings below to tabular data viewer config options later
   // default page data size for incremental data loading into table view
-  private readonly _pageDataSize: number = 1000;
+  private readonly _pageDataSize: number = 10000;
 
   // infer table schema rows sample size limit
   private readonly _inferDataSize = 100;
@@ -214,7 +214,7 @@ export class TableView {
       tableRows.push(row);
       rowCount++;
       if (rowCount % this._pageDataSize === 0) {
-        // console.log('rows:', rowCount);
+        console.log('rows:', rowCount);
       }
       if (rowCount === this._pageDataSize) {
         // send initial set of data rows to table view for display
