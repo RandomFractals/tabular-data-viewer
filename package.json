@@ -192,6 +192,6 @@
 	"dependencies": {
 		"@vscode/webview-ui-toolkit": "^0.8.4",
 		"tableschema": "^1.12.4",
-		"tabulator-tables": "^5.0.8"
+		"tabulator-tables": "^5.0.10"
 	}
 }

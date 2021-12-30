@@ -414,9 +414,9 @@ export class TableView {
               font-src 'self' ${cspSource} https://* blob: data:;
               connect-src 'self' https://* wss://*;
               worker-src 'self' https://* blob: data:">
-          <link href="https://unpkg.com/tabulator-tables@5.0.8/dist/css/tabulator.min.css" rel="stylesheet">
+          <link href="https://unpkg.com/tabulator-tables@5.0.10/dist/css/tabulator.min.css" rel="stylesheet">
           <link href="${tableViewStylesUri}" rel="stylesheet">
-          <script type="text/javascript" src="https://unpkg.com/tabulator-tables@5.0.8/dist/js/tabulator.min.js"></script>
+          <script type="text/javascript" src="https://unpkg.com/tabulator-tables@5.0.10/dist/js/tabulator.min.js"></script>
           <script type="module" src="${webviewUiToolkitUri}"></script>
           <script type="module" src="${tableViewScriptUri}"></script>
           <title>Table View</title>
