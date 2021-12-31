@@ -219,6 +219,8 @@ export class TableView {
       if (rowCount === this._pageDataSize) {
         // send initial set of data rows to table view for display
         this.loadData(tableRows);
+        // stop reading data
+        // dataStream.destroy();
       }
     });
 
@@ -227,6 +229,13 @@ export class TableView {
       if (tableRows.length < this._pageDataSize) {
         // load first page of data
         this.loadData(tableRows);
+      }
+      else if (tableRows.length >= this._pageDataSize) {
+        // load remaining table rows
+        this._tableData = tableRows;
+        this._totalRows = this._tableData.length;
+        const dataPageIndex: number = 1;
+        this.addData(dataPageIndex);
       }
     });
   }
@@ -240,6 +249,7 @@ export class TableView {
     // save table data for incremental load into table view
     this._tableData = tableRows;
     this._totalRows = this._tableData.length;
+    this.logTableData(tableRows);
 
     // send initial set of data rows to table view for display
     const initialDataRows: Array<any> = tableRows.slice(0, Math.min(this._pageDataSize, this._totalRows));
@@ -260,6 +270,7 @@ export class TableView {
    */
   public async addData(dataPage: number): Promise<void> {
     const nextRows: number = dataPage * this._pageDataSize;
+    console.log(`tabular.data.view:addData(): loading rows ${nextRows}+ ...`);
     if (nextRows < this._totalRows) {
       // get the next set of data rows to load in table view
       const dataRows: Array<any> =
