@@ -26,7 +26,7 @@ const clipboardPasteAction = 'replace';
 const movableColumns = true;
 const movableRows = true;
 const selectableRows =  true;
-const reactiveData = true;
+const reactiveData = false;
 const renderVerticalBuffer = 300; // virtual view buffer height in px for redraw on scroll
 
 // tabulator debug options
