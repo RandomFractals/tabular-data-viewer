@@ -365,7 +365,7 @@ function addData(table, dataRows) {
  * Scrolls table data display to the first table row.
  */
 function scrollToFirstRow() {
-  const rows = table.getRows();
+  const rows = table.getRows('active'); // rows with applied sort and filter
   table.scrollToRow(rows[0], 'top', true);
 }
 
@@ -373,7 +373,7 @@ function scrollToFirstRow() {
  * Scrolls table data display to the last table row.
  */
 function scrollToLastRow() {
-  const rows = table.getRows();
+  const rows = table.getRows('active'); // rows with applied sort and filter
   table.scrollToRow(rows[rows.length-1], 'top', true);
 }
 
