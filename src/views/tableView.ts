@@ -213,8 +213,8 @@ export class TableView {
     dataStream.on('data', (row: any) => {
       tableRows.push(row);
       rowCount++;
-      if (rowCount % this._pageDataSize === 0) {
-        console.log('rows:', rowCount);
+      if ((rowCount % (this._pageDataSize * 10)) === 0) {
+        console.log(`tabular.data.view:refresh(): parsing rows ${rowCount}+ ...`);
       }
       if (rowCount === this._pageDataSize) {
         // send initial set of data rows to table view for display
