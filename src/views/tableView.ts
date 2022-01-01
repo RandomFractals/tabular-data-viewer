@@ -216,6 +216,8 @@ export class TableView {
     const dataStream: Stream = dataFileStream.pipe(
       Papa.parse(Papa.NODE_STREAM_INPUT, {
         header: true, // key results by header fields
+        dynamicTyping: true, // enable dynamic typing
+        skipEmptyLines: true, // ignore empty lines to avoid errors
         worker: true, // parse data lines in a worker thread
       }));
     
