@@ -25,6 +25,9 @@ import { Stream } from 'stream';
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const {Table} = require('tableschema');
 
+// eslint-disable-next-line @typescript-eslint/naming-convention
+const Papa = require('papaparse');
+
 /**
  * Defines Table view class for managing state and behaviour of Table webview panels.
  */
@@ -206,8 +209,17 @@ export class TableView {
     this._tableSchema = await table.infer(this._inferDataSize);
     console.log('tabular.data.view:tableInfo:', this._tableSchema);
 
-    // open data stream and read tabular row data
-    const dataStream: Stream = await table.iter({stream: true, keyed: true, cast: false});
+    // create readable CSV data file stream
+    const dataFileStream: fs.ReadStream = fs.createReadStream(this._documentUri.fsPath, 'utf-8');
+
+    // pipe data file reads to Papa parse
+    const dataStream: Stream = dataFileStream.pipe(
+      Papa.parse(Papa.NODE_STREAM_INPUT, {
+        header: true, // key results by header fields
+        worker: true, // parse data lines in a worker thread
+      }));
+    
+    // process parsed data rows
     const tableRows: Array<any> = [];
     let rowCount: number = 0;
     dataStream.on('data', (row: any) => {
@@ -219,8 +231,7 @@ export class TableView {
       if (rowCount === this._pageDataSize) {
         // send initial set of data rows to table view for display
         this.loadData(tableRows);
-        // stop reading data
-        // dataStream.destroy();
+        // TODO: add pause/resume stream later
       }
     });
 
