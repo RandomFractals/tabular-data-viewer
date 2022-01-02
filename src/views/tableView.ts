@@ -18,6 +18,8 @@ import * as path from 'path';
 import { TextDecoder } from 'util';
 
 import * as fileUtils from '../utils/fileUtils';
+import * as formatUtils from '../utils/formatUtils';
+
 import { FileTypes } from './fileTypes';
 import { ViewTypes } from './viewTypes';
 import { Stream } from 'stream';
@@ -204,6 +206,7 @@ export class TableView {
 
     // load tabular data file
     const table = await Table.load(this._documentUri.fsPath);
+    this.logDataFileSize(this._documentUri.fsPath);
 
     // infer table shema
     this._tableSchema = await table.infer(this._inferDataSize);
@@ -328,6 +331,16 @@ export class TableView {
         }
       });
     }
+  }
+
+  /**
+   * Logs data file size for debug.
+   * 
+   * @param filePath Data file path.
+   */
+  private logDataFileSize(filePath: string): void {
+    console.log('tabular.data.view:fileSize:', 
+      formatUtils.formatBytes(fileUtils.getFileSize(filePath)));
   }
 
   /**
