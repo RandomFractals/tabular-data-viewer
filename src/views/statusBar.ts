@@ -16,12 +16,16 @@ export class StatusBar {
 	private static _instance: StatusBar;
 	private _statusBarItem: StatusBarItem;
 	private readonly _statusBarItemName: string = 'tabular.data';
+
 	private _fileInfo: FileInfo | undefined;
 	private _fileSizeInfo: string = '';
 	private _statusMessage: string = '';
 
+	/**
+	 * Creates tabular data view status bar UI.
+	 */
 	private constructor() {
-		// create tabular data staus bar item
+		// create tabular data status bar item
 		this._statusBarItem = window.createStatusBarItem(
 			this._statusBarItemName,
 			StatusBarAlignment.Right,
@@ -60,16 +64,15 @@ export class StatusBar {
 	 * @param message Data loading message to show in status bar.
 	 */
 	public showMessage(message: string): void {
+		this._statusBarItem.text = `中`;
 		if (message && message.length > 0) {
 			this._statusMessage = message;
-			this._statusBarItem.text = `中 $(sync~spin) ${message} \t ${this._fileSizeInfo}`;
-			this.show();
+			this._statusBarItem.text += ` $(sync~spin) ${message} \t`;
 		}
-		else {
-			// clear data loading message display
-			this._statusBarItem.text = `中 ${this._fileSizeInfo}`;
-			this.show();
-		}
+
+		// append file size info
+		this._statusBarItem.text += ` ${this._fileSizeInfo}`;
+		this.show();
 	}
 
 	/**
