@@ -242,8 +242,10 @@ export class TableView {
         // load first page of data
         this.loadData(tableRows);
 
-        // clear loading data status display
-        statusBar.showMessage('');
+        if (this.visible) {
+          // clear loading data status display
+          statusBar.showMessage('');
+        }
       }
       else if (tableRows.length >= this._pageDataSize) {
         // load remaining table rows
@@ -252,9 +254,11 @@ export class TableView {
         const dataPageIndex: number = 1;
         this.addData(dataPageIndex);
       }
-      
-      // update total rows display in status bar
-      statusBar.totalRows = tableRows.length;
+
+      if (this.visible) {
+        // update total rows display in status bar
+        statusBar.totalRows = tableRows.length;
+      }
     });
   }
 
@@ -289,7 +293,9 @@ export class TableView {
   public async addData(dataPage: number): Promise<void> {
     const nextRows: number = dataPage * this._pageDataSize;
     console.log(`tabular.data.view:addData(): loading rows ${nextRows}+ ...`);
-    statusBar.showMessage(`Loading rows ${nextRows.toLocaleString()}+`);
+    if (this.visible) {
+      statusBar.showMessage(`Loading rows ${nextRows.toLocaleString()}+`);
+    }
 
     if (nextRows < this._totalRows) {
       // get the next set of data rows to load in table view
