@@ -3,6 +3,8 @@ import { ExtensionContext } from 'vscode';
 import { registerOpenDataFileCommand } from './commands/openDataFile';
 import { registerViewTableCommand } from './commands/viewTable';
 
+import { statusBar } from './views/statusBar';
+
 import { TableEditor } from './views/tableEditor';
 import { TableViewSerializer } from './views/tableViewSerializer';
 
@@ -33,5 +35,5 @@ export function activate(context: ExtensionContext) {
  * Deactivates this vscode extension to free up resources.
  */
 export function deactivate() {
-	// TODO: add extension cleanup code, if needed
+	statusBar.dispose();
 }

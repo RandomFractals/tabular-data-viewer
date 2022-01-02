@@ -134,6 +134,13 @@ export class StatusBar {
 	public hide(): void {
 		this._statusBarItem.hide();
 	}
+
+	/**
+	 * Disposes status bar UI components.
+	 */
+	public dispose(): void {
+		this._statusBarItem.dispose();
+	}
 }
 
 export const statusBar = StatusBar.instance;

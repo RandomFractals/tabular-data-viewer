@@ -137,6 +137,7 @@ export class TableView {
 
     // create new file info for the data source
     this._fileInfo = new FileInfo(documentUri);
+    statusBar.showFileStats(this._fileInfo);
 
     // dispose table view resources when table view panel is closed by the user or via vscode apis
     this._webviewPanel.onDidDispose(this.dispose, null, this._disposables);
@@ -161,6 +162,7 @@ export class TableView {
         disposable.dispose();
       }
     }
+    statusBar.hide();
   }
 
   /**
@@ -227,7 +229,9 @@ export class TableView {
       rowCount++;
       if ((rowCount % (this._pageDataSize * 10)) === 0) {
         console.log(`tabular.data.view:refresh(): parsing rows ${rowCount}+ ...`);
-        statusBar.showMessage(`Parsing rows ${rowCount.toLocaleString()}+`);
+        if (this.visible) {
+          statusBar.showMessage(`Parsing rows ${rowCount.toLocaleString()}+`);
+        }
       }
       if (rowCount === this._pageDataSize) {
         // send initial set of data rows to table view for display
