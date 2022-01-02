@@ -15,13 +15,14 @@ import {
 
 import * as fs from 'fs';
 import * as path from 'path';
-import { TextDecoder } from 'util';
-
 import * as fileUtils from '../utils/fileUtils';
 import * as formatUtils from '../utils/formatUtils';
 
+import { FileInfo } from './fileInfo';
 import { FileTypes } from './fileTypes';
 import { ViewTypes } from './viewTypes';
+import { statusBar } from './statusBar';
+
 import { Stream } from 'stream';
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -41,10 +42,7 @@ export class TableView {
   // table view instance vars
   private readonly _webviewPanel: WebviewPanel;
   private readonly _extensionUri: Uri;
-  private readonly _documentUri: Uri;
-  private readonly _viewUri: Uri;
-  private readonly _fileName: string;
-  private readonly _fileExtension: string;
+  private _fileInfo: FileInfo;
   private _disposables: Disposable[] = [];
 
   // tabular data vars
@@ -136,14 +134,9 @@ export class TableView {
   private constructor(webviewPanel: WebviewPanel, extensionUri: Uri, documentUri: Uri) {
     this._webviewPanel = webviewPanel;
     this._extensionUri = extensionUri;
-    this._documentUri = documentUri;
 
-    // create custom table view Uri
-    this._viewUri = documentUri.with({ scheme: 'tabular-data' });
-
-    // extract data file name from the data source document path
-    this._fileName = fileUtils.getFileName(documentUri);
-    this._fileExtension = path.extname(this._fileName);
+    // create new file info for the data source
+    this._fileInfo = new FileInfo(documentUri);
 
     // dispose table view resources when table view panel is closed by the user or via vscode apis
     this._webviewPanel.onDidDispose(this.dispose, null, this._disposables);
@@ -152,7 +145,7 @@ export class TableView {
     this.configure();
 
     // add it to the tracked table webviews
-    TableView._views.set(this._viewUri.toString(), this);
+    TableView._views.set(this.viewUri.toString(), this);
   }
 
   /**
@@ -160,7 +153,7 @@ export class TableView {
    */
   public dispose() {
     TableView.currentView = undefined;
-    TableView._views.delete(this._viewUri.toString());
+    TableView._views.delete(this.viewUri.toString());
     this._webviewPanel.dispose();
     while (this._disposables.length) {
       const disposable: Disposable | undefined = this._disposables.pop();
@@ -205,15 +198,16 @@ export class TableView {
     this._tableData.length = 0;
 
     // load tabular data file
-    const table = await Table.load(this._documentUri.fsPath);
-    this.logDataFileSize(this._documentUri.fsPath);
+    const table = await Table.load(this._fileInfo.filePath);
+    statusBar.showFileStats(this._fileInfo);
 
     // infer table shema
     this._tableSchema = await table.infer(this._inferDataSize);
     console.log('tabular.data.view:tableInfo:', this._tableSchema);
 
     // create readable CSV data file stream
-    const dataFileStream: fs.ReadStream = fs.createReadStream(this._documentUri.fsPath, 'utf-8');
+    const dataFileStream: fs.ReadStream =
+      fs.createReadStream(this._fileInfo.filePath, 'utf-8');
 
     // pipe data file reads to Papa parse
     const dataStream: Stream = dataFileStream.pipe(
@@ -232,6 +226,7 @@ export class TableView {
       rowCount++;
       if ((rowCount % (this._pageDataSize * 10)) === 0) {
         console.log(`tabular.data.view:refresh(): parsing rows ${rowCount}+ ...`);
+        statusBar.showMessage(`Parsing rows ${rowCount.toLocaleString()}+`);
       }
       if (rowCount === this._pageDataSize) {
         // send initial set of data rows to table view for display
@@ -245,6 +240,9 @@ export class TableView {
       if (tableRows.length < this._pageDataSize) {
         // load first page of data
         this.loadData(tableRows);
+
+        // clear loading data status display
+        statusBar.showMessage('');
       }
       else if (tableRows.length >= this._pageDataSize) {
         // load remaining table rows
@@ -271,8 +269,8 @@ export class TableView {
     const initialDataRows: Array<any> = tableRows.slice(0, Math.min(this._pageDataSize, this._totalRows));
     this.webviewPanel.webview.postMessage({
       command: 'refresh',
-      fileName: this._fileName,
-      documentUrl: this._documentUri.toString(),
+      fileName: this._fileInfo.fileName,
+      documentUrl: this._fileInfo.fileUri.toString(),
       tableShema: this._tableSchema,
       totalRows: this._totalRows,
       tableData: initialDataRows
@@ -287,6 +285,8 @@ export class TableView {
   public async addData(dataPage: number): Promise<void> {
     const nextRows: number = dataPage * this._pageDataSize;
     console.log(`tabular.data.view:addData(): loading rows ${nextRows}+ ...`);
+    statusBar.showMessage(`Loading rows ${nextRows.toLocaleString()}+`);
+
     if (nextRows < this._totalRows) {
       // get the next set of data rows to load in table view
       const dataRows: Array<any> =
@@ -309,7 +309,7 @@ export class TableView {
     // this.logTextData(data);
 
     // create full data file path for saving data
-    let dataFilePath: string = path.dirname(this._documentUri.fsPath);
+    let dataFilePath: string = path.dirname(this._fileInfo.filePath);
     dataFilePath = path.join(dataFilePath, dataFileName);
 
     // display save file dialog
@@ -331,16 +331,6 @@ export class TableView {
         }
       });
     }
-  }
-
-  /**
-   * Logs data file size for debug.
-   * 
-   * @param filePath Data file path.
-   */
-  private logDataFileSize(filePath: string): void {
-    console.log('tabular.data.view:fileSize:', 
-      formatUtils.formatBytes(fileUtils.getFileSize(filePath)));
   }
 
   /**
@@ -387,14 +377,14 @@ export class TableView {
    * Gets the source data uri for this view.
    */
   get documentUri(): Uri {
-    return this._documentUri;
+    return this._fileInfo.fileUri;
   }
 
   /**
    * Gets the view uri to load on tabular data view command triggers or vscode IDE reload. 
    */
   get viewUri(): Uri {
-    return this._viewUri;
+    return this._fileInfo.viewUri;
   }
 
   /**
@@ -402,7 +392,7 @@ export class TableView {
    */
   get delimiter(): string {
     let delimiter: string = '';
-    switch (this._fileExtension) {
+    switch (this._fileInfo.fileExtension) {
       case FileTypes.csv:
         delimiter = ',';
         break;
