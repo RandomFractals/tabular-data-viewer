@@ -204,6 +204,7 @@ export class TableView {
     // infer table shema
     this._tableSchema = await table.infer(this._inferDataSize);
     console.log('tabular.data.view:tableInfo:', this._tableSchema);
+    statusBar.showColumns(this._tableSchema.fields);
 
     // create readable CSV data file stream
     const dataFileStream: fs.ReadStream =

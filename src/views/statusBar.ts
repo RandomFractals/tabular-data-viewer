@@ -19,6 +19,10 @@ export class StatusBar {
 
 	private _fileInfo: FileInfo | undefined;
 	private _fileSizeInfo: string = '';
+
+	private _columns: [] = [];
+	private _columnsInfo: string = '';
+
 	private _statusMessage: string = '';
 
 	/**
@@ -59,6 +63,17 @@ export class StatusBar {
 	}
 
 	/**
+ 	 * Shows table columns info in vscode status bar.
+ 	 * 
+   * @param columns Table columns info.
+   */
+	public showColumns(columns: []): void {
+		this._columns = columns;
+		this._columnsInfo = `Columns: ${columns.length}`;
+		statusBar.showMessage('Loading data');
+	}
+
+	/**
 	 * Shows tabular data loading message in vscode status bar.
 	 * 
 	 * @param message Data loading message to show in status bar.
@@ -68,6 +83,11 @@ export class StatusBar {
 		if (message && message.length > 0) {
 			this._statusMessage = message;
 			this._statusBarItem.text += ` $(sync~spin) ${message} \t`;
+		}
+
+		if (this._columns.length > 0) {
+			// append columns info
+			this._statusBarItem.text += ` ${this._columnsInfo} \t`;
 		}
 
 		// append file size info
