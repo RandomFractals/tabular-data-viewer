@@ -252,6 +252,9 @@ export class TableView {
         const dataPageIndex: number = 1;
         this.addData(dataPageIndex);
       }
+      
+      // update total rows display in status bar
+      statusBar.totalRows = tableRows.length;
     });
   }
 

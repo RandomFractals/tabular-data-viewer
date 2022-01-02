@@ -23,6 +23,7 @@ export class StatusBar {
 	private _columns: [] = [];
 	private _columnsInfo: string = '';
 
+	private _totalRows: number = 0;
 	private _statusMessage: string = '';
 
 	/**
@@ -58,7 +59,15 @@ export class StatusBar {
 	 */
 	public showFileStats(fileInfo: FileInfo): void {
 		this._fileInfo = fileInfo;
+
+		// create file size info label
 		this._fileSizeInfo = `FileSize: ${formatUtils.formatBytes(this._fileInfo.fileSize)}`;
+
+		// reset columns and rows counters
+		this._columns.length = 0;
+		this._totalRows = 0;
+
+		// show initial loading data message
 		statusBar.showMessage('Loading data');
 	}
 
@@ -74,6 +83,18 @@ export class StatusBar {
 	}
 
 	/**
+	 * Sets total rows to display for active table view in vscode status bar.
+	 */
+	public set totalRows(rowCount: number) {
+		if (rowCount > 0) {
+			this._totalRows = rowCount;
+
+			// update status bar display
+			this.showMessage(this._statusMessage);
+		}
+	}
+
+	/**
 	 * Shows tabular data loading message in vscode status bar.
 	 * 
 	 * @param message Data loading message to show in status bar.
@@ -83,6 +104,11 @@ export class StatusBar {
 		if (message && message.length > 0) {
 			this._statusMessage = message;
 			this._statusBarItem.text += ` $(sync~spin) ${message} \t`;
+		}
+
+		if (this._totalRows > 0) {
+			// append rows count
+			this._statusBarItem.text += ` Rows: ${this._totalRows.toLocaleString()} \t`;
 		}
 
 		if (this._columns.length > 0) {
