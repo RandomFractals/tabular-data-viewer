@@ -14,6 +14,7 @@ import * as formatUtils from '../utils/formatUtils';
 export class StatusBar {
 
 	private static _instance: StatusBar;
+
 	private _statusBarItem: StatusBarItem;
 	private readonly _statusBarItemName: string = 'tabular.data';
 
@@ -36,13 +37,10 @@ export class StatusBar {
 			StatusBarAlignment.Right,
 			100, // align left priority
 		);
-
-		// show initial loading data message
-		this.showMessage('Loading data');
 	}
 
 	/**
-	* Creates status bar singleton instance.
+	* Gets status bar singleton instance.
 	*/
 	public static get instance(): StatusBar {
 		if (!this._instance) {
@@ -63,23 +61,19 @@ export class StatusBar {
 		// create file size info label
 		this._fileSizeInfo = `FileSize: ${formatUtils.formatBytes(this._fileInfo.fileSize)}`;
 
-		// reset columns and rows counters
-		this._columns.length = 0;
+		// reset columns and total rows counter
+		this._columns = [];
 		this._totalRows = 0;
-
-		// show initial loading data message
-		statusBar.showMessage('Loading data');
 	}
 
 	/**
  	 * Shows table columns info in vscode status bar.
  	 * 
-   * @param columns Table columns info.
+   * @param columns Table columns descriptor array.
    */
 	public showColumns(columns: []): void {
 		this._columns = columns;
 		this._columnsInfo = `Columns: ${columns.length}`;
-		statusBar.showMessage('Loading data');
 	}
 
 	/**
@@ -91,6 +85,9 @@ export class StatusBar {
 
 			// update status bar display
 			this.showMessage(this._statusMessage);
+		}
+		else {
+			this._totalRows = 0;
 		}
 	}
 

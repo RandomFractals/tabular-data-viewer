@@ -16,7 +16,6 @@ import {
 import * as fs from 'fs';
 import * as path from 'path';
 import * as fileUtils from '../utils/fileUtils';
-import * as formatUtils from '../utils/formatUtils';
 
 import { FileInfo } from './fileInfo';
 import { FileTypes } from './fileTypes';
@@ -75,8 +74,7 @@ export class TableView {
     const tableView: TableView | undefined = TableView._views.get(viewUri.toString());
     if (tableView) {
       // show loaded table webview panel in the active editor view column
-      const viewColumn: ViewColumn = ViewColumn.Active ? ViewColumn.Active : ViewColumn.One;
-      tableView.webviewPanel.reveal(viewColumn);
+      tableView.reveal();
       TableView.currentView = tableView;
     }
     else {
@@ -163,6 +161,24 @@ export class TableView {
       }
     }
     statusBar.hide();
+  }
+
+  /**
+   * Reveals loaded table view and sets it as active editor in vscode editor panel.
+   * Updates tabular data file stats, columns, and total rows display in vscode status bar.
+   */
+  public reveal() {
+    const viewColumn: ViewColumn = ViewColumn.Active ? ViewColumn.Active : ViewColumn.One;
+    this.webviewPanel.reveal(viewColumn);
+
+    // update status bar with active table view stats
+    statusBar.showFileStats(this._fileInfo);
+    if (this._tableSchema) {
+      statusBar.showColumns(this._tableSchema.fields);
+    }
+    if (this._totalRows > 0) {
+      statusBar.totalRows = this._totalRows;
+    }
   }
 
   /**
@@ -399,6 +415,27 @@ export class TableView {
    */
   get viewUri(): Uri {
     return this._fileInfo.viewUri;
+  }
+
+  /**
+   * Gets data file info with document uri, table view uri, etc.
+   */
+  get fileInfo(): FileInfo {
+    return this.fileInfo;
+  }
+
+  /**
+   * Gets data table schema with array of fields for that table columns, etc.
+   */
+  get tableShema(): any {
+    return this._tableSchema;
+  }
+
+  /**
+   * Gets loaded data rows count.
+   */
+  get totalRows(): number {
+    return this._totalRows;
   }
 
   /**

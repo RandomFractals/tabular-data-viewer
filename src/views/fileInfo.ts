@@ -1,8 +1,8 @@
-import * as fs from 'fs';
-import * as path from 'path';
 import { Uri } from 'vscode';
+
+import * as path from 'path';
+
 import * as fileUtils from '../utils/fileUtils';
-import * as formatUtils from '../utils/formatUtils';
 
 /**
  * Defines file info class for tabular data view.
@@ -37,7 +37,7 @@ export class FileInfo {
 	}
 
 	/**
-	 * Gets file name from file path.
+	 * Gets full file name.
 	 */
 	public get fileName(): string {
 		return this._fileName;
