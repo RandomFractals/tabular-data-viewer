@@ -56,14 +56,11 @@ export class StatusBar {
 	 * @param fileInfo File info with data document uri, etc.
 	 */
 	public showFileStats(fileInfo: FileInfo): void {
+		this.clear();
 		this._fileInfo = fileInfo;
 
 		// create file size info label
 		this._fileSizeInfo = `FileSize: ${formatUtils.formatBytes(this._fileInfo.fileSize)}`;
-
-		// reset columns and total rows counter
-		this._columns = [];
-		this._totalRows = 0;
 	}
 
 	/**
