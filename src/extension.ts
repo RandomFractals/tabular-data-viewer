@@ -1,4 +1,4 @@
-import { ExtensionContext } from 'vscode';
+import { ExtensionContext, TextEditor, window } from 'vscode';
 
 import { registerOpenDataFileCommand } from './commands/openDataFile';
 import { registerViewTableCommand } from './commands/viewTable';
@@ -29,6 +29,11 @@ export function activate(context: ExtensionContext) {
 
 	// register custom table editor
 	context.subscriptions.push(TableEditor.register(context));
+
+	window.onDidChangeActiveTextEditor((textEditor: TextEditor | undefined) => {
+		// hide tabular data stats display on active editor change
+		statusBar.hide();
+	});
 }
 
 /**

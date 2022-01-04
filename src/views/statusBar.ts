@@ -126,10 +126,22 @@ export class StatusBar {
 	}
 
 	/**
-	 * Hides tabular data status display.
+	 * Clears and hides tabular data stats display.
 	 */
 	public hide(): void {
+		this.clear();
 		this._statusBarItem.hide();
+	}
+
+	/**
+	 * Clears active tabular data view stats display.
+	 */
+	public clear(): void {
+		this._fileInfo = undefined;
+		this._columns = [];
+		this._totalRows = 0;
+		this._statusMessage = '';
+		this._statusBarItem.text = '';
 	}
 
 	/**
