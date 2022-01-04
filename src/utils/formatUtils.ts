@@ -14,3 +14,21 @@ export function formatBytes(bytes: number, decimals: number = 2): string {
   }
   return `${parseFloat(remainder.toFixed(decimals))} ${fileSizeLabels[i]}`;
 }
+
+/**
+ * Formats time in milliseconds for data load time display.
+ * 
+ * @param time Time in milliseconds.
+ */
+export function formatTime(time: number): string {
+  // covert to seconds
+  let timeValue: number = time / 1000;
+  let timeUnit: string = 'sec';
+
+  if (timeValue > 60) {
+    // covert to minutes
+    timeValue /= 60;
+    timeUnit = 'min';
+  }
+  return `${parseFloat(timeValue.toFixed(2)).toLocaleString()} ${timeUnit}`;
+}

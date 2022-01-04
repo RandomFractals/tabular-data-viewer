@@ -27,6 +27,9 @@ export class StatusBar {
 	private _totalRows: number = 0;
 	private _statusMessage: string = '';
 
+	private _loadTime: number = 0; // milliseconds
+	private _loadTimeInfo: string = '';
+
 	/**
 	 * Creates tabular data view status bar UI.
 	 */
@@ -89,6 +92,24 @@ export class StatusBar {
 	}
 
 	/**
+ 	 * Sets data read/load into memory time in seconds
+	 * for active table view in vscode status bar display.
+ 	 */
+	public set loadTime(time: number) {
+		if (time > 0) {
+			this._loadTime = time;
+			this._loadTimeInfo = `LoadTime: ${formatUtils.formatTime(time)}`;
+
+			// update status bar display
+			this.showMessage(this._statusMessage);
+		}
+		else {
+			this._loadTime = 0;
+			this._loadTimeInfo = '';
+		}
+	}
+
+	/**
 	 * Shows tabular data loading message in vscode status bar.
 	 * 
 	 * @param message Data loading message to show in status bar.
@@ -97,21 +118,27 @@ export class StatusBar {
 		this._statusBarItem.text = `中`;
 		if (message && message.length > 0) {
 			this._statusMessage = message;
-			this._statusBarItem.text += ` $(sync~spin) ${message} \t`;
+			this._statusBarItem.text += ` $(sync~spin) ${message} |`;
 		}
 
 		if (this._totalRows > 0) {
 			// append rows count
-			this._statusBarItem.text += ` Rows: ${this._totalRows.toLocaleString()} \t`;
+			this._statusBarItem.text += ` Rows: ${this._totalRows.toLocaleString()} |`;
 		}
 
 		if (this._columns.length > 0) {
 			// append columns info
-			this._statusBarItem.text += ` ${this._columnsInfo} \t`;
+			this._statusBarItem.text += ` ${this._columnsInfo} |`;
 		}
 
 		// append file size info
 		this._statusBarItem.text += ` ${this._fileSizeInfo}`;
+
+		if (this._loadTime > 0) {
+			// append load time info
+			this._statusBarItem.text += ` | ${this._loadTimeInfo}`;
+		}
+
 		this.show();
 	}
 
@@ -137,6 +164,7 @@ export class StatusBar {
 		this._fileInfo = undefined;
 		this._columns = [];
 		this._totalRows = 0;
+		this._loadTime = 0;
 		this._statusMessage = '';
 		this._statusBarItem.text = '';
 	}

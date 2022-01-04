@@ -49,6 +49,7 @@ export class TableView {
   private _tableData: Array<any> = [];
   private _currentDataPage: number = 0;
   private _totalRows: number = 0;
+  private _loadTime: number = 0; // load time in milliseconds
 
   // TODO: move the settings below to tabular data viewer config options later
   // default page data size for incremental data loading into table view
@@ -180,13 +181,13 @@ export class TableView {
     if (this._tableSchema) {
       statusBar.showColumns(this._tableSchema.fields);
     }
-    if (this._totalRows > 0) {
-      statusBar.totalRows = this._totalRows;
-    }
+    statusBar.totalRows = this._totalRows;
+    statusBar.loadTime = this._loadTime;
   }
 
   /**
-   * Configures webview html for view display.
+   * Configures webview html for tabular data view display,
+   * and adds webview message request handlers for data updates.
    */
   public configure(): void {
     // set table view html content for the webview panel
@@ -218,6 +219,7 @@ export class TableView {
     this._totalRows = 0;
     this._currentDataPage = 0;
     this._tableData.length = 0;
+    this._loadTime = 0;
 
     // load tabular data file
     const table = await Table.load(this._fileInfo.filePath);
@@ -229,10 +231,11 @@ export class TableView {
     statusBar.showColumns(this._tableSchema.fields);
 
     // create readable CSV data file stream
+    const startReadTime: Date = new Date();
     const dataFileStream: fs.ReadStream =
       fs.createReadStream(this._fileInfo.filePath, 'utf-8');
 
-    // pipe data file reads to Papa parse
+    // pipe data file reads to Papa parse for CSV data parsing in a worker thread
     const dataStream: Stream = dataFileStream.pipe(
       Papa.parse(Papa.NODE_STREAM_INPUT, {
         header: true, // key results by header fields
@@ -261,7 +264,16 @@ export class TableView {
     });
 
     dataStream.on('end', () => {
+      // calculate and save data load time in seconds
+      const endReadTime: Date = new Date();
+      this._loadTime = (endReadTime.getTime() - startReadTime.getTime());
+      statusBar.loadTime = this._loadTime;
       this.logTableData(tableRows, table.headers);
+
+      // udpate table view state
+      this._tableData = tableRows;
+      this._totalRows = this._tableData.length;
+
       if (tableRows.length < this._pageDataSize) {
         // load first page of data
         this.loadData(tableRows);
@@ -273,8 +285,6 @@ export class TableView {
       }
       else if (tableRows.length >= this._pageDataSize) {
         // load remaining table rows
-        this._tableData = tableRows;
-        this._totalRows = this._tableData.length;
         const dataPageIndex: number = 1;
         this.addData(dataPageIndex);
       }
