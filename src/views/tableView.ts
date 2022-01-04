@@ -71,7 +71,7 @@ export class TableView {
     // console.log('\tdocumentUri:', documentUri);
 
     // check for open table view
-    const tableView: TableView | undefined = TableView._views.get(viewUri.toString());
+    const tableView: TableView | undefined = TableView._views.get(viewUri.toString(true)); // skip encoding
     if (tableView) {
       // show loaded table webview panel in the active editor view column
       tableView.reveal();
@@ -91,7 +91,8 @@ export class TableView {
       }
 
       // set custom table view panel icon
-      webviewPanel.iconPath = Uri.file(path.join(extensionUri.fsPath, './resources/icons/tabular-data-viewer.svg'));
+      webviewPanel.iconPath = Uri.file(
+        path.join(extensionUri.fsPath, './resources/icons/tabular-data-viewer.svg'));
 
       // set as current table view
       TableView.currentView = new TableView(webviewPanel, extensionUri, documentUri);
@@ -137,22 +138,23 @@ export class TableView {
     this._fileInfo = new FileInfo(documentUri);
     statusBar.showFileStats(this._fileInfo);
 
-    // dispose table view resources when table view panel is closed by the user or via vscode apis
-    this._webviewPanel.onDidDispose(this.dispose, null, this._disposables);
-
     // configure webview panel
     this.configure();
 
     // add it to the tracked table webviews
-    TableView._views.set(this.viewUri.toString(), this);
+    TableView._views.set(this.viewUri.toString(true), this);
+
+    // dispose table view resources when table view panel is closed by the user or via vscode apis
+    this._webviewPanel.onDidDispose(this.dispose, null, this._disposables);
   }
 
   /**
    * Disposes table view resources when webview panel is closed.
    */
   public dispose() {
+    console.log('tabular.data.view:dispose(): disposing table view:', this._fileInfo.fileName);
     TableView.currentView = undefined;
-    TableView._views.delete(this.viewUri.toString());
+    TableView._views.delete(this.viewUri.toString(true)); // skip encoding
     this._webviewPanel.dispose();
     while (this._disposables.length) {
       const disposable: Disposable | undefined = this._disposables.pop();
@@ -160,6 +162,8 @@ export class TableView {
         disposable.dispose();
       }
     }
+    
+    // clear and hide current table view stats display
     statusBar.hide();
   }
 
@@ -312,12 +316,12 @@ export class TableView {
    */
   public async addData(dataPage: number): Promise<void> {
     const nextRows: number = dataPage * this._pageDataSize;
-    console.log(`tabular.data.view:addData(): loading rows ${nextRows}+ ...`);
-    if (this.visible) {
-      statusBar.showMessage(`Loading rows ${nextRows.toLocaleString()}+`);
-    }
-
     if (nextRows < this._totalRows) {
+      console.log(`tabular.data.view:addData(): loading rows ${nextRows}+ ...`);
+      if (this.visible) {
+        statusBar.showMessage(`Loading rows ${nextRows.toLocaleString()}+`);
+      }
+
       // get the next set of data rows to load in table view
       const dataRows: Array<any> =
         this._tableData.slice(nextRows, Math.min(nextRows + this._pageDataSize, this._totalRows));
@@ -425,9 +429,9 @@ export class TableView {
   }
 
   /**
-   * Gets data table schema with array of fields for that table columns, etc.
+   * Gets data table schema with array of fields for the table columns, etc.
    */
-  get tableShema(): any {
+  get tableSchema(): any {
     return this._tableSchema;
   }
 

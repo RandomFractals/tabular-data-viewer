@@ -31,14 +31,14 @@ export class TableViewSerializer implements WebviewPanelSerializer {
    * 
    * @param extensionUri Extension directory Uri.
    */
-  constructor(private extensionUri: Uri) {
+  constructor(private readonly extensionUri: Uri) {
   }
 
   /**
    * Restores webview panel on vscode reload for table views.
    * 
    * @param webviewPanel Webview panel to restore.
-   * @param state Saved web view panel state.
+   * @param state Saved web view panel state with data document Url.
    */
   async deserializeWebviewPanel(webviewPanel: WebviewPanel, state: any) {
     const documentUri: Uri = Uri.parse(state.documentUrl);
