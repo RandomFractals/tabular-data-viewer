@@ -104,7 +104,7 @@ window.addEventListener('message', event => {
       break;
     case 'addData':
       totalRows = event.data.totalRows;
-      addData(table, event.data.dataRows);
+      addData(table, event.data.dataRows, event.data.dataPage);
       break;
   }
 });
@@ -165,7 +165,7 @@ function loadData(tableData) {
   }
   else {
     // add new data rows to existing tabulator table
-    addData(table, tableData);
+    addData(table, tableData, 1); // next dataPageIndex
     progressRing.style.visibility = 'hidden';
   }
 }
@@ -192,7 +192,7 @@ function createTable(tableData) {
       movableColumns: movableColumns,
       movableRows: movableRows,
       selectable: selectableRows,
-      // reactiveData: reactiveData,
+      reactiveData: reactiveData,
       data: tableData,
       pagination: pagination,
       paginationSize: paginationSize,
@@ -252,15 +252,82 @@ function onTableBuilt () {
 
   // request more data for incremental data loading
   loadedRows = table.getRows().length;
-  console.log('tableView.loadedRows:', loadedRows);
+  console.log('tableView.loadedRows:', loadedRows.toLocaleString());
   if (loadedRows < totalRows) {
-    dataPage++;
-    progressRing.style.visibility = 'visible';
-    vscode.postMessage({
-      command: 'addData',
-      dataPage: dataPage
-    });
+    getNextDataPage();
   }
+}
+
+
+/**
+ * Adds data rows to the table.
+ * 
+ * @param {*} table Tabulator table instance.
+ * @param {*} dataRows Data array for the table rows to add.
+ * @param {*} dataPageIndex Data page index for the data rows to add.
+ */
+function addData(table, dataRows, dataPageIndex) {
+  if (dataPageIndex === dataPage) {
+    // get the next set of data rows
+    getNextDataPage();
+  }
+
+  console.log('tableView:addData(): loading data page:', dataPage);
+
+  // add new rows to table data
+  tableData.push.apply(tableData, dataRows);
+  loadedRows += dataRows.length;
+  // console.log('tableView:rowCount:', loadedRows.toLocaleString(), 'totalRows:', totalRows.toLocaleString());
+  
+  if (loadedRows < totalRows) {
+    // request more data rows to load and display
+    getNextDataPage();
+  }
+  else {
+    // hide data loading progress ring
+    progressRing.style.visibility = 'hidden';
+    console.log('tableView:rowCount:', loadedRows.toLocaleString(), 'totalRows:', totalRows.toLocaleString());
+  }
+
+  /*
+  if (table && dataRows) {
+    table.addData(dataRows, true)
+      .then(function (rows) { // rows - array of the row components for the rows updated or added
+        // update loaded table data array and rows counter
+        tableData.push.apply(tableData, dataRows);
+        loadedRows += rows.length;
+        if (loadedRows < totalRows) {
+          // request more data rows to load and display
+          dataPage++;
+          progressRing.style.visibility = 'visible';
+          vscode.postMessage({
+            command: 'addData',
+            dataPage: dataPage
+          });
+        }
+        else {
+          // hide data loading progress ring
+          progressRing.style.visibility = 'hidden';
+          console.log('tableView:rowCount:', loadedRows, 'totalRows:', totalRows);
+        }
+      })
+      .catch(function (error) {
+        // handle error updating data
+        console.error(error);
+      });
+  }*/
+}
+
+/**
+ * Requests more data rows to load and display.
+ */
+function getNextDataPage() {
+  dataPage++;
+  progressRing.style.visibility = 'visible';
+  vscode.postMessage({
+    command: 'addData',
+    dataPage: dataPage
+  });
 }
 
 /**
@@ -299,6 +366,37 @@ function restoreTableSetting(id, type) {
 }
 
 /**
+ * Clears displayed table data.
+ */
+function clearTable(table) {
+  if (table) {
+    // clear displayed table view
+    table.clearData();
+
+    // reset loaded table data row/page counters
+    loadedRows = 0;
+    totalRows = 0;
+    dataPage = 0;
+  }
+}
+
+/**
+ * Scrolls table data display to the first table row.
+ */
+function scrollToFirstRow() {
+  const rows = table.getRows('active'); // rows with applied sort and filter
+  table.scrollToRow(rows[0], 'top', true);
+}
+
+/**
+ * Scrolls table data display to the last table row.
+ */
+function scrollToLastRow() {
+  const rows = table.getRows('active'); // rows with applied sort and filter
+  table.scrollToRow(rows[rows.length-1], 'top', true);
+}
+
+/**
  * Download data handler.
  * 
  * @param {*} fileContents Unencoded contents of the file to save.
@@ -318,72 +416,6 @@ function downloadData(fileContents, blob) {
   // Note: this must return a blob to proceed with the download in a browser,
   // or false to abort download and handle it in table view extension with workspace.fs
   return false; // blob; 
-}
-
-/**
- * Clears displayed table data.
- */
-function clearTable(table) {
-  if (table) {
-    // clear displayed table view
-    table.clearData();
-
-    // reset loaded table data row/page counters
-    loadedRows = 0;
-    totalRows = 0;
-    dataPage = 0;
-  }
-}
-
-/**
- * Adds data rows to the table.
- * 
- * @param {*} table Tabulator table instance.
- * @param {*} dataRows Data array for the table rows to add.
- */
-function addData(table, dataRows) {
-  if (table && dataRows) {
-    table.addData(dataRows, true)
-      .then(function (rows) { // rows - array of the row components for the rows updated or added
-        // update loaded table data array and rows counter
-        tableData.push(dataRows.shift());
-        loadedRows += rows.length;
-        if (loadedRows < totalRows) {
-          // request more data rows to load and display
-          dataPage++;
-          progressRing.style.visibility = 'visible';
-          vscode.postMessage({
-            command: 'addData',
-            dataPage: dataPage
-          });
-        }
-        else {
-          // hide data loading progress ring
-          progressRing.style.visibility = 'hidden';
-          console.log('tableView:rowCount:', loadedRows, 'totalRows:', totalRows);
-        }
-      })
-      .catch(function (error) {
-        // handle error updating data
-        console.error(error);
-      });
-  }
-}
-
-/**
- * Scrolls table data display to the first table row.
- */
-function scrollToFirstRow() {
-  const rows = table.getRows('active'); // rows with applied sort and filter
-  table.scrollToRow(rows[0], 'top', true);
-}
-
-/**
- * Scrolls table data display to the last table row.
- */
-function scrollToLastRow() {
-  const rows = table.getRows('active'); // rows with applied sort and filter
-  table.scrollToRow(rows[rows.length-1], 'top', true);
 }
 
 /**

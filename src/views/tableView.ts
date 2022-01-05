@@ -256,6 +256,7 @@ export class TableView {
           statusBar.showMessage(`Parsing rows ${rowCount.toLocaleString()}+`);
         }
       }
+
       if (rowCount === this._pageDataSize) {
         // send initial set of data rows to table view for display
         this.loadData(tableRows);
@@ -283,10 +284,10 @@ export class TableView {
         // load first page of data
         this.loadData(tableRows);
       }
-      else if (tableRows.length >= this._pageDataSize) {
+      else if (tableRows.length > this._pageDataSize) {
         // load remaining table rows
         const dataPageIndex: number = 1;
-        //this.addData(dataPageIndex);
+        this.addData(dataPageIndex);
       }
     });
   }
@@ -320,7 +321,7 @@ export class TableView {
    * @param dataPage Requested data page index for loading the next set of data rows.
    */
   public async addData(dataPage: number): Promise<void> {
-    const nextRows: number = dataPage * this._pageDataSize;
+    let nextRows: number = dataPage * this._pageDataSize;
     if (nextRows < this._totalRows) {
       console.log(`tabular.data.view:addData(): loading rows ${nextRows.toLocaleString()}+ ...`);
       if (this.visible) {
@@ -335,8 +336,17 @@ export class TableView {
       this.webviewPanel.webview.postMessage({
         command: 'addData',
         dataRows: dataRows,
+        dataPage: dataPage,
         totalRows: this._totalRows
       });
+
+      // increment next rows for data loading status update
+      nextRows += dataRows.length;
+    }
+
+    if (nextRows >= this._totalRows) {
+      // clear data loading status bar message
+      statusBar.showMessage('');
     }
   }
 
