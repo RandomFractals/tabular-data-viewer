@@ -37,8 +37,9 @@ const renderVerticalBuffer = 300; // virtual view buffer height in px for redraw
 // tabulator debug options
 const debugInvalidOptions = true; // tabulator warnings
 
-// Note: set these to true to log all events dispatched by the tabulator
-const debugEventsExternal = ['tableBuilding', 'dataLoaded', 'tableBuilt'];
+// Note: set these events to true to log all events dispatched by the Tabulator table.
+// To debug table data loading add 'dataLoaded' to the tracked external Tabulator events.
+const debugEventsExternal = ['tableBuilding', 'tableBuilt'];
 const debugEventsInternal = false; // log all internal tabulator events
 
 // table row context menu options
