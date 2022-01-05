@@ -322,7 +322,7 @@ export class TableView {
   public async addData(dataPage: number): Promise<void> {
     const nextRows: number = dataPage * this._pageDataSize;
     if (nextRows < this._totalRows) {
-      console.log(`tabular.data.view:addData(): loading rows ${nextRows}+ ...`);
+      console.log(`tabular.data.view:addData(): loading rows ${nextRows.toLocaleString()}+ ...`);
       if (this.visible) {
         statusBar.showMessage(`Loading rows ${nextRows.toLocaleString()}+`);
       }
@@ -390,7 +390,7 @@ export class TableView {
    * @param tableData Parsed table data.
    */
   private logTableData(tableData: any, columns?: []): void {
-    console.log('tabular.data.view:rowCount:', tableData.length);
+    console.log('tabular.data.view:rowCount:', tableData.length.toLocaleString());
     if (columns) {
       console.log('\tcolumns:', columns );
     }

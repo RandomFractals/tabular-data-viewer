@@ -28,8 +28,8 @@ const movableRows = true;
 const selectableRows =  true;
 
 const pagination = true;
-const paginationSize = 10000;
-const pageSizes = [20, 100, 1000, 10000, 100000, 1000000, 10000000];
+const paginationSize = 1000;
+const pageSizes = [100, 1000, 10000, 100000, 1000000, 10000000];
 
 const reactiveData = false;
 const renderVerticalBuffer = 300; // virtual view buffer height in px for redraw on scroll
