@@ -26,6 +26,11 @@ const clipboardPasteAction = 'replace';
 const movableColumns = true;
 const movableRows = true;
 const selectableRows =  true;
+
+const pagination = true;
+const paginationSize = 10000;
+const pageSizes = [20, 100, 1000, 10000, 100000, 1000000, 10000000];
+
 const reactiveData = false;
 const renderVerticalBuffer = 300; // virtual view buffer height in px for redraw on scroll
 
@@ -187,8 +192,11 @@ function createTable(tableData) {
       movableColumns: movableColumns,
       movableRows: movableRows,
       selectable: selectableRows,
-      reactiveData: reactiveData,
+      // reactiveData: reactiveData,
       data: tableData,
+      pagination: pagination,
+      paginationSize: paginationSize,
+      paginationSizeSelector: pageSizes,
       rowContextMenu: rowContextMenu,
       renderVerticalBuffer: renderVerticalBuffer,
       debugInvalidOptions: debugInvalidOptions, // log invalid tabulator config warnings
@@ -244,6 +252,7 @@ function onTableBuilt () {
 
   // request more data for incremental data loading
   loadedRows = table.getRows().length;
+  console.log('tableView.loadedRows:', loadedRows);
   if (loadedRows < totalRows) {
     dataPage++;
     progressRing.style.visibility = 'visible';

@@ -97,3 +97,7 @@ body {
 	background-color: var(--vscode-editor-background);
 	border: none;
 }
+
+.tabulator .tabulator-footer {
+	background-color: var(--vscode-editor-background);
+}

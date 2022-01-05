@@ -82,9 +82,8 @@ export class StatusBar {
 	public set totalRows(rowCount: number) {
 		if (rowCount > 0) {
 			this._totalRows = rowCount;
-
-			// update status bar display
-			this.showMessage(this._statusMessage);
+			// clear loading data message
+			this.showMessage('');
 		}
 		else {
 			this._totalRows = 0;
@@ -119,6 +118,10 @@ export class StatusBar {
 		if (message && message.length > 0) {
 			this._statusMessage = message;
 			this._statusBarItem.text += ` $(sync~spin) ${message} |`;
+		}
+		else {
+			// clear loading data message
+			this._statusMessage = '';
 		}
 
 		if (this._totalRows > 0) {

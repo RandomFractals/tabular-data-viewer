@@ -53,7 +53,7 @@ export class TableView {
 
   // TODO: move the settings below to tabular data viewer config options later
   // default page data size for incremental data loading into table view
-  private readonly _pageDataSize: number = 10000;
+  private readonly _pageDataSize: number = 100000;
 
   // infer table schema rows sample size limit
   private readonly _inferDataSize = 100;
@@ -251,7 +251,7 @@ export class TableView {
       tableRows.push(row);
       rowCount++;
       if ((rowCount % (this._pageDataSize * 10)) === 0) {
-        console.log(`tabular.data.view:refresh(): parsing rows ${rowCount}+ ...`);
+        console.log(`tabular.data.view:refresh(): parsing rows ${rowCount.toLocaleString()}+ ...`);
         if (this.visible) {
           statusBar.showMessage(`Parsing rows ${rowCount.toLocaleString()}+`);
         }
@@ -274,24 +274,19 @@ export class TableView {
       this._tableData = tableRows;
       this._totalRows = this._tableData.length;
 
+      if (this.visible) {
+        // update total rows display in status bar
+        statusBar.totalRows = tableRows.length;
+      }
+
       if (tableRows.length < this._pageDataSize) {
         // load first page of data
         this.loadData(tableRows);
-
-        if (this.visible) {
-          // clear loading data status display
-          statusBar.showMessage('');
-        }
       }
       else if (tableRows.length >= this._pageDataSize) {
         // load remaining table rows
         const dataPageIndex: number = 1;
-        this.addData(dataPageIndex);
-      }
-
-      if (this.visible) {
-        // update total rows display in status bar
-        statusBar.totalRows = tableRows.length;
+        //this.addData(dataPageIndex);
       }
     });
   }
