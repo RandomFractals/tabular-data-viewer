@@ -146,17 +146,16 @@ export class TableView {
     TableView._views.set(this.viewUri.toString(true), this);
 
     // dispose table view resources when table view panel is closed by the user or via vscode apis
-    this._webviewPanel.onDidDispose(this.dispose, null, this._disposables);
+    this._webviewPanel.onDidDispose(this.dispose, this, this._disposables);
   }
 
   /**
    * Disposes table view resources when webview panel is closed.
    */
   public dispose() {
-    console.log('tabular.data.view:dispose(): disposing table view:', this._fileInfo.fileName);
+    console.log('tabular.data.view:dispose(): disposing table view:', this.fileInfo.fileName);
     TableView.currentView = undefined;
     TableView._views.delete(this.viewUri.toString(true)); // skip encoding
-    this._webviewPanel.dispose();
     while (this._disposables.length) {
       const disposable: Disposable | undefined = this._disposables.pop();
       if (disposable) {
@@ -440,7 +439,7 @@ export class TableView {
    * Gets data file info with document uri, table view uri, etc.
    */
   get fileInfo(): FileInfo {
-    return this.fileInfo;
+    return this._fileInfo;
   }
 
   /**
