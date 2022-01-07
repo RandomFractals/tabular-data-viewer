@@ -302,6 +302,11 @@ function addData(table, dataRows, dataPageIndex) {
     tableData.push(...dataRows);
     loadedRows += dataRows.length;
     console.log('tableView.loadedRows:', loadedRows.toLocaleString(), 'totalRows:', totalRows.toLocaleString());
+
+    if (table.getDataCount() <= 0) {
+      // display the first data page on reload
+      table.setData(tableData);
+    }
   }
 
   // request more data rows to load and display
