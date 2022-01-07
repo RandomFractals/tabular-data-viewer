@@ -9,7 +9,7 @@ let fileName = '';
 let saveDataFileName = '';
 
 // table view elements
-let tableContainer, table, progressRing, saveFileTypeSelector;
+let tableContainer, table, progressRing, saveFileTypeSelector, tablePageSelector;
 
 // table view vars
 let tableSchema;
@@ -29,7 +29,7 @@ const movableColumns = true;
 const movableRows = true;
 const selectableRows =  true;
 
-const pagination = true;
+const pagination = false;
 const paginationSize = 1000;
 const pageDataSize = 100000;
 const pageSizes = [100, 1000, 10000, 100000];
@@ -123,10 +123,6 @@ function initializeView() {
   // data progress loading indicator
   progressRing = document.getElementById('progress-ring');
 
-  // save file selector
-  saveFileTypeSelector = document.getElementById('save-file-type-selector');
-  saveFileTypeSelector.onchange = saveData;
-
   // reload data UI
   const reloadButton = document.getElementById('reload-button');
   reloadButton.addEventListener('click', reloadData);
@@ -137,6 +133,14 @@ function initializeView() {
 
   const scrollToLastRowButton = document.getElementById('scroll-to-last-row-button');
   scrollToLastRowButton.addEventListener('click', scrollToLastRow);
+
+  // table page selector
+  tablePageSelector = document.getElementById('table-page-selector');
+  tablePageSelector.onchange = showDataPage;
+
+  // save file selector
+  saveFileTypeSelector = document.getElementById('save-file-type-selector');
+  saveFileTypeSelector.onchange = saveData;
 
   // request initial rows data load
   vscode.postMessage({ command: 'refresh' });
@@ -297,20 +301,34 @@ function addData(table, dataRows, dataPageIndex) {
     // increment last loaded data page index
     loadedDataPage++;
 
-    // add new rows to table data
-    console.log('tableView.addData(): loading data page:', loadedDataPage);
-    tableData.push(...dataRows);
-    loadedRows += dataRows.length;
-    console.log('tableView.loadedRows:', loadedRows.toLocaleString(), 'totalRows:', totalRows.toLocaleString());
+    // update data page selector
+    tablePageSelector.innerHTML += `<option value="${loadedDataPage}">${loadedDataPage + 1}</option>`;
 
-    if (table.getDataCount() <= 0) {
-      // display the first data page on reload
-      table.setData(tableData);
+    // add new rows to table data
+    tableData.push(...dataRows);
+    if (loadedRows <= 0) {
+      // reset table data on on reload
+      table.setData(dataRows);
     }
+    loadedRows += dataRows.length;
+    // console.log('tableView.addData(): loading data page:', loadedDataPage);
+    // console.log('tableView.loadedRows:', loadedRows.toLocaleString(), 'totalRows:', totalRows.toLocaleString());
   }
 
   // request more data rows to load and display
   getNextDataPage();
+}
+
+/**
+ * Loads requested data page in table view.
+ */
+function showDataPage() {
+  let dataPageIndex = Number(tablePageSelector.value);
+  // console.log('tableView.showDataPage(): loading data page:', dataPageIndex);
+  const pageStart = (dataPageIndex * pageDataSize);
+  const pageData = tableData.slice(pageStart, Math.min(pageStart + pageDataSize, totalRows));
+  table.clearData();
+  table.setData(pageData);
 }
 
 /**
@@ -325,7 +343,10 @@ function clearTable(table) {
     loadedRows = 0;
     totalRows = 0;
     loadedDataPage = 0;
-    tableData.length = 0;
+    tableData = [];
+
+    // clear UI controls
+    tablePageSelector.innerHTML = '<option value="">Page</option><option value="1">1</option>';
   }
 }
 

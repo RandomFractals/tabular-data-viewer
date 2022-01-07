@@ -330,7 +330,7 @@ export class TableView {
   public async addData(dataPage: number): Promise<void> {
     let nextRows: number = dataPage * this._pageDataSize;
     if (this._loadedDataPage <= dataPage && nextRows < this._totalRows) {
-      console.log(`tabular.data.view:addData(): loading rows ${nextRows.toLocaleString()}+ ...`);
+      // console.log(`tabular.data.view:addData(): loading rows ${nextRows.toLocaleString()}+ ...`);
       if (this.visible) {
         statusBar.showMessage(`Loading rows ${nextRows.toLocaleString()}+`);
       }
@@ -544,6 +544,10 @@ export class TableView {
                 appearance="icon" aria-label="Scroll to First Row">
 	              <span class="codicon codicon-arrow-up">⤒</span>
               </vscode-button>
+              <select id="table-page-selector" title="View Data Page">
+                <option value="">Page</option>
+                <option value="1">1</option>
+              </select>
               <select id="save-file-type-selector" title="Save Data">
                 <option value="">📥&nbsp;Save</option>
                 <option value="csv">,,, csv</option>
