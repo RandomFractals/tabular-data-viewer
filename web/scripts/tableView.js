@@ -8,14 +8,16 @@ let documentUrl = '';
 let fileName = '';
 let saveDataFileName = '';
 
-// table view vars
+// table view elements
 let tableContainer, table, progressRing, saveFileTypeSelector;
+
+// table view vars
 let tableSchema;
 let tableColumns = [];
 let tableData = [];
 let loadedRows = 0;
 let totalRows = 0;
-let dataPage = 0;
+let loadedDataPage = 0;
 
 // table view settings
 const toolbarHeight = 40; // table view toolbar height offset
@@ -29,7 +31,8 @@ const selectableRows =  true;
 
 const pagination = true;
 const paginationSize = 1000;
-const pageSizes = [100, 1000, 10000, 100000, 1000000, 10000000];
+const pageDataSize = 100000;
+const pageSizes = [100, 1000, 10000, 100000];
 
 const reactiveData = false;
 const renderVerticalBuffer = 300; // virtual view buffer height in px for redraw on scroll
@@ -94,7 +97,6 @@ window.addEventListener('resize', function () {
 window.addEventListener('message', event => {
   switch (event.data.command) {
     case 'refresh':
-      console.log('refreshing table view ...');
       documentUrl = event.data.documentUrl;
       fileName = event.data.fileName;
       vscode.setState({ documentUrl: documentUrl });
@@ -146,6 +148,7 @@ function initializeView() {
  * @see https://code.visualstudio.com/api/extension-guides/webview#passing-messages-from-an-extension-to-a-webview
  */
 function reloadData() {
+  console.log('tableView.reloadData(): reloading table data ...');
   clearTable(table);
   progressRing.style.visibility = 'visible';
   vscode.postMessage({
@@ -159,6 +162,7 @@ function reloadData() {
  * @param {*} tableData Data array to display in tabulator table.
  */
 function loadData(tableData) {
+  console.log('tableView.loadData(): loading table data ...');
   logTableData(tableData);
   if (table === undefined) {
     // create table and load initial set of data rows
@@ -221,6 +225,11 @@ function createTable(tableData) {
 
     // update table settings after initial data rows load
     table.on('tableBuilt', onTableBuilt);
+
+    // log loaded table data counts for debug
+    table.on('dataLoaded', data => {
+      console.log('tableView.table.dataLoaded():loadedData:', data.length.toLocaleString());
+    });
   }
 }
 
@@ -254,81 +263,65 @@ function onTableBuilt () {
   // request more data for incremental data loading
   loadedRows = table.getRows().length;
   console.log('tableView.loadedRows:', loadedRows.toLocaleString());
-  if (loadedRows < totalRows) {
-    getNextDataPage();
-  }
-}
-
-
-/**
- * Adds data rows to the table.
- * 
- * @param {*} table Tabulator table instance.
- * @param {*} dataRows Data array for the table rows to add.
- * @param {*} dataPageIndex Data page index for the data rows to add.
- */
-function addData(table, dataRows, dataPageIndex) {
-  if (dataPageIndex === dataPage) {
-    // get the next set of data rows
-    getNextDataPage();
-  }
-
-  console.log('tableView:addData(): loading data page:', dataPage);
-
-  // add new rows to table data
-  tableData.push.apply(tableData, dataRows);
-  loadedRows += dataRows.length;
-  // console.log('tableView:rowCount:', loadedRows.toLocaleString(), 'totalRows:', totalRows.toLocaleString());
-  
-  if (loadedRows < totalRows) {
-    // request more data rows to load and display
-    getNextDataPage();
-  }
-  else {
-    // hide data loading progress ring
-    progressRing.style.visibility = 'hidden';
-    console.log('tableView:rowCount:', loadedRows.toLocaleString(), 'totalRows:', totalRows.toLocaleString());
-  }
-
-  /*
-  if (table && dataRows) {
-    table.addData(dataRows, true)
-      .then(function (rows) { // rows - array of the row components for the rows updated or added
-        // update loaded table data array and rows counter
-        tableData.push.apply(tableData, dataRows);
-        loadedRows += rows.length;
-        if (loadedRows < totalRows) {
-          // request more data rows to load and display
-          dataPage++;
-          progressRing.style.visibility = 'visible';
-          vscode.postMessage({
-            command: 'addData',
-            dataPage: dataPage
-          });
-        }
-        else {
-          // hide data loading progress ring
-          progressRing.style.visibility = 'hidden';
-          console.log('tableView:rowCount:', loadedRows, 'totalRows:', totalRows);
-        }
-      })
-      .catch(function (error) {
-        // handle error updating data
-        console.error(error);
-      });
-  }*/
+  getNextDataPage();
 }
 
 /**
  * Requests more data rows to load and display.
  */
 function getNextDataPage() {
-  dataPage++;
-  progressRing.style.visibility = 'visible';
-  vscode.postMessage({
-    command: 'addData',
-    dataPage: dataPage
-  });
+  const nextDataPage = loadedDataPage + 1;
+  if (loadedRows < totalRows && (nextDataPage * pageDataSize) < totalRows) {
+    progressRing.style.visibility = 'visible';
+    vscode.postMessage({
+      command: 'addData',
+      dataPage: nextDataPage
+    });
+  }
+  else {
+    // hide data loading progress ring
+    progressRing.style.visibility = 'hidden';
+  }
+}
+
+
+/**
+ * Adds data rows to the table view and requests the next data page.
+ * 
+ * @param {*} table Tabulator table instance.
+ * @param {*} dataRows Data array for the table rows to add.
+ * @param {*} dataPageIndex Data page index for the data rows to add.
+ */
+function addData(table, dataRows, dataPageIndex) {
+  if (dataPageIndex > loadedDataPage) {
+    // increment last loaded data page index
+    loadedDataPage++;
+
+    // add new rows to table data
+    console.log('tableView.addData(): loading data page:', loadedDataPage);
+    tableData.push(...dataRows);
+    loadedRows += dataRows.length;
+    console.log('tableView.loadedRows:', loadedRows.toLocaleString(), 'totalRows:', totalRows.toLocaleString());
+  }
+
+  // request more data rows to load and display
+  getNextDataPage();
+}
+
+/**
+ * Clears displayed table data.
+ */
+function clearTable(table) {
+  if (table) {
+    // clear displayed table view
+    table.clearData();
+
+    // reset loaded table data row/page counters
+    loadedRows = 0;
+    totalRows = 0;
+    loadedDataPage = 0;
+    tableData.length = 0;
+  }
 }
 
 /**
@@ -364,21 +357,6 @@ function restoreTableSetting(id, type) {
     console.log(`tableSetting:${tableSettingKey}:`, tableSetting);
   }
   return tableSetting ? JSON.parse(tableSetting) : false;
-}
-
-/**
- * Clears displayed table data.
- */
-function clearTable(table) {
-  if (table) {
-    // clear displayed table view
-    table.clearData();
-
-    // reset loaded table data row/page counters
-    loadedRows = 0;
-    totalRows = 0;
-    dataPage = 0;
-  }
 }
 
 /**
@@ -466,6 +444,6 @@ function saveData() {
  * @param tableData Loaded able data.
  */
 function logTableData(tableData) {
-  console.log('tableView:rowCount:', tableData.length);
+  console.log('tableView.loadedRows:', tableData.length.toLocaleString());
   console.log('1st 10 rows:', tableData.slice(0, 10));
 }

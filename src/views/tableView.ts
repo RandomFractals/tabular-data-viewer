@@ -47,9 +47,10 @@ export class TableView {
   // tabular data vars
   private _tableSchema: any;
   private _tableData: Array<any> = [];
-  private _currentDataPage: number = 0;
   private _totalRows: number = 0;
   private _loadTime: number = 0; // load time in milliseconds
+  private _loadedDataPage: number = 0;
+
 
   // TODO: move the settings below to tabular data viewer config options later
   // default page data size for incremental data loading into table view
@@ -216,7 +217,7 @@ export class TableView {
   public async refresh(): Promise<void> {
     // clear loaded data info
     this._totalRows = 0;
-    this._currentDataPage = 0;
+    this._loadedDataPage = 0;
     this._tableData.length = 0;
     this._loadTime = 0;
 
@@ -282,6 +283,8 @@ export class TableView {
       if (tableRows.length < this._pageDataSize) {
         // load first page of data
         this.loadData(tableRows);
+        // clear data loading status bar message
+        statusBar.showMessage('');
       }
       else if (tableRows.length > this._pageDataSize) {
         // load remaining table rows
@@ -302,8 +305,13 @@ export class TableView {
     this._totalRows = this._tableData.length;
     this.logTableData(tableRows);
 
+    if (this.visible) {
+      statusBar.showMessage(`Loading data`);
+    }
+
     // send initial set of data rows to table view for display
-    const initialDataRows: Array<any> = tableRows.slice(0, Math.min(this._pageDataSize, this._totalRows));
+    const nextRows: number = Math.min(this._pageDataSize, this._totalRows);
+    const initialDataRows: Array<any> = tableRows.slice(0, nextRows);
     this.webviewPanel.webview.postMessage({
       command: 'refresh',
       fileName: this._fileInfo.fileName,
@@ -321,7 +329,7 @@ export class TableView {
    */
   public async addData(dataPage: number): Promise<void> {
     let nextRows: number = dataPage * this._pageDataSize;
-    if (nextRows < this._totalRows) {
+    if (this._loadedDataPage <= dataPage && nextRows < this._totalRows) {
       console.log(`tabular.data.view:addData(): loading rows ${nextRows.toLocaleString()}+ ...`);
       if (this.visible) {
         statusBar.showMessage(`Loading rows ${nextRows.toLocaleString()}+`);
@@ -331,16 +339,17 @@ export class TableView {
       const dataRows: Array<any> =
         this._tableData.slice(nextRows, Math.min(nextRows + this._pageDataSize, this._totalRows));
 
+      // increment next rows for data loading status update
+      nextRows += dataRows.length;
+      this._loadedDataPage++;
+
       // send the next set of data rows to display
       this.webviewPanel.webview.postMessage({
         command: 'addData',
         dataRows: dataRows,
-        dataPage: dataPage,
+        dataPage: this._loadedDataPage,
         totalRows: this._totalRows
       });
-
-      // increment next rows for data loading status update
-      nextRows += dataRows.length;
     }
 
     if (nextRows >= this._totalRows) {
@@ -399,7 +408,7 @@ export class TableView {
    * @param tableData Parsed table data.
    */
   private logTableData(tableData: any, columns?: []): void {
-    console.log('tabular.data.view:rowCount:', tableData.length.toLocaleString());
+    console.log('tabular.data.view:loadedRows:', tableData.length.toLocaleString());
     if (columns) {
       console.log('\tcolumns:', columns );
     }
