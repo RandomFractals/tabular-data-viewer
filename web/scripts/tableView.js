@@ -308,7 +308,7 @@ function addData(table, dataRows, dataPageIndex) {
     tableData.push(...dataRows);
     if (loadedRows <= 0) {
       // reset table data on on reload
-      table.setData(dataRows);
+      table.replaceData(dataRows);
     }
     loadedRows += dataRows.length;
     // console.log('tableView.addData(): loading data page:', loadedDataPage);
@@ -328,7 +328,7 @@ function showDataPage() {
   const pageStart = (dataPageIndex * pageDataSize);
   const pageData = tableData.slice(pageStart, Math.min(pageStart + pageDataSize, totalRows));
   table.clearData();
-  table.setData(pageData);
+  table.replaceData(pageData);
 }
 
 /**
