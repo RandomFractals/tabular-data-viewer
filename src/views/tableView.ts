@@ -227,7 +227,7 @@ export class TableView {
 
     // infer table shema
     this._tableSchema = await table.infer(this._inferDataSize);
-    console.log('tabular.data.view:tableInfo:', this._tableSchema);
+    console.log('tabular.data.view:tableSchema: columns:', this._tableSchema.fields);
     statusBar.showColumns(this._tableSchema.fields);
 
     // create readable CSV data file stream
@@ -269,7 +269,7 @@ export class TableView {
       const endReadTime: Date = new Date();
       this._loadTime = (endReadTime.getTime() - startReadTime.getTime());
       statusBar.loadTime = this._loadTime;
-      this.logTableData(tableRows, table.headers);
+      this.logTableData(tableRows); //, table.headers);
 
       // udpate table view state
       this._tableData = tableRows;
@@ -411,8 +411,8 @@ export class TableView {
     console.log('tabular.data.view:loadedRows:', tableData.length.toLocaleString());
     if (columns) {
       console.log('\tcolumns:', columns );
+      console.log('1st 10 rows:', tableData.slice(0, 10));
     }
-    console.log('1st 10 rows:', tableData.slice(0, 10));
   }
 
   /**
