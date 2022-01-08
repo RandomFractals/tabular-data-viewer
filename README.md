@@ -17,7 +17,7 @@ See [Data Preview](https://github.com/RandomFractals/vscode-data-preview) 🈸 v
 
 # Tabular Data Viewer 中
 
-Tabular Data Viewer 🀄 provides custom Table View for `.csv`, `.tsv` and `.tab` data files with <a title="Tabulator" href="http://tabulator.info"><img width="95" height="20" src="docs/images/tabulator.png" /></a>:
+Tabular Data Viewer provides fast [`DSV`](https://en.wikipedia.org/wiki/Delimiter-separated_values) data loading and custom Table View 🀄 display for large `.csv`, `.tsv` and `.tab` data files via <a title="Tabulator" href="http://tabulator.info"><img width="95" height="20" src="docs/images/tabulator.png" /></a> table and [Papa Parse](https://www.papaparse.com/) CSV parser with [NodeJS File Streams](https://nodejs.dev/learn/nodejs-streams) and [Worker threads](https://nodejs.org/api/worker_threads.html):
 
 ![Tabular Data View 中](https://github.com/RandomFractals/tabular-data-viewer/blob/main/docs/images/tabular-data-view.png?raw=true 
  "Tabular Data View 中")

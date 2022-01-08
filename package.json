@@ -1,7 +1,7 @@
 {
 	"name": "tabular-data-viewer",
 	"displayName": "Tabular Data Viewer 中",
-	"description": "Tabular Data Viewer 🀄 provides custom Table View for .csv, .tsv and .tab data files with Tabulator.",
+	"description": "Tabular Data Viewer provides fast DSV data loading and custom Table View 🀄 display for large .csv, .tsv and .tab data files via Tabulator table and Papa Parse CSV parser.",
 	"version": "1.3.0",
 	"engines": {
 		"vscode": "^1.63.0"
@@ -34,10 +34,13 @@
 		"data grid 中",
 		"data viewer",
 		"CSV",
+		"DSV",
 		"TSV",
 		"flat data",
+		"large data",
 		"text data",
-		"table view"
+		"table view",
+		"data streaming"
 	],
 	"activationEvents": [
 		"onLanguage:csv",
