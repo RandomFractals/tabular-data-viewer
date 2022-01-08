@@ -42,7 +42,7 @@ const debugInvalidOptions = true; // tabulator warnings
 
 // Note: set these events to true to log all events dispatched by the Tabulator table.
 // To debug table data loading add 'dataLoaded' to the tracked external Tabulator events.
-const debugEventsExternal = ['tableBuilding', 'tableBuilt'];
+const debugEventsExternal = false; //['tableBuilding', 'tableBuilt'];
 const debugEventsInternal = false; // log all internal tabulator events
 
 // table row context menu options
@@ -246,7 +246,7 @@ function onTableBuilt () {
 
   // get table columns for debug
   const columns = table.getColumns();
-  console.log('tableView.columns:', columns);
+  // console.log('tableView.columns:', columns);
 
   // add row selection column
   // TODO: make this optional via tabular data viewer config setting
@@ -360,7 +360,7 @@ function clearTable(table) {
 function saveTableSetting(id, type, data) {
   // create table setting key
   const tableSettingKey = `${id}-${type}`;
-  console.log(`tableSetting:${tableSettingKey}:`, data);
+  // console.log(`tableSetting:${tableSettingKey}:`, data);
 
   // save table settings in local storage for now
   localStorage.setItem(tableSettingKey, JSON.stringify(data));
@@ -380,7 +380,7 @@ function restoreTableSetting(id, type) {
   // try to get requested table setting from local storage
   const tableSetting = localStorage.getItem(tableSettingKey);
   if (tableSetting) {
-    console.log(`tableSetting:${tableSettingKey}:`, tableSetting);
+    // console.log(`tableSetting:${tableSettingKey}:`, tableSetting);
   }
   return tableSetting ? JSON.parse(tableSetting) : false;
 }
@@ -471,5 +471,5 @@ function saveData() {
  */
 function logTableData(tableData) {
   console.log('tableView.loadedRows:', tableData.length.toLocaleString());
-  console.log('1st 10 rows:', tableData.slice(0, 10));
+  // console.log('1st 10 rows:', tableData.slice(0, 10));
 }
