@@ -46,6 +46,9 @@ Large CSV data files streaming and display is very alpha and has the following l
 - Columns sort only works for the paged data loaded and displayed in Table View 🀄 and doesn't sort data for the whole dataset
 - Save data uses [Tabulator Download Table Data](http://tabulator.info/docs/5.0/download) feature and is also limited to max 100k rows for the currently displayed tabular data in Table View 🀄
 
+![Tabular Data View 中 Large Dataset](https://github.com/RandomFractals/tabular-data-viewer/blob/main/docs/images/tabular-data-view-large-dataset.png?raw=true 
+ "Tabular Data View 中 Large Dataset")
+
 # Contributions
 
 Commands, languages, editor/view types and activation events contributed to VSCode IDE by Tabular Data Viewer 中:
