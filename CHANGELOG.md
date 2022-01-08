@@ -2,6 +2,33 @@
 
 See [releases](https://github.com/RandomFractals/tabular-data-viewer/releases) for source code and `tabular-data-viewer-x.x.x.vsix` extension package download.
 
+## v1.3.0 - [2022-01-08]
+- [#31](https://github.com/RandomFractals/tabular-data-viewer/issues/31)
+Resolve reopening table view for a data file after tab close
+- [#47](https://github.com/RandomFractals/tabular-data-viewer/issues/47)
+Move viewTable command registration to commands/viewTable.ts
+- [#48](https://github.com/RandomFractals/tabular-data-viewer/issues/48)
+Add Open Data File command with quick input prompt
+- [#49](https://github.com/RandomFractals/tabular-data-viewer/issues/49)
+Use tableschema-js for data loading instead of d3-dsv
+- [#50](https://github.com/RandomFractals/tabular-data-viewer/issues/50)
+Use table.iter api with readable stream for loading large data files
+- [#54](https://github.com/RandomFractals/tabular-data-viewer/issues/54)
+Update Tabulator tables library to v5.0.10
+- [#55](https://github.com/RandomFractals/tabular-data-viewer/issues/55)
+Use table.getRows('active') in scroll to last/first row
+- [#56](https://github.com/RandomFractals/tabular-data-viewer/issues/56)
+Add large data files for testing data loading and table view display
+- [#57](https://github.com/RandomFractals/tabular-data-viewer/issues/57)
+Add rows/columns count, file size and data load time display to vscode status bar
+- [#58](https://github.com/RandomFractals/tabular-data-viewer/issues/58)
+Investigate slow Tabulator table data loading and Virtual DOM configuration
+- [#59](https://github.com/RandomFractals/tabular-data-viewer/issues/59)
+Switch to Papa Parse for CSV data loading and parsing in a worker thread
+- [#60](https://github.com/RandomFractals/tabular-data-viewer/issues/60)
+Add paging for large data files
+- [#61](https://github.com/RandomFractals/tabular-data-viewer/issues/61)
+Package and publish data streaming update release
 ## v1.2.0 - [2021-12-28]
 - [#44](https://github.com/RandomFractals/tabular-data-viewer/issues/44)
 Resolve webview UI toolkit bundling and loading
