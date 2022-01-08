@@ -24,17 +24,27 @@ Tabular Data Viewer 🀄 provides custom Table View for `.csv`, `.tsv` and `.tab
 # Features
 
 - View large [`CSV`](https://en.wikipedia.org/wiki/Comma-separated_values) and [`TSV`](https://en.wikipedia.org/wiki/Tab-separated_values) data files in a custom [Tabulator](http://tabulator.info/) Table View 🀄
-- Sort data by multiple columns
+- Open Data File Table View 🀄 via quick file path input prompt
+- Load large datasets with millions of rows and over 1GB of tabular data using [Papa Parse](https://www.papaparse.com/) CSV parser in a worker thread with data streaming and incremental loading into Table View 🀄
+- View data loading progress, file size, colulmns, rows and load time stats display in vscode status bar
+- Sort displayed table data by multiple columns
 - Resize table columns
 - Rearrange table columns and rows
 - Hide, freeze, or delete table columns
 - Freeze or delete table rows
 - Select table rows column
-- Perisist table settings per data file
 - Copy tab delimited table data to Clipboard
-- Save table data in  `CSV` (`,` or `;` delimited), `TSV`, `HTML` table, or `JSON` data array format
+- Save displayed table data in `CSV` (`,` or `;` delimited), `TSV`, `HTML` table, or `JSON` data array format
 
 ...
+
+# Limitations
+
+Large CSV data files streaming and display is very alpha and has the following limitations for now:
+
+- Large datasets are paged and loaded into view for display with default page size set to 100K rows per page
+- Columns sort only works for the paged data loaded and displayed in Table View 🀄 and doesn't sort data for the whole dataset
+- Save data uses [Tabulator Download Table Data](http://tabulator.info/docs/5.0/download) feature and is also limited to max 100k rows for the currently displayed tabular data in Table View 🀄
 
 # Contributions
 
