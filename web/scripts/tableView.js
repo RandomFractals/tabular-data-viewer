@@ -22,7 +22,7 @@ let loadedDataPage = 0;
 // table view settings
 const toolbarHeight = 40; // table view toolbar height offset
 const autoResize = true;
-const autoColumns = true;
+let autoColumns = true;
 const enableClipboard = true; // enable clipboard copy and paste
 const clipboardPasteAction = 'replace';
 const movableColumns = true;
@@ -103,7 +103,7 @@ window.addEventListener('message', event => {
       tableSchema = event.data.tableSchema;
       tableData = event.data.tableData;
       totalRows = event.data.totalRows;
-      loadData(tableData, fileName);
+      loadData(tableData, tableSchema);
       break;
     case 'addData':
       totalRows = event.data.totalRows;
@@ -164,13 +164,14 @@ function reloadData() {
  * Loads and displays table data.
  * 
  * @param {*} tableData Data array to display in tabulator table.
+ * @param {*} tableSchema Data table schema with inferred column fields info.
  */
-function loadData(tableData) {
+function loadData(tableData, tableSchema) {
   console.log('tableView.loadData(): loading table data ...');
   logTableData(tableData);
   if (table === undefined) {
     // create table and load initial set of data rows
-    createTable(tableData);
+    createTable(tableData, tableSchema);
   }
   else {
     // add new data rows to existing tabulator table
@@ -183,49 +184,20 @@ function loadData(tableData) {
  * Creates new Tabulator table with initial set of data to display.
  * 
  * @param {*} tableData Data array to display in tabulator table.
+ * @param {*} tableSchema Data table schema with inferred column fields info.
  */
-function createTable(tableData) {
+function createTable(tableData, tableSchema) {
   if (table === undefined) {
-    table = new Tabulator('#table-container', {
-      height: window.innerHeight - toolbarHeight,
-      maxHeight: '100%',
-      autoResize: autoResize,
-      autoColumns: autoColumns,
-      columnDefaults: {
-        headerMenu: columnHeaderMenu
-      },
-      clipboard: enableClipboard, // enable clipboard copy and paste
-      clipboardPasteAction: clipboardPasteAction,
-      layout: 'fitDataStretch', // 'fitColumns',
-      layoutColumnsOnNewData: true,
-      movableColumns: movableColumns,
-      movableRows: movableRows,
-      selectable: selectableRows,
-      reactiveData: reactiveData,
-      data: tableData,
-      pagination: pagination,
-      paginationSize: paginationSize,
-      paginationSizeSelector: pageSizes,
-      rowContextMenu: rowContextMenu,
-      renderVerticalBuffer: renderVerticalBuffer,
-      debugInvalidOptions: debugInvalidOptions, // log invalid tabulator config warnings
-      debugEventsExternal: debugEventsExternal,
-      debugEventsInternal: debugEventsInternal,
-      persistenceMode: 'local',
-      persistenceID: fileName,
-      // persistentLayout: true,
-      persistence: {
-        sort: true,
-        filter: true,
-        group: true,
-        columns: true,
-      },
-      // add table setting save/restore handlers
-      persistenceWriterFunc: (id, type, data) => saveTableSetting(id, type, data),
-      persistenceReaderFunc: (id, type) => restoreTableSetting(id, type),
-      // add table data download handler
-      downloadReady: (fileContents, blob) => downloadData(fileContents, blob)
-    });
+    // create table columns array from table schema fields
+    tableColumns = createTableColumns(tableSchema);
+    if (tableColumns.length > 0) {
+      // don't auto generate columns
+      autoColumns = false;
+    }
+    
+    // create tabulator table instance for tabular data display
+    const tableConfig = createTableConfig(tableColumns);
+    table = new Tabulator('#table-container', tableConfig);
 
     // update table settings after initial data rows load
     table.on('tableBuilt', onTableBuilt);
@@ -238,6 +210,98 @@ function createTable(tableData) {
 }
 
 /**
+ * Creates table column descriptors from frictionless data table schema config.
+ * 
+ * @see https://specs.frictionlessdata.io/table-schema/#descriptor
+ * 
+ * @param {*} tableSchema Frictionless data table schema config.
+ */
+function createTableColumns(tableSchema) {
+  const tableColumns = [];
+  // Note: sometimes table rows are not parsed correctly
+  // by the frictionless table schema infer() and returns only 1 field
+  if (tableSchema && tableSchema.fields && tableSchema.fields.length > 1) {
+    console.log('tableView.createTableColumns():tableSchema:', tableSchema.fields);
+    tableSchema.fields.forEach(field => {
+      // determine field sorter type
+      let sorter = 'string';
+      switch (field.type) {
+        case 'integer':
+        case 'number':
+          sorter = 'number';
+          break;
+        // TODO: add more sorter types for dates, etc.
+      }
+
+      // add new table column descriptor
+      tableColumns.push({
+        field: field.name,
+        title: field.name,
+        resizable: true,
+        headerSort: true,
+        sorter: sorter
+      });
+    });
+    console.log('tableView.createTableColumns():columns:', tableColumns);
+    return tableColumns;
+  }
+}
+
+/**
+ * Creates Tabulator table config.
+ * 
+ * @param {*} tableColumns Optional table column descriptors array.
+ */
+function createTableConfig(tableColumns) {
+  let tableConfig = {
+    height: window.innerHeight - toolbarHeight,
+    maxHeight: '100%',
+    autoResize: autoResize,
+    autoColumns: autoColumns,
+    columnDefaults: {
+      headerMenu: columnHeaderMenu
+    },
+    clipboard: enableClipboard, // enable clipboard copy and paste
+    clipboardPasteAction: clipboardPasteAction,
+    layout: 'fitDataStretch', // 'fitColumns',
+    layoutColumnsOnNewData: true,
+    movableColumns: movableColumns,
+    movableRows: movableRows,
+    selectable: selectableRows,
+    reactiveData: reactiveData,
+    data: tableData,
+    pagination: pagination,
+    paginationSize: paginationSize,
+    paginationSizeSelector: pageSizes,
+    rowContextMenu: rowContextMenu,
+    renderVerticalBuffer: renderVerticalBuffer,
+    debugInvalidOptions: debugInvalidOptions, // log invalid tabulator config warnings
+    debugEventsExternal: debugEventsExternal,
+    debugEventsInternal: debugEventsInternal,
+    persistenceMode: 'local',
+    persistenceID: fileName,
+    // persistentLayout: true,
+    persistence: {
+      sort: true,
+      filter: true,
+      group: true,
+      columns: true,
+    },
+    // add table setting save/restore handlers
+    persistenceWriterFunc: (id, type, data) => saveTableSetting(id, type, data),
+    persistenceReaderFunc: (id, type) => restoreTableSetting(id, type),
+    // add table data download handler
+    downloadReady: (fileContents, blob) => downloadData(fileContents, blob)
+  };
+
+  if (tableColumns && tableColumns.length > 0) {
+    tableConfig.autoColumns = false;
+    tableConfig.columns = tableColumns;
+  }
+  return tableConfig;
+}
+
+/**
  * Updates Tabulator table after initial set of data rows is loaded.
  */
 function onTableBuilt () {
@@ -246,7 +310,7 @@ function onTableBuilt () {
 
   // get table columns for debug
   const columns = table.getColumns();
-  // console.log('tableView.columns:', columns);
+  console.log('tableView.onTableBuilt():columns:', columns);
 
   // add row selection column
   // TODO: make this optional via tabular data viewer config setting
@@ -360,7 +424,7 @@ function clearTable(table) {
 function saveTableSetting(id, type, data) {
   // create table setting key
   const tableSettingKey = `${id}-${type}`;
-  // console.log(`tableSetting:${tableSettingKey}:`, data);
+  console.log(`tableView.saveTableSetting(): ${tableSettingKey}=`, data);
 
   // save table settings in local storage for now
   localStorage.setItem(tableSettingKey, JSON.stringify(data));
@@ -380,7 +444,7 @@ function restoreTableSetting(id, type) {
   // try to get requested table setting from local storage
   const tableSetting = localStorage.getItem(tableSettingKey);
   if (tableSetting) {
-    // console.log(`tableSetting:${tableSettingKey}:`, tableSetting);
+    console.log(`tableView.restoreTableSetting(): ${tableSettingKey}=`, tableSetting);
   }
   return tableSetting ? JSON.parse(tableSetting) : false;
 }

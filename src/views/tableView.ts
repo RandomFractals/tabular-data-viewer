@@ -316,7 +316,7 @@ export class TableView {
       command: 'refresh',
       fileName: this._fileInfo.fileName,
       documentUrl: this._fileInfo.fileUri.toString(),
-      tableShema: this._tableSchema,
+      tableSchema: this._tableSchema,
       totalRows: this._totalRows,
       tableData: initialDataRows
     });
