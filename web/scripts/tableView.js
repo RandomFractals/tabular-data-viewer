@@ -96,6 +96,9 @@ window.addEventListener('resize', function () {
 // add data/config update handler
 window.addEventListener('message', event => {
   switch (event.data.command) {
+    case 'createTable':
+      createTable(event.data.tableSchema);
+      break;
     case 'refresh':
       documentUrl = event.data.documentUrl;
       fileName = event.data.fileName;
@@ -171,7 +174,7 @@ function loadData(tableData, tableSchema) {
   logTableData(tableData);
   if (table === undefined) {
     // create table and load initial set of data rows
-    createTable(tableData, tableSchema);
+    table = createTable(tableSchema, tableData);
   }
   else {
     // add new data rows to existing tabulator table
@@ -183,11 +186,14 @@ function loadData(tableData, tableSchema) {
 /**
  * Creates new Tabulator table with initial set of data to display.
  * 
- * @param {*} tableData Data array to display in tabulator table.
  * @param {*} tableSchema Data table schema with inferred column fields info.
+ * @param {*} tableData Data array to display in tabulator table.
  */
-function createTable(tableData, tableSchema) {
+function createTable(tableSchema, tableData) {
   if (table === undefined) {
+    // show progress ring
+    progressRing.style.visibility = 'visible';
+
     // create table columns array from table schema fields
     tableColumns = createTableColumns(tableSchema);
     if (tableColumns.length > 0) {
@@ -207,6 +213,7 @@ function createTable(tableData, tableSchema) {
       console.log('tableView.table.dataLoaded():loadedData:', data.length.toLocaleString());
     });
   }
+  return table;
 }
 
 /**
@@ -221,7 +228,7 @@ function createTableColumns(tableSchema) {
   // Note: sometimes table rows are not parsed correctly
   // by the frictionless table schema infer() and returns only 1 field
   if (tableSchema && tableSchema.fields && tableSchema.fields.length > 1) {
-    console.log('tableView.createTableColumns():tableSchema:', tableSchema.fields);
+    // console.log('tableView.createTableColumns():tableSchema:', tableSchema.fields);
     tableSchema.fields.forEach(field => {
       // determine field sorter type
       let sorter = 'string';
@@ -243,8 +250,8 @@ function createTableColumns(tableSchema) {
       });
     });
     console.log('tableView.createTableColumns():columns:', tableColumns);
-    return tableColumns;
   }
+  return tableColumns;
 }
 
 /**

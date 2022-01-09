@@ -230,6 +230,13 @@ export class TableView {
     console.log('tabular.data.view:tableSchema: columns:', this._tableSchema.fields);
     statusBar.showColumns(this._tableSchema.fields);
 
+    // create table in table view before loading data
+    /*
+    this.webviewPanel.webview.postMessage({
+      command: 'createTable',
+      tableSchema: this._tableSchema
+    }); */
+
     // create readable CSV data file stream
     const startReadTime: Date = new Date();
     const dataFileStream: fs.ReadStream =
