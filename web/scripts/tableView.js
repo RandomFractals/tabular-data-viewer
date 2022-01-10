@@ -12,12 +12,16 @@ let saveDataFileName = '';
 let tableContainer, table, progressRing, saveFileTypeSelector, tablePageSelector;
 
 // table view vars
+let tableConfig = {};
 let tableSchema;
 let tableColumns = [];
 let tableData = [];
 let loadedRows = 0;
 let totalRows = 0;
 let loadedDataPage = 0;
+let viewState = {
+  tableConfig: tableConfig
+};
 
 // table view settings
 const toolbarHeight = 40; // table view toolbar height offset
@@ -102,7 +106,8 @@ window.addEventListener('message', event => {
     case 'refresh':
       documentUrl = event.data.documentUrl;
       fileName = event.data.fileName;
-      vscode.setState({ documentUrl: documentUrl });
+      viewState.documentUrl = documentUrl;
+      vscode.setState(viewState);
       tableSchema = event.data.tableSchema;
       tableData = event.data.tableData;
       totalRows = event.data.totalRows;
@@ -144,6 +149,19 @@ function initializeView() {
   // save file selector
   saveFileTypeSelector = document.getElementById('save-file-type-selector');
   saveFileTypeSelector.onchange = saveData;
+
+  // restore previous table view state
+  viewState = vscode.getState();
+  if (viewState && viewState.tableConfig) {
+    // get last table view config
+    tableConfig = viewState.tableConfig;
+  }
+  else {
+    // create new empty table view config
+    viewState = {};
+    viewState.tableConfig = tableConfig;
+    vscode.setState(viewState);
+  }
 
   // request initial rows data load
   vscode.postMessage({ command: 'refresh' });
@@ -202,8 +220,8 @@ function createTable(tableSchema, tableData) {
     }
     
     // create tabulator table instance for tabular data display
-    const tableConfig = createTableConfig(tableColumns);
-    table = new Tabulator('#table-container', tableConfig);
+    const tableOptions = createTableConfig(tableColumns);
+    table = new Tabulator('#table-container', tableOptions);
 
     // update table settings after initial data rows load
     table.on('tableBuilt', onTableBuilt);
@@ -435,6 +453,16 @@ function saveTableSetting(id, type, data) {
 
   // save table settings in local storage for now
   localStorage.setItem(tableSettingKey, JSON.stringify(data));
+
+  if (viewState.tableConfig === undefined) {
+    // add table config to table view state
+    viewState.tableConfig = tableConfig;
+  }
+
+  // update table config in view state
+  tableConfig[type] = data;
+  vscode.setState(viewState);
+  console.log(`tableView.saveTableSetting():viewState`, viewState);
 }
 
 /**
