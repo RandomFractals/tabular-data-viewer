@@ -259,6 +259,12 @@ function createTable(tableSchema, tableData) {
  * @param {*} tableSchema Frictionless data table schema config.
  */
 function createTableColumns(tableSchema) {
+
+  if (viewState.tableConfig.columns) {
+    // use columns from restored table view config
+    return viewState.tableConfig.columns;
+  }
+
   const tableColumns = [];
   // Note: sometimes table rows are not parsed correctly
   // by the frictionless table schema infer() and returns only 1 field
@@ -352,23 +358,25 @@ function onTableBuilt () {
 
   // get table columns for debug
   const columns = table.getColumns();
-  console.log('tableView.onTableBuilt():columns:', columns);
+  // console.log('tableView.onTableBuilt():columns:', columns);
 
-  // add row selection column
-  // TODO: make this optional via tabular data viewer config setting
-  table.addColumn({
-    formatter: 'rowSelection',
-    titleFormatter: 'rowSelection',
-    headerMenu: [], // don't show header context menu
-    headerSort: false,
-    download: false // don't include it in data save
-  }, true) // add as 1st column
-    .then(function (column) { // column - row selection colulmn component
-    })
-    .catch(function (error) {
-      // log adding row selection column error for now
-      console.error('tableView.addRowSelectionCollumn: Error\n', error);
-    });
+  if (tableColumns.length > 0 && tableColumns[0].formatter !== 'rowSelection') {
+    // add row selection column
+    // TODO: make this optional via tabular data viewer config setting
+    table.addColumn({
+      formatter: 'rowSelection',
+      titleFormatter: 'rowSelection',
+      headerMenu: [], // don't show header context menu
+      headerSort: false,
+      download: false // don't include it in data save
+    }, true) // add as 1st column
+      .then(function (column) { // column - row selection colulmn component
+      })
+      .catch(function (error) {
+        // log adding row selection column error for now
+        console.error('tableView.addRowSelectionCollumn: Error\n', error);
+      });
+  }
 
   // request more data for incremental data loading
   loadedRows = table.getRows().length;
@@ -466,7 +474,7 @@ function clearTable(table) {
 function saveTableSetting(id, type, data) {
   // create table setting key
   const tableSettingKey = `${id}-${type}`;
-  console.log(`tableView.saveTableSetting(): ${tableSettingKey}=`, data);
+  // console.log(`tableView.saveTableSetting(): ${tableSettingKey}=`, data);
 
   // save table setting in local storage
   localStorage.setItem(tableSettingKey, JSON.stringify(data));
@@ -479,7 +487,8 @@ function saveTableSetting(id, type, data) {
   // update table config in view state
   tableConfig[type] = data;
   vscode.setState(viewState);
-  console.log(`tableView.saveTableSetting():viewState`, viewState);
+  
+  // console.log(`tableView.saveTableSetting():viewState`, viewState);
 }
 
 /**
