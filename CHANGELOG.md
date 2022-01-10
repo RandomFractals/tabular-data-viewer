@@ -2,6 +2,9 @@
 
 See [releases](https://github.com/RandomFractals/tabular-data-viewer/releases) for source code and `tabular-data-viewer-x.x.x.vsix` extension package download.
 
+## v1.4.0 - [2022-01-10]
+- [#64](https://github.com/RandomFractals/tabular-data-viewer/issues/64)
+Save and restore table settings on vscode reload
 ## v1.3.0 - [2022-01-08]
 - [#31](https://github.com/RandomFractals/tabular-data-viewer/issues/31)
 Resolve reopening table view for a data file after tab close
