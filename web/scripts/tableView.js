@@ -104,13 +104,7 @@ window.addEventListener('message', event => {
       createTable(event.data.tableSchema);
       break;
     case 'refresh':
-      documentUrl = event.data.documentUrl;
-      fileName = event.data.fileName;
-      viewState.documentUrl = documentUrl;
-      vscode.setState(viewState);
-      tableSchema = event.data.tableSchema;
-      tableData = event.data.tableData;
-      totalRows = event.data.totalRows;
+      updateViewState(event.data);
       loadData(tableData, tableSchema);
       break;
     case 'addData':
@@ -165,6 +159,29 @@ function initializeView() {
 
   // request initial rows data load
   vscode.postMessage({ command: 'refresh' });
+}
+
+/**
+ * Updates table view state on initial data load and refresh.
+ * 
+ * @param {*} tableInfo Table data and config info from webview.
+ */
+function updateViewState(tableInfo) {
+  documentUrl = tableInfo.documentUrl;
+  fileName = tableInfo.fileName;
+  tableSchema = tableInfo.tableSchema;
+  tableData = tableInfo.tableData;
+  totalRows = tableInfo.totalRows;
+
+  if (tableInfo.tableConfig.columns) {
+    // update table config
+    tableConfig = tableInfo.tableConfig;
+    viewState.tableConfig = tableConfig;
+  }
+  viewState.documentUrl = documentUrl;
+
+  // save updated view state
+  vscode.setState(viewState);
 }
 
 /**
@@ -451,7 +468,7 @@ function saveTableSetting(id, type, data) {
   const tableSettingKey = `${id}-${type}`;
   console.log(`tableView.saveTableSetting(): ${tableSettingKey}=`, data);
 
-  // save table settings in local storage for now
+  // save table setting in local storage
   localStorage.setItem(tableSettingKey, JSON.stringify(data));
 
   if (viewState.tableConfig === undefined) {

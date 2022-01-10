@@ -50,6 +50,7 @@ export class TableView {
   private _totalRows: number = 0;
   private _loadTime: number = 0; // load time in milliseconds
   private _loadedDataPage: number = 0;
+  private _tableConfig: any = {};
 
 
   // TODO: move the settings below to tabular data viewer config options later
@@ -65,8 +66,10 @@ export class TableView {
    * @param extensionUri Extension directory Uri.
    * @param documentUri Data document Uri.
    * @param webviewPanel Optional webview panel instance.
+   * @param tableConfig Table view config to restore.
    */
-  public static render(extensionUri: Uri, documentUri: Uri, webviewPanel?: WebviewPanel) {
+  public static render(extensionUri: Uri, documentUri: Uri, 
+    webviewPanel?: WebviewPanel, tableConfig?: any) {
     // create table view Uri
     const viewUri: Uri = documentUri.with({ scheme: 'tabular-data' });
     console.log('tabular.data.view:render(): loading table view:', viewUri.toString(true)); // skip encoding
@@ -97,7 +100,7 @@ export class TableView {
         path.join(extensionUri.fsPath, './resources/icons/tabular-data-viewer.svg'));
 
       // set as current table view
-      TableView.currentView = new TableView(webviewPanel, extensionUri, documentUri);
+      TableView.currentView = new TableView(webviewPanel, extensionUri, documentUri, tableConfig);
     }
   }
 
@@ -131,10 +134,19 @@ export class TableView {
    * @param webviewPanel Reference to the webview panel.
    * @param extensionUri Extension directory Uri.
    * @param documentUri Data document Uri.
+   * @param tableConfig Optional table view config to restore.
    */
-  private constructor(webviewPanel: WebviewPanel, extensionUri: Uri, documentUri: Uri) {
+  private constructor(webviewPanel: WebviewPanel, extensionUri: Uri,
+    documentUri: Uri, tableConfig?: any) {
+
+    // save webview panel and extension uri
     this._webviewPanel = webviewPanel;
     this._extensionUri = extensionUri;
+
+    if (tableConfig) {
+      // save table view config to restore
+      this._tableConfig = tableConfig;
+    }
 
     // create new file info for the data source
     this._fileInfo = new FileInfo(documentUri);
@@ -234,6 +246,7 @@ export class TableView {
     /*
     this.webviewPanel.webview.postMessage({
       command: 'createTable',
+      tableConfig: this._tableConfig,
       tableSchema: this._tableSchema
     }); */
 
@@ -323,6 +336,7 @@ export class TableView {
       command: 'refresh',
       fileName: this._fileInfo.fileName,
       documentUrl: this._fileInfo.fileUri.toString(),
+      tableConfig: this._tableConfig,
       tableSchema: this._tableSchema,
       totalRows: this._totalRows,
       tableData: initialDataRows

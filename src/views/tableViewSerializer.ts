@@ -43,6 +43,6 @@ export class TableViewSerializer implements WebviewPanelSerializer {
   async deserializeWebviewPanel(webviewPanel: WebviewPanel, state: any) {
     const documentUri: Uri = Uri.parse(state.documentUrl);
     console.log('tabular.data.viewer:deserializeWeviewPanel(): documentUrl:', documentUri.toString());
-    TableView.render(this.extensionUri, documentUri, webviewPanel);
+    TableView.render(this.extensionUri, documentUri, webviewPanel, state.tableConfig);
   }
 }
