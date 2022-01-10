@@ -33,7 +33,7 @@ See [Data Preview](https://github.com/RandomFractals/vscode-data-preview) 🈸 v
 - Hide, freeze, or delete table columns
 - Freeze or delete table rows
 - Select table rows column
-- Perisist table columns layout and sort order
+- Persist table columns layout and sort order
 - Restore customized table columns and sort configuration on vscode reload
 - Copy tab delimited table data to Clipboard
 - Save displayed table data in `CSV` (`,` or `;` delimited), `TSV`, `HTML` table, or `JSON` data array format
