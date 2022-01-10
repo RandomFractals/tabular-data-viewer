@@ -343,9 +343,17 @@ function createTableConfig(tableColumns) {
   };
 
   if (tableColumns && tableColumns.length > 0) {
+    // use restored table columns config
     tableConfig.autoColumns = false;
     tableConfig.columns = tableColumns;
   }
+
+  const initialSort = viewState.tableConfig.sort;
+  if (initialSort) {
+    // set initial sort from restored table view state
+    tableConfig.initialSort = initialSort;
+  }
+
   return tableConfig;
 }
 
@@ -487,7 +495,6 @@ function saveTableSetting(id, type, data) {
   // update table config in view state
   tableConfig[type] = data;
   vscode.setState(viewState);
-  
   // console.log(`tableView.saveTableSetting():viewState`, viewState);
 }
 
