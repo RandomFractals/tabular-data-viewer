@@ -38,6 +38,7 @@ See [Data Preview](https://github.com/RandomFractals/vscode-data-preview) 🈸 v
 - Copy tab delimited table data to Clipboard
 - Save displayed table data in `CSV` (`,` or `;` delimited), `TSV`, `HTML` table, or `JSON` data array format
 - Generate and view [Frictionless Table](https://specs.frictionlessdata.io/table-schema/) `.schema.json` configration file created with [`tableschema-js.infer()`](https://github.com/frictionlessdata/tableschema-js#working-with-validateinfer)
+- Load saved table config options from auto-generated `*.table.json` config file when reopening previously customized Table View 🀄
 
 ...
 
