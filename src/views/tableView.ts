@@ -219,6 +219,9 @@ export class TableView {
         case 'saveData':
           this.saveData(message.data, message.dataFileName, message.dataFileType);
           break;
+        case 'updateTableConfig':
+          this.updateTableConfig(message.tableConfig);
+          break;
       }
     }, undefined, this._disposables);
   }
@@ -410,6 +413,24 @@ export class TableView {
       });
     }
   }
+
+  /**
+   * Updates table config and the corresponding *.table.json
+   * for the loaded data file on table view columns, sort and filter changes.
+   * 
+   * @param tableConfig Table config object to save.
+   */
+  private async updateTableConfig(tableConfig: any): Promise<void> {
+    if (tableConfig) {
+      this._tableConfig = tableConfig;
+      // TODO: add tabular.data.saveTableConfig boolean setting check
+      // save updated table config for restoring table view after tab close
+      const tableConfigFilePath: string = path.join(
+        path.dirname(this._fileInfo.filePath), `${this._fileInfo.fileName}.table.json`);
+      fileUtils.createJsonFile(tableConfigFilePath, tableConfig);
+    }
+  }
+
 
   /**
    * Logs truncated text data for debug.

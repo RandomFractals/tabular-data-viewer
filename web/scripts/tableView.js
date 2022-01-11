@@ -496,6 +496,12 @@ function saveTableSetting(id, type, data) {
   tableConfig[type] = data;
   vscode.setState(viewState);
   // console.log(`tableView.saveTableSetting():viewState`, viewState);
+
+  // notify webview about table config changes
+  vscode.postMessage({
+    command: 'updateTableConfig',
+    tableConfig: tableConfig
+  });
 }
 
 /**
