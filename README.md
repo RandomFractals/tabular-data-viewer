@@ -37,6 +37,7 @@ See [Data Preview](https://github.com/RandomFractals/vscode-data-preview) 🈸 v
 - Restore customized table columns and sort configuration on vscode reload
 - Copy tab delimited table data to Clipboard
 - Save displayed table data in `CSV` (`,` or `;` delimited), `TSV`, `HTML` table, or `JSON` data array format
+- Generate and view [Frictionless Table](https://specs.frictionlessdata.io/table-schema/) `.schema.json` configration file created with [`tableschema-js.infer()`](https://github.com/frictionlessdata/tableschema-js#working-with-validateinfer)
 
 ...
 
