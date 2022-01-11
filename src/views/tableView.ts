@@ -244,6 +244,7 @@ export class TableView {
     this._tableSchema = await table.infer(this._inferDataSize);
     console.log('tabular.data.view:tableSchema: columns:', this._tableSchema.fields);
     statusBar.showColumns(this._tableSchema.fields);
+    this.saveTableSchema(this._tableSchema);
 
     // create table in table view before loading data
     /*
@@ -415,6 +416,25 @@ export class TableView {
   }
 
   /**
+   * Saves tabular data *.schema.json configuration file
+   * on initial data load or table view refresh
+   * to enable viewing inferred tabular data columns and types.
+   * 
+   * @see https://github.com/frictionlessdata/tableschema-js#working-with-schema
+   * 
+   * @param tableSchema Table schema object to save.
+  */
+  private async saveTableSchema(tableSchema: any): Promise<void> {
+    if (tableSchema) {
+      // TODO: add tabular.data.saveTableSchema boolean setting check
+      // save updated table schema from tableschema infer call
+      const tableConfigFilePath: string = path.join(
+        path.dirname(this._fileInfo.filePath), `${this._fileInfo.fileName}.schema.json`);
+      fileUtils.createJsonFile(tableConfigFilePath, tableSchema);
+    }
+  }
+
+  /**
    * Updates table config and the corresponding *.table.json
    * for the loaded data file on table view columns, sort and filter changes.
    * 
@@ -430,7 +450,6 @@ export class TableView {
       fileUtils.createJsonFile(tableConfigFilePath, tableConfig);
     }
   }
-
 
   /**
    * Logs truncated text data for debug.
