@@ -30,7 +30,7 @@
     {
       "field": "city",
       "title": "city",
-      "width": 331,
+      "width": 208,
       "minWidth": 40,
       "resizable": true,
       "sorter": "string",
@@ -39,11 +39,17 @@
     {
       "field": "state",
       "title": "state",
-      "width": 374,
+      "width": 136,
       "minWidth": 40,
       "resizable": true,
       "sorter": "string",
       "headerSort": true
+    }
+  ],
+  "sort": [
+    {
+      "column": "state",
+      "dir": "asc"
     }
   ]
 }
