@@ -428,9 +428,7 @@ export class TableView {
     if (tableSchema) {
       // TODO: add tabular.data.saveTableSchema boolean setting check
       // save updated table schema from tableschema infer call
-      const tableConfigFilePath: string = path.join(
-        path.dirname(this._fileInfo.filePath), `${this._fileInfo.fileName}.schema.json`);
-      fileUtils.createJsonFile(tableConfigFilePath, tableSchema);
+      fileUtils.createJsonFile(this._fileInfo.tableSchemaFilePath, tableSchema);
     }
   }
 
@@ -445,9 +443,7 @@ export class TableView {
       this._tableConfig = tableConfig;
       // TODO: add tabular.data.saveTableConfig boolean setting check
       // save updated table config for restoring table view after tab close
-      const tableConfigFilePath: string = path.join(
-        path.dirname(this._fileInfo.filePath), `${this._fileInfo.fileName}.table.json`);
-      fileUtils.createJsonFile(tableConfigFilePath, tableConfig);
+      fileUtils.createJsonFile(this._fileInfo.tableConfigFilePath, tableConfig);
     }
   }
 

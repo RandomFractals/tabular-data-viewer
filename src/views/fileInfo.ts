@@ -66,4 +66,18 @@ export class FileInfo {
 	public get viewUri(): Uri {
 		return this._viewUri;
 	}
+
+	/**
+ 	 * Gets table schema file path.
+ 	 */
+	public get tableSchemaFilePath(): string {
+		return path.join(path.dirname(this.filePath), `${this._fileName}.schema.json`);
+	}
+
+	/**
+	 * Gets table view config file path.
+ 	 */
+	public get tableConfigFilePath(): string {
+		return path.join(path.dirname(this.filePath), `${this._fileName}.table.json`);
+	}
 }
