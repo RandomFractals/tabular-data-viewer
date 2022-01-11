@@ -333,6 +333,11 @@ export class TableView {
       statusBar.showMessage(`Loading data`);
     }
 
+    if (!this._tableConfig.columns) { // no initial table config
+      // load previously saved table config
+      this._tableConfig = this.loadTableConfig(this._fileInfo.tableConfigFilePath);
+    }
+
     // send initial set of data rows to table view for display
     const nextRows: number = Math.min(this._pageDataSize, this._totalRows);
     const initialDataRows: Array<any> = tableRows.slice(0, nextRows);
@@ -445,6 +450,20 @@ export class TableView {
       // save updated table config for restoring table view after tab close
       fileUtils.createJsonFile(this._fileInfo.tableConfigFilePath, tableConfig);
     }
+  }
+
+  /**
+   * Loads saved table config.
+   * 
+   * @param configFilePath Table config file path
+   */
+  private loadTableConfig(configFilePath: string): any {
+    let tableConfig: any = {};
+    if (fs.existsSync(configFilePath)) {
+      // load and parse previously saved table config
+      tableConfig = JSON.parse(fs.readFileSync(configFilePath, 'utf8'));
+    }
+    return tableConfig;
   }
 
   /**
