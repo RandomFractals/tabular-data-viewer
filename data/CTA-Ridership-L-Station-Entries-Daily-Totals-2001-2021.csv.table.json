@@ -1,58 +1,58 @@
 {
   "columns": [
     {
+      "width": 52,
       "minWidth": 40,
       "download": false,
       "formatter": "rowSelection",
       "titleFormatter": "rowSelection",
       "resizable": true,
-      "headerSort": false,
-      "width": 52
+      "headerSort": false
     },
     {
       "field": "station_id",
       "title": "station_id",
+      "width": 116,
       "minWidth": 40,
       "resizable": true,
       "sorter": "number",
-      "headerSort": true,
-      "width": 116
+      "headerSort": true
     },
     {
       "field": "stationname",
       "title": "stationname",
+      "width": 175,
       "minWidth": 40,
       "resizable": true,
       "sorter": "string",
-      "headerSort": true,
-      "width": 175
+      "headerSort": true
     },
     {
       "field": "daytype",
       "title": "daytype",
+      "width": 106,
       "minWidth": 40,
       "resizable": true,
       "sorter": "string",
-      "headerSort": true,
-      "width": 106
+      "headerSort": true
     },
     {
       "field": "rides",
       "title": "rides",
+      "width": 362,
       "minWidth": 40,
       "resizable": true,
       "sorter": "number",
-      "headerSort": true,
-      "width": 362
+      "headerSort": true
     },
     {
       "field": "date",
       "title": "date",
+      "width": 114,
       "minWidth": 40,
       "resizable": true,
       "sorter": "string",
-      "headerSort": true,
-      "width": 84
+      "headerSort": true
     }
   ]
 }

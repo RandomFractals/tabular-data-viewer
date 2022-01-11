@@ -1,49 +1,49 @@
 {
   "columns": [
     {
+      "width": 52,
       "minWidth": 40,
       "download": false,
       "formatter": "rowSelection",
       "titleFormatter": "rowSelection",
       "resizable": true,
-      "headerSort": false,
-      "width": 52
+      "headerSort": false
     },
     {
       "field": "lon",
       "title": "lon",
+      "width": 87,
       "minWidth": 40,
       "resizable": true,
       "sorter": "number",
-      "headerSort": true,
-      "width": 87
+      "headerSort": true
     },
     {
       "field": "lat",
       "title": "lat",
+      "width": 81,
       "minWidth": 40,
       "resizable": true,
       "sorter": "number",
-      "headerSort": true,
-      "width": 81
+      "headerSort": true
     },
     {
       "field": "city",
       "title": "city",
+      "width": 331,
       "minWidth": 40,
       "resizable": true,
       "sorter": "string",
-      "headerSort": true,
-      "width": 331
+      "headerSort": true
     },
     {
       "field": "state",
       "title": "state",
+      "width": 374,
       "minWidth": 40,
       "resizable": true,
       "sorter": "string",
-      "headerSort": true,
-      "width": 370
+      "headerSort": true
     }
   ]
 }

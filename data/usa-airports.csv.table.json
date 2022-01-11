@@ -1,76 +1,76 @@
 {
   "columns": [
     {
+      "width": 52,
       "minWidth": 40,
       "download": false,
       "formatter": "rowSelection",
       "titleFormatter": "rowSelection",
       "resizable": true,
-      "headerSort": false,
-      "width": 52
+      "headerSort": false
     },
     {
       "field": "iata",
       "title": "iata",
+      "width": 79,
       "minWidth": 40,
       "resizable": true,
       "sorter": "string",
-      "headerSort": true,
-      "width": 79
+      "headerSort": true
     },
     {
       "field": "name",
       "title": "name",
+      "width": 155,
       "minWidth": 40,
       "resizable": true,
       "sorter": "string",
-      "headerSort": true,
-      "width": 155
+      "headerSort": true
     },
     {
       "field": "city",
       "title": "city",
+      "width": 143,
       "minWidth": 40,
       "resizable": true,
       "sorter": "string",
-      "headerSort": true,
-      "width": 143
+      "headerSort": true
     },
     {
       "field": "state",
       "title": "state",
+      "width": 87,
       "minWidth": 40,
       "resizable": true,
       "sorter": "string",
-      "headerSort": true,
-      "width": 87
+      "headerSort": true
     },
     {
       "field": "country",
       "title": "country",
+      "width": 104,
       "minWidth": 40,
       "resizable": true,
       "sorter": "string",
-      "headerSort": true,
-      "width": 104
+      "headerSort": true
     },
     {
       "field": "latitude",
       "title": "latitude",
+      "width": 104,
       "minWidth": 40,
       "resizable": true,
       "sorter": "number",
-      "headerSort": true,
-      "width": 104
+      "headerSort": true
     },
     {
       "field": "longitude",
       "title": "longitude",
+      "width": 201,
       "minWidth": 40,
       "resizable": true,
       "sorter": "number",
-      "headerSort": true,
-      "width": 201
+      "headerSort": true
     }
   ]
 }
