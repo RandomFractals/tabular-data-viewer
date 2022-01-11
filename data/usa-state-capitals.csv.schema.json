@@ -1,0 +1,27 @@
+{
+  "fields": [
+    {
+      "name": "lon",
+      "type": "number",
+      "format": "default"
+    },
+    {
+      "name": "lat",
+      "type": "number",
+      "format": "default"
+    },
+    {
+      "name": "state",
+      "type": "string",
+      "format": "default"
+    },
+    {
+      "name": "city",
+      "type": "string",
+      "format": "default"
+    }
+  ],
+  "missingValues": [
+    ""
+  ]
+}

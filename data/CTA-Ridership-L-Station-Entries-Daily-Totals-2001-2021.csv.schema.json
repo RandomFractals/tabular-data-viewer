@@ -1,0 +1,32 @@
+{
+  "fields": [
+    {
+      "name": "station_id",
+      "type": "integer",
+      "format": "default"
+    },
+    {
+      "name": "stationname",
+      "type": "string",
+      "format": "default"
+    },
+    {
+      "name": "date",
+      "type": "any",
+      "format": "default"
+    },
+    {
+      "name": "daytype",
+      "type": "string",
+      "format": "default"
+    },
+    {
+      "name": "rides",
+      "type": "integer",
+      "format": "default"
+    }
+  ],
+  "missingValues": [
+    ""
+  ]
+}
