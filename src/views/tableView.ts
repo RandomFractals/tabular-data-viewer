@@ -23,6 +23,7 @@ import { ViewTypes } from './viewTypes';
 import { statusBar } from './statusBar';
 
 import { Stream } from 'stream';
+import { ViewCommands } from '../commands/viewCommands';
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const {Table} = require('tableschema');
@@ -221,6 +222,10 @@ export class TableView {
           break;
         case 'updateTableConfig':
           this.updateTableConfig(message.tableConfig);
+          break;
+        case 'openTableConfig':
+          commands.executeCommand(ViewCommands.vscodeOpen,
+            Uri.parse(this._fileInfo.fileUri.toString(true) + '.table.json'));
           break;
       }
     }, undefined, this._disposables);
@@ -632,6 +637,10 @@ export class TableView {
                 <option value="json">{} &nbsp;json</option>
                 <option value="html">&lt;/&gt; &nbsp;html</option>
               </select>
+              <vscode-button id="view-table-config-button"
+                appearance="icon" aria-label="View Table Config">
+	              <span class="codicon codicon-gear">⚙</span>
+              </vscode-button>
             </div>
           </div>
           <div id="table-container" />

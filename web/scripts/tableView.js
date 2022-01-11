@@ -157,6 +157,10 @@ function initializeView() {
     vscode.setState(viewState);
   }
 
+  // view table config UI
+  const viewTableConfigButton = document.getElementById('view-table-config-button');
+  viewTableConfigButton.addEventListener('click', openTableConfig);
+
   // request initial rows data load
   vscode.postMessage({ command: 'refresh' });
 }
@@ -195,6 +199,15 @@ function reloadData() {
   progressRing.style.visibility = 'visible';
   vscode.postMessage({
     command: 'refresh',
+  });
+}
+
+/**
+ * Opens *.table.json view config in vscode editor.
+ */
+function openTableConfig() {
+  vscode.postMessage({
+    command: 'openTableConfig',
   });
 }
 
