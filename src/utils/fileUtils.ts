@@ -1,4 +1,4 @@
-import { Uri, Webview } from 'vscode';
+import { Uri, Webview, window } from 'vscode';
 
 import * as fs from 'fs';
 
@@ -37,4 +37,27 @@ export function getFileSize(filePath: string): number {
 		fileSize = stats.size;
 	}
 	return fileSize;
+}
+
+/**
+ * Creates JSON data, *.table.json, or *.schema.json
+ * data configuration file for tabular data views.
+ * 
+ * @param filePath JSON data file path.
+ * @param data JSON data object to serialize and save.
+ */
+export function createJsonFile(filePath: string, data: any): void {
+	if (data) {
+		const jsonString: string = JSON.stringify(data, null, 2);
+		try {
+			const fileWriteStream: fs.WriteStream = fs.createWriteStream(filePath, { encoding: 'utf8' });
+			fileWriteStream.write(jsonString);
+			fileWriteStream.end();
+		}
+		catch (error: any) {
+			const errorMessage: string = 
+				`Unable to save JSON file: ${filePath}. \nError: ${error.message}`;
+			window.showErrorMessage(errorMessage);
+		}
+	}
 }
