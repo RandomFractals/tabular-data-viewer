@@ -61,6 +61,17 @@ Commands, languages, editor/view types and activation events contributed to VSCo
 ![Tabular Data Viewer 中 Feature Contributions](https://github.com/RandomFractals/tabular-data-viewer/blob/main/docs/images/tabular-data-viewer-feature-contributions.png?raw=true 
  "Tabular Data Viewer 中 Feature Contributions")
 
+## Settings
+
+[Create User or Workspace Settings in vscode](http://code.visualstudio.com/docs/customization/userandworkspace#_creating-user-and-workspace-settings) to change Tabular Data Viewer 中 extension Settings:
+
+| Setting | Type | Default Value | Description |
+| ------- | ---- | ------------- | ----------- |
+| `tabular.data.pageSize` | integer | `100000` | Default Data Page Size to use for incremental loading and display of large datasets. |
+| `tabular.data.parser.dynamicTyping` | boolean | `true` | Enable type conversions for numeric and boolean data fields when parsing CSV data. Set this option to `false` to speed up large datasets parsing and loading. |
+| `tabular.data.createTableSchemaConfig` | boolean | `true` | Create table `*.schema.json` configuration file alongside data file when parsing CSV data. |
+| `tabular.data.createTableViewConfig` | boolean | `true` | Create `*.table.json` configuration file alongside data file for saving and restoring customized Table View 🀄 columns and sort settings. |
+
 # Observable JS Notebook
 
 You can try [Tabular Data Viewer 🀄 Observable Notebook 📓](https://observablehq.com/@randomfractals/tabular-data-viewer) with public datasets and supported data formats in a browser:
