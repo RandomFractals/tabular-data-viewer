@@ -173,6 +173,11 @@
 					"enum": [1000, 10000, 100000],
 					"default": "100000",
 					"description": "Default data page size to use for loading and displaying large datasets."
+				},
+				"tabular.data.parser.dynamicTyping": {
+					"type": "boolean",
+					"default": true,
+					"description": "Convert numeric and boolean data fields when parsing CSV data. Disable this option to speed up large datasets parsing and loading."
 				}
 			}
 		}

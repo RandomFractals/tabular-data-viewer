@@ -268,7 +268,7 @@ export class TableView {
     const dataStream: Stream = dataFileStream.pipe(
       Papa.parse(Papa.NODE_STREAM_INPUT, {
         header: true, // key results by header fields
-        dynamicTyping: true, // enable dynamic typing
+        dynamicTyping: this.dynamicDataTyping, // enable dynamic typing
         skipEmptyLines: true, // ignore empty lines to avoid errors
         worker: true, // parse data lines in a worker thread
       }));
@@ -569,6 +569,13 @@ export class TableView {
    */
   get dataPageSize(): number {
     return <number>config.get(Settings.dataPageSize);
+  }
+
+  /**
+   * Gets dynamic data typing configuration setting for CSV data parsing.
+   */
+  get dynamicDataTyping(): boolean {
+    return <boolean>config.get(Settings.dynamicDataTyping);
   }
 
   /**
