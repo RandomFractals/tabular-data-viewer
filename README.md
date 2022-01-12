@@ -37,8 +37,9 @@ See [Data Preview](https://github.com/RandomFractals/vscode-data-preview) 🈸 v
 - Restore customized table columns and sort configuration on vscode reload
 - Copy tab delimited table data to Clipboard
 - Save displayed table data in `CSV` (`,` or `;` delimited), `TSV`, `HTML` table, or `JSON` data array format
-- Generate and view [Frictionless Table](https://specs.frictionlessdata.io/table-schema/) `.schema.json` configration file created with [`tableschema-js.infer()`](https://github.com/frictionlessdata/tableschema-js#working-with-validateinfer)
-- Load saved table config options from auto-generated `*.table.json` config file when reopening previously customized Table View 🀄
+- Generate and view [Frictionless Table](https://specs.frictionlessdata.io/table-schema/) `*.schema.json` configration file created with [`tableschema-js.infer()`](https://github.com/frictionlessdata/tableschema-js#working-with-validateinfer)
+- Load saved table configuration options from auto-generated `*.table.json` config file when reopening previously customized Table View 🀄
+- Set default Data Page Size to 1K, 10K, or 100K (default) rows per page via standard vscode `Preferences -> Settings -> Extensions -> Tabular Data Viewer` configuration options to speed up large datasets parsing and loading into Table View 🀄
 
 ...
 
@@ -74,7 +75,7 @@ Recommended custom dataViz extensions produced by [Random Fractals Inc.](https:/
 | Extension | Description |
 | --- | --- |
 | [Rainbow CSV 🌈](https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv) | Highlight CSV and TSV files, Run SQL-like queries |
-| [Data Preivew 🈸](https://marketplace.visualstudio.com/items?itemName=RandomFractalsInc.vscode-data-preview) | Data Preview 🈸 extension for importing 📤 viewing 🔎 slicing 🔪 dicing 🎲 charting 📊 & exporting 📥 large JSON array/config, YAML, Apache Arrow, Avro & Excel data files |
+| [Data Preview 🈸](https://marketplace.visualstudio.com/items?itemName=RandomFractalsInc.vscode-data-preview) | Data Preview 🈸 extension for importing 📤 viewing 🔎 slicing 🔪 dicing 🎲 charting 📊 & exporting 📥 large JSON array/config, YAML, Apache Arrow, Avro & Excel data files |
 | [Geo Data Viewer 🗺️](https://marketplace.visualstudio.com/items?itemName=RandomFractalsInc.geo-data-viewer) | [kepler.gl](https://kepler.gl) Geo Data Analytics tool to gen. some snazzy 🗺️s  w/0 `Py` 🐍 `pyWidgets` ⚙️ `pandas` 🐼 or `react` ⚛️ |
 | [Vega Viewer 📈](https://marketplace.visualstudio.com/items?itemName=RandomFractalsInc.vscode-vega-viewer) | Provides Interactive Preview of Vega & Vega-Lite maps 🗺️ & graphs 📈 |
 | [Observable JS](https://marketplace.visualstudio.com/items?itemName=GordonSmith.observable-js) | Observable JS compiler with [Observable](https://observablehq.com/@observablehq/observable-for-jupyter-users?collection=@observablehq/observable-for-jupyter-users) `js` and `md` code outline and previews. |
