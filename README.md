@@ -69,7 +69,7 @@ Commands, languages, editor/view types and activation events contributed to VSCo
 | ------- | ---- | ------------- | ----------- |
 | `tabular.data.pageSize` | integer | `100000` | Default Data Page Size to use for incremental loading and display of large datasets. |
 | `tabular.data.parser.dynamicTyping` | boolean | `true` | Enable type conversions for numeric and boolean data fields when parsing CSV data. Set this option to `false` to speed up large datasets parsing and loading. |
-| `tabular.data.createTableSchemaConfig` | boolean | `true` | Create table `*.schema.json` configuration file alongside data file when parsing CSV data. |
+| `tabular.data.createTableSchemaConfig` | boolean | `true` | Create [table `*.schema.json`](https://specs.frictionlessdata.io/table-schema/#descriptor) configuration file alongside data file when parsing CSV data. |
 | `tabular.data.createTableViewConfig` | boolean | `true` | Create `*.table.json` configuration file alongside data file for saving and restoring customized Table View 🀄 columns and sort settings. |
 
 # Observable JS Notebook
