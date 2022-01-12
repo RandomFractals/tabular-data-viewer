@@ -10,6 +10,7 @@ let saveDataFileName = '';
 
 // table view elements
 let tableContainer, table, progressRing, saveFileTypeSelector, tablePageSelector;
+const toolbarHeight = 40; // table view toolbar height offset
 
 // table view vars
 let tableConfig = {};
@@ -19,27 +20,24 @@ let tableData = [];
 let loadedRows = 0;
 let totalRows = 0;
 let loadedDataPage = 0;
+let dataPageSize = 100000;
 let viewState = {
   tableConfig: tableConfig
 };
 
-// table view settings
-const toolbarHeight = 40; // table view toolbar height offset
-const autoResize = true;
+// tabulator table settings
 let autoColumns = true;
+const autoResize = true;
 const enableClipboard = true; // enable clipboard copy and paste
 const clipboardPasteAction = 'replace';
 const movableColumns = true;
 const movableRows = true;
 const selectableRows =  true;
-
 const pagination = false;
 const paginationSize = 1000;
-const pageDataSize = 100000;
 const pageSizes = [100, 1000, 10000, 100000];
-
-const reactiveData = false;
 const renderVerticalBuffer = 300; // virtual view buffer height in px for redraw on scroll
+const reactiveData = false;
 
 // tabulator debug options
 const debugInvalidOptions = true; // tabulator warnings
@@ -176,6 +174,7 @@ function updateViewState(tableInfo) {
   tableSchema = tableInfo.tableSchema;
   tableData = tableInfo.tableData;
   totalRows = tableInfo.totalRows;
+  dataPageSize = tableInfo.dataPageSize;
 
   if (tableInfo.tableConfig.columns) {
     // update table config
@@ -410,7 +409,7 @@ function onTableBuilt () {
  */
 function getNextDataPage() {
   const nextDataPage = loadedDataPage + 1;
-  if (loadedRows < totalRows && (nextDataPage * pageDataSize) < totalRows) {
+  if (loadedRows < totalRows && (nextDataPage * dataPageSize) < totalRows) {
     progressRing.style.visibility = 'visible';
     vscode.postMessage({
       command: 'addData',
@@ -460,8 +459,8 @@ function addData(table, dataRows, dataPageIndex) {
 function showDataPage() {
   let dataPageIndex = Number(tablePageSelector.value);
   // console.log('tableView.showDataPage(): loading data page:', dataPageIndex);
-  const pageStart = (dataPageIndex * pageDataSize);
-  const pageData = tableData.slice(pageStart, Math.min(pageStart + pageDataSize, totalRows));
+  const pageStart = (dataPageIndex * dataPageSize);
+  const pageData = tableData.slice(pageStart, Math.min(pageStart + dataPageSize, totalRows));
   table.clearData();
   table.replaceData(pageData);
 }

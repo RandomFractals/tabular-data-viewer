@@ -163,7 +163,19 @@
 					}
 				]
 			}
-		]
+		],
+		"configuration": {
+			"title": "Tabular Data Viewer",
+			"type": "object",
+			"properties": {
+				"tabular.data.pageSize": {
+					"type": "integer",
+					"enum": [1000, 10000, 100000],
+					"default": "100000",
+					"description": "Default data page size to use for loading and displaying large datasets."
+				}
+			}
+		}
 	},
 	"scripts": {
 		"vscode:prepublish": "npm run package",

@@ -15,6 +15,9 @@ import {
 
 import * as fs from 'fs';
 import * as path from 'path';
+import { Stream } from 'stream';
+
+import * as config from '../configuration/configuration';
 import * as fileUtils from '../utils/fileUtils';
 
 import { FileInfo } from './fileInfo';
@@ -22,8 +25,8 @@ import { FileTypes } from './fileTypes';
 import { ViewTypes } from './viewTypes';
 import { statusBar } from './statusBar';
 
-import { Stream } from 'stream';
 import { ViewCommands } from '../commands/viewCommands';
+import { Settings } from '../configuration/Settings';
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const {Table} = require('tableschema');
@@ -55,9 +58,6 @@ export class TableView {
 
 
   // TODO: move the settings below to tabular data viewer config options later
-  // default page data size for incremental data loading into table view
-  private readonly _pageDataSize: number = 100000;
-
   // infer table schema rows sample size limit
   private readonly _inferDataSize = 100;
 
@@ -279,14 +279,14 @@ export class TableView {
     dataStream.on('data', (row: any) => {
       tableRows.push(row);
       rowCount++;
-      if ((rowCount % (this._pageDataSize * 10)) === 0) {
+      if ((rowCount % (this.dataPageSize * 10)) === 0) {
         console.log(`tabular.data.view:refresh(): parsing rows ${rowCount.toLocaleString()}+ ...`);
         if (this.visible) {
           statusBar.showMessage(`Parsing rows ${rowCount.toLocaleString()}+`);
         }
       }
 
-      if (rowCount === this._pageDataSize) {
+      if (rowCount === this.dataPageSize) {
         // send initial set of data rows to table view for display
         this.loadData(tableRows);
         // TODO: add pause/resume stream later
@@ -309,13 +309,13 @@ export class TableView {
         statusBar.totalRows = tableRows.length;
       }
 
-      if (tableRows.length < this._pageDataSize) {
+      if (tableRows.length < this.dataPageSize) {
         // load first page of data
         this.loadData(tableRows);
         // clear data loading status bar message
         statusBar.showMessage('');
       }
-      else if (tableRows.length > this._pageDataSize) {
+      else if (tableRows.length > this.dataPageSize) {
         // load remaining table rows
         const dataPageIndex: number = 1;
         this.addData(dataPageIndex);
@@ -344,7 +344,7 @@ export class TableView {
     }
 
     // send initial set of data rows to table view for display
-    const nextRows: number = Math.min(this._pageDataSize, this._totalRows);
+    const nextRows: number = Math.min(this.dataPageSize, this._totalRows);
     const initialDataRows: Array<any> = tableRows.slice(0, nextRows);
     this.webviewPanel.webview.postMessage({
       command: 'refresh',
@@ -353,7 +353,8 @@ export class TableView {
       tableConfig: this._tableConfig,
       tableSchema: this._tableSchema,
       totalRows: this._totalRows,
-      tableData: initialDataRows
+      tableData: initialDataRows,
+      dataPageSize: this.dataPageSize
     });
   }
 
@@ -363,7 +364,7 @@ export class TableView {
    * @param dataPage Requested data page index for loading the next set of data rows.
    */
   public async addData(dataPage: number): Promise<void> {
-    let nextRows: number = dataPage * this._pageDataSize;
+    let nextRows: number = dataPage * this.dataPageSize;
     if (this._loadedDataPage <= dataPage && nextRows < this._totalRows) {
       // console.log(`tabular.data.view:addData(): loading rows ${nextRows.toLocaleString()}+ ...`);
       if (this.visible) {
@@ -372,7 +373,7 @@ export class TableView {
 
       // get the next set of data rows to load in table view
       const dataRows: Array<any> =
-        this._tableData.slice(nextRows, Math.min(nextRows + this._pageDataSize, this._totalRows));
+        this._tableData.slice(nextRows, Math.min(nextRows + this.dataPageSize, this._totalRows));
 
       // increment next rows for data loading status update
       nextRows += dataRows.length;
@@ -561,6 +562,13 @@ export class TableView {
         break;
     }
     return delimiter;
+  }
+
+  /**
+   * Gets data page size configuration setting.
+   */
+  get dataPageSize(): number {
+    return <number>config.get(Settings.dataPageSize);
   }
 
   /**
