@@ -2,6 +2,7 @@ import { ExtensionContext, TextEditor, window } from 'vscode';
 
 import { registerOpenDataFileCommand } from './commands/openDataFile';
 import { registerViewTableCommand } from './commands/viewTable';
+import { registerViewSettingsCommand } from './commands/viewSettings';
 
 import { statusBar } from './views/statusBar';
 
@@ -23,6 +24,7 @@ export function activate(context: ExtensionContext) {
 	// register tabular data viewer commands
 	registerOpenDataFileCommand(context);
 	registerViewTableCommand(context);
+	registerViewSettingsCommand(context);
 
 	// register table view serializer for restore on vscode reload
 	context.subscriptions.push(TableViewSerializer.register(context));

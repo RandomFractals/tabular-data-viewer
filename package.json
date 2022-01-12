@@ -47,6 +47,7 @@
 		"onLanguage:tsv",
 		"onCommand:tabular.data.openDataFile",
 		"onCommand:tabular.data.viewTable",
+		"onCommand:tabular.data.viewSettings",
 		"onCustomEditor:tabular.data.tableEditor",
 		"onWebviewPanel:tabular.data.tableView"
 	],
@@ -67,6 +68,12 @@
 				"command": "tabular.data.viewTable",
 				"title": "View Table",
 				"category": "Tabular Data"
+			},
+			{
+				"command": "tabular.data.viewSettings",
+				"title": "View Settings",
+				"category": "Tabular Data",
+				"icon": "$(gear)"
 			}
 		],
 		"keybindings": [
