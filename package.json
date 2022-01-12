@@ -178,6 +178,11 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Convert numeric and boolean data fields when parsing CSV data. Disable this option to speed up large datasets parsing and loading."
+				},
+				"tabular.data.createTableSchemaConfig": {
+					"type": "boolean",
+					"default": true,
+					"description": "Create table *.schema.json configuration file when parsing CSV data."
 				}
 			}
 		}

@@ -436,8 +436,7 @@ export class TableView {
    * @param tableSchema Table schema object to save.
   */
   private async saveTableSchema(tableSchema: any): Promise<void> {
-    if (tableSchema) {
-      // TODO: add tabular.data.saveTableSchema boolean setting check
+    if (tableSchema && this.createTableSchemaConfig) {
       // save updated table schema from tableschema infer call
       fileUtils.createJsonFile(this._fileInfo.tableSchemaFilePath, tableSchema);
     }
@@ -576,6 +575,13 @@ export class TableView {
    */
   get dynamicDataTyping(): boolean {
     return <boolean>config.get(Settings.dynamicDataTyping);
+  }
+
+  /**
+   * Gets create table schema configuration setting for CSV data parsing.
+   */
+  get createTableSchemaConfig(): boolean {
+    return <boolean>config.get(Settings.createTableSchemaConfig);
   }
 
   /**
