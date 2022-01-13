@@ -56,7 +56,7 @@ Large CSV data files streaming and display is very alpha and has the following l
 
 # Contributions
 
-Commands, languages, editor/view types and activation events contributed to VSCode IDE by Tabular Data Viewer 中:
+Tabular Data Viewer 中 Settings, Commands, Languages, Custom Editors and Activation Events contributed to VSCode IDE:
 
 ![Tabular Data Viewer 中 Feature Contributions](https://github.com/RandomFractals/tabular-data-viewer/blob/main/docs/images/tabular-data-viewer-feature-contributions.png?raw=true 
  "Tabular Data Viewer 中 Feature Contributions")
