@@ -2,6 +2,24 @@
 
 See [releases](https://github.com/RandomFractals/tabular-data-viewer/releases) for source code and `tabular-data-viewer-x.x.x.vsix` extension package download.
 
+## v1.5.0 - [2022-01-13]
+- [#28](https://github.com/RandomFractals/tabular-data-viewer/issues/28)
+Persist table view config settings for restore on vscode reload or after table view tab close
+- [#52](https://github.com/RandomFractals/tabular-data-viewer/issues/52)
+Add tabular data viewer config option to auto-save inferred table shema
+- [#67](https://github.com/RandomFractals/tabular-data-viewer/issues/67)
+Add tabular.data.pageSize config option
+- [#69](https://github.com/RandomFractals/tabular-data-viewer/issues/69)
+Add View Table Config UI option to Table view toolbar
+- [#70](https://github.com/RandomFractals/tabular-data-viewer/issues/70)
+Add tabular.data.parser.dynamicTyping on/off config option
+- [#71](https://github.com/RandomFractals/tabular-data-viewer/issues/71)
+Add Tabular Data: View Settings command
+- [#72](https://github.com/RandomFractals/tabular-data-viewer/issues/72)
+Add Tabular Data Settings section to README.md
+- [#73](https://github.com/RandomFractals/tabular-data-viewer/issues/73)
+Package and publish Tabular Data Settings release
+
 ## v1.4.0 - [2022-01-10]
 - [#64](https://github.com/RandomFractals/tabular-data-viewer/issues/64)
 Save and restore table settings on vscode reload
