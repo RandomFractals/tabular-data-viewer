@@ -39,7 +39,7 @@
     {
       "field": "rides",
       "title": "rides",
-      "width": 362,
+      "width": 81,
       "minWidth": 40,
       "resizable": true,
       "sorter": "number",
@@ -48,11 +48,17 @@
     {
       "field": "date",
       "title": "date",
-      "width": 114,
+      "width": 202,
       "minWidth": 40,
       "resizable": true,
       "sorter": "string",
       "headerSort": true
+    }
+  ],
+  "sort": [
+    {
+      "column": "rides",
+      "dir": "desc"
     }
   ]
 }
