@@ -190,6 +190,11 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Create table *.schema.json configuration file when parsing CSV data."
+				},
+				"tabular.data.createTableViewConfig": {
+					"type": "boolean",
+					"default": true,
+					"description": "Create *.table.json configuration file to save and restore customized Table View 🀄 columns and sort settings."
 				}
 			}
 		}

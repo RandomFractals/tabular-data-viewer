@@ -4,5 +4,6 @@
 export enum Settings {
 	dataPageSize = 'pageSize',
 	dynamicDataTyping = 'parser.dynamicTyping',
-	createTableSchemaConfig = 'createTableSchemaConfig'
+	createTableSchemaConfig = 'createTableSchemaConfig',
+	createTableViewConfig = 'createTableViewConfig',
 }

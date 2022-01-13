@@ -451,9 +451,10 @@ export class TableView {
   private async updateTableConfig(tableConfig: any): Promise<void> {
     if (tableConfig) {
       this._tableConfig = tableConfig;
-      // TODO: add tabular.data.saveTableConfig boolean setting check
-      // save updated table config for restoring table view after tab close
-      fileUtils.createJsonFile(this._fileInfo.tableConfigFilePath, tableConfig);
+      if (this.createTableViewConfig) {
+        // save updated table config for restoring table view after tab close
+        fileUtils.createJsonFile(this._fileInfo.tableConfigFilePath, tableConfig);
+      }
     }
   }
 
@@ -582,6 +583,13 @@ export class TableView {
    */
   get createTableSchemaConfig(): boolean {
     return <boolean>config.get(Settings.createTableSchemaConfig);
+  }
+
+  /**
+   * Gets create table schema configuration setting for CSV data parsing.
+   */
+  get createTableViewConfig(): boolean {
+    return <boolean>config.get(Settings.createTableViewConfig);
   }
 
   /**
