@@ -61,43 +61,9 @@ body {
 	outline-color: var(--vscode-focusBorder);
 }
 
-/* tabulator table styles */
 #table-container {
 	background-color: var(--vscode-editor-background);
 	border: 1px solid var(--vscode-panel-border);
   height: calc(100% - 40);
 	overflow: hidden;
-}
-
-#table-container .tabulator-header {
-	background-color: var(--vscode-editor-background);
-	color: var(--vscode-editor-foreground);
-	border: none;
-}
-
-/* allow column header names to wrap lines */
-#table-container .tabulator-header .tabulator-col,
-#table-container .tabulator-header .tabulator-col-row-handle {
-	background-color: var(--vscode-editor-background);
-	border: 1px solid var(--vscode-panel-border);
-	font-weight: normal;
-	white-space: normal;
-	min-height: 24px;
-}
-
-/* table rows */
-#table-container .tabulator-tableHolder .tabulator-table .tabulator-row {
-	color: var(--vscode-editor-foreground);
-	background-color: var(--vscode-editor-background);
-	border: none;
-}
-
-/* even rows */
-#table-container .tabulator-tableHolder .tabulator-table .tabulator-row:nth-child(even) {
-	background-color: var(--vscode-editor-background);
-	border: none;
-}
-
-.tabulator .tabulator-footer {
-	background-color: var(--vscode-editor-background);
 }
