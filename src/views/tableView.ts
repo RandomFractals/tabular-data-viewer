@@ -649,8 +649,8 @@ export class TableView {
           <link href="${dataViewStylesUri}" rel="stylesheet">
           <script type="text/javascript" src="https://unpkg.com/tabulator-tables@5.0.10/dist/js/tabulator.min.js"></script>
           <script type="module" src="${webviewUiToolkitUri}"></script>
-          <script type="module" src="${tableViewScriptUri}"></script>
-          <script type="module" src="${dataViewScriptUri}"></script>
+          <script type="text/javascript" src="${tableViewScriptUri}"></script>
+          <script type="text/javascript" src="${dataViewScriptUri}"></script>
           <title>Tabular Data View</title>
         </head>
         <body>
