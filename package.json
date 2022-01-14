@@ -2,7 +2,7 @@
 	"name": "tabular-data-viewer",
 	"displayName": "Tabular Data Viewer 中",
 	"description": "Tabular Data Viewer provides fast DSV data loading and custom Table View 🀄 display for large .csv, .tsv and .tab data files via Tabulator table and Papa Parse CSV parser.",
-	"version": "1.5.0",
+	"version": "1.6.0",
 	"engines": {
 		"vscode": "^1.63.0"
 	},
@@ -175,9 +175,22 @@
 			"title": "Tabular Data Viewer",
 			"type": "object",
 			"properties": {
+				"tabular.data.view": {
+					"type": "string",
+					"enum": [
+						"Tabulator",
+						"Perspective"
+					],
+					"default": "Tabulator",
+					"description": "Default tabular data view to use for displaying data."
+				},
 				"tabular.data.pageSize": {
 					"type": "integer",
-					"enum": [1000, 10000, 100000],
+					"enum": [
+						1000,
+						10000,
+						100000
+					],
 					"default": "100000",
 					"description": "Default data page size to use for loading and displaying large datasets."
 				},
