@@ -23,6 +23,7 @@ import * as fileUtils from '../utils/fileUtils';
 import { FileInfo } from './fileInfo';
 import { FileTypes } from './fileTypes';
 import { ViewTypes } from './viewTypes';
+import { DataViewTypes } from './dataViewTypes';
 import { statusBar } from './statusBar';
 
 import { ViewCommands } from '../commands/viewCommands';
@@ -562,6 +563,13 @@ export class TableView {
         break;
     }
     return delimiter;
+  }
+
+  /**
+   * Gets default data view type configuration setting.
+   */
+  get dataViewType(): string {
+    return <string>config.get(Settings.dataViewType);
   }
 
   /**
