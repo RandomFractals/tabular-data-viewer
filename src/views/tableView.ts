@@ -618,6 +618,13 @@ export class TableView {
     const tableViewStylesUri: Uri =
       fileUtils.getWebviewUri(webview, extensionUri, ['web', 'styles', 'table-view.css']);
 
+    // create data view script and styles Uris
+    const viewType = this.dataViewType.toLowerCase();
+    const dataViewScriptUri: Uri =
+      fileUtils.getWebviewUri(webview, extensionUri, ['web', 'scripts', `${viewType}.js`]);
+    const dataViewStylesUri: Uri =
+      fileUtils.getWebviewUri(webview, extensionUri, ['web', 'styles', `${viewType}.css`]);
+
     // get CSP (Content-Security-Policy) source link for this webview
     const cspSource: string = this.webviewPanel.webview.cspSource;
 
@@ -639,10 +646,12 @@ export class TableView {
               worker-src 'self' https://* blob: data:">
           <link href="https://unpkg.com/tabulator-tables@5.0.10/dist/css/tabulator.min.css" rel="stylesheet">
           <link href="${tableViewStylesUri}" rel="stylesheet">
+          <link href="${dataViewStylesUri}" rel="stylesheet">
           <script type="text/javascript" src="https://unpkg.com/tabulator-tables@5.0.10/dist/js/tabulator.min.js"></script>
           <script type="module" src="${webviewUiToolkitUri}"></script>
           <script type="module" src="${tableViewScriptUri}"></script>
-          <title>Table View</title>
+          <script type="module" src="${dataViewScriptUri}"></script>
+          <title>Tabular Data View</title>
         </head>
         <body>
           <div id="toolbar">
