@@ -620,6 +620,7 @@ export class TableView {
 
     // create data view script and styles Uris
     const viewType = this.dataViewType.toLowerCase();
+    const viewImports = config.viewImports[viewType];
     const dataViewScriptUri: Uri =
       fileUtils.getWebviewUri(webview, extensionUri, ['web', 'scripts', `${viewType}.js`]);
     const dataViewStylesUri: Uri =
@@ -644,10 +645,9 @@ export class TableView {
               font-src 'self' ${cspSource} https://* blob: data:;
               connect-src 'self' https://* wss://*;
               worker-src 'self' https://* blob: data:">
-          <link href="https://unpkg.com/tabulator-tables@5.0.10/dist/css/tabulator.min.css" rel="stylesheet">
+          ${viewImports}
           <link href="${tableViewStylesUri}" rel="stylesheet">
           <link href="${dataViewStylesUri}" rel="stylesheet">
-          <script type="text/javascript" src="https://unpkg.com/tabulator-tables@5.0.10/dist/js/tabulator.min.js"></script>
           <script type="module" src="${webviewUiToolkitUri}"></script>
           <script type="text/javascript" src="${tableViewScriptUri}"></script>
           <script type="text/javascript" src="${dataViewScriptUri}"></script>
