@@ -16,20 +16,18 @@ document.addEventListener('DOMContentLoaded', async function () {
 });
 
 window.addEventListener('load', async function () {
-	// create mock data
-	const data = {
-		Sales: [500, 1000, 1500],
-		Profit: [100.25, 200.5, 300.75],
-	};
+	// get sample arrow data
+	const dataRequest = fetch('https://cdn.jsdelivr.net/npm/superstore-arrow/superstore.arrow');
 
-	// create worker for data loading
+	// create worker for table data loading
 	const worker = perspective.worker();
+	const dataResponse = await dataRequest;
+	const arrowData = await dataResponse.arrayBuffer();
 
 	// create sample data table
-	table = worker.table(data);
-	// table = perspective.table(data);
+	table = worker.table(arrowData);
 
-	// Note: perspective viewer element exposes data table loading API
+	// load sample data and toggle perspective grid view config
 	viewer.load(table);
 	viewer.toggleConfig();
 });
