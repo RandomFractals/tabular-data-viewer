@@ -190,6 +190,28 @@ function getNextDataPage() {
 }
 
 /**
+ * Download data handler.
+ * 
+ * @param {*} fileContents Unencoded contents of the file to save.
+ * @param {*} blob Download data blob object.
+ * @returns Data blob to save or false to skip download via typical browser api.
+ */
+function downloadData(fileContents, blob) {
+	// console.log(fileContents);
+	// request data file save
+	vscode.postMessage({
+		command: 'saveData',
+		data: fileContents,
+		dataFileType: saveFileTypeSelector.value,
+		dataFileName: saveDataFileName
+	});
+
+	// Note: this must return a blob to proceed with the download in a browser,
+	// or false to abort download and handle it in table view extension with workspace.fs
+	return false; // blob; 
+}
+
+/**
  * Logs table data for debug.
  * 
  * @param tableData Loaded able data.
