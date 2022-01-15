@@ -1,4 +1,38 @@
 // TODO: convert this to JS module later
+// import perspective from 'https://unpkg.com/@finos/perspective@1.1.0/dist/cdn/perspective.js';
+
+// perspective viewer vars
+let viewer, worker, view;
+
+// create Perspective viewer element
+document.addEventListener('DOMContentLoaded', async function () {
+	// initialize table container
+	tableContainer = document.getElementById('table-container');
+
+	// add perspective viewer element
+	viewer = document.createElement('perspective-viewer');
+	viewer.setAttribute('editable', true);
+	tableContainer.appendChild(viewer);
+});
+
+window.addEventListener('load', async function () {
+	// create mock data
+	const data = {
+		Sales: [500, 1000, 1500],
+		Profit: [100.25, 200.5, 300.75],
+	};
+
+	// create worker for data loading
+	const worker = perspective.worker();
+
+	// create sample data table
+	table = worker.table(data);
+	// table = perspective.table(data);
+
+	// Note: perspective viewer element exposes data table loading API
+	viewer.load(table);
+	viewer.toggleConfig();
+});
 
 /**
  * Creates new Tabulator table with initial set of data to display.
