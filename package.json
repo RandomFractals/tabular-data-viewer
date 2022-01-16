@@ -40,7 +40,8 @@
 		"large data",
 		"text data",
 		"table view",
-		"data streaming"
+		"data streaming",
+		"data perspective view"
 	],
 	"activationEvents": [
 		"onLanguage:csv",
@@ -49,6 +50,7 @@
 		"onCommand:tabular.data.viewTable",
 		"onCommand:tabular.data.viewSettings",
 		"onCustomEditor:tabular.data.tableEditor",
+		"onCustomEditor:tabular.data.perspectiveEditor",
 		"onWebviewPanel:tabular.data.tableView"
 	],
 	"main": "./dist/extension.js",
@@ -157,6 +159,22 @@
 			{
 				"viewType": "tabular.data.tableEditor",
 				"displayName": "Table View",
+				"priority": "option",
+				"selector": [
+					{
+						"filenamePattern": "*.csv"
+					},
+					{
+						"filenamePattern": "*.tsv"
+					},
+					{
+						"filenamePattern": "*.tab"
+					}
+				]
+			},
+			{
+				"viewType": "tabular.data.perspectiveEditor",
+				"displayName": "Perspective",
 				"priority": "option",
 				"selector": [
 					{
