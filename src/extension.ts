@@ -8,6 +8,7 @@ import { statusBar } from './views/statusBar';
 
 import { TableEditor } from './views/tableEditor';
 import { TableViewSerializer } from './views/tableViewSerializer';
+import { PerspectiveEditor } from './views/perspectiveEditor';
 
 /**
  * Activates this extension per rules set in package.json.
@@ -29,8 +30,9 @@ export function activate(context: ExtensionContext) {
 	// register table view serializer for restore on vscode reload
 	context.subscriptions.push(TableViewSerializer.register(context));
 
-	// register custom table editor
+	// register custom tabular data editors
 	context.subscriptions.push(TableEditor.register(context));
+	context.subscriptions.push(PerspectiveEditor.register(context));
 
 	window.onDidChangeActiveTextEditor((textEditor: TextEditor | undefined) => {
 		// hide tabular data stats display on active editor change

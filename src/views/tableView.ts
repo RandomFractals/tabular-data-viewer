@@ -115,7 +115,7 @@ export class TableView {
   private static createWebviewPanel(documentUri: Uri): WebviewPanel {
     // create new webview panel for the table view
     return window.createWebviewPanel(
-      ViewTypes.tableView, // webview panel view type
+      ViewTypes.TableView, // webview panel view type
       fileUtils.getFileName(documentUri), // webview panel title
       {
         viewColumn: ViewColumn.Active, // use active view column for display
@@ -155,7 +155,7 @@ export class TableView {
     statusBar.showFileStats(this._fileInfo);
 
     // configure webview panel
-    this.configure();
+    this.configure(this._tableConfig);
 
     // add it to the tracked table webviews
     TableView._views.set(this.viewUri.toString(true), this);
@@ -201,11 +201,14 @@ export class TableView {
 
   /**
    * Configures webview html for tabular data view display,
-   * and adds webview message request handlers for data updates.
+   * and registers webview message request handlers for data updates.
+   * 
+   * @param tableConfig Table view config.
    */
-  public configure(): void {
+  public configure(tableConfig: any): void {
     // set table view html content for the webview panel
-    this.webviewPanel.webview.html = this.getWebviewContent(this.webviewPanel.webview, this._extensionUri);
+    this.webviewPanel.webview.html =
+      this.getWebviewContent(this.webviewPanel.webview, this._extensionUri, tableConfig);
 
     // process webview messages
     this.webviewPanel.webview.onDidReceiveMessage((message: any) => {
@@ -554,11 +557,11 @@ export class TableView {
   get delimiter(): string {
     let delimiter: string = '';
     switch (this._fileInfo.fileExtension) {
-      case FileTypes.csv:
+      case FileTypes.Csv:
         delimiter = ',';
         break;
-      case FileTypes.tsv:
-      case FileTypes.tab:
+      case FileTypes.Tsv:
+      case FileTypes.Tab:
         delimiter = '\t';
         break;
     }
@@ -605,9 +608,11 @@ export class TableView {
    * 
    * @param webview Reference to the extensions webview.
    * @param extensionUri Extension directory Uri.
-   * @returns Html string for the webview content.
+   * @param tableConfig Table view config.
+   * 
+   * @returns Html string for the webview content display.
    */
-  private getWebviewContent(webview: Webview, extensionUri: Uri): string {
+  private getWebviewContent(webview: Webview, extensionUri: Uri, tableConfig: any): string {
     // create webview UI toolkit Uri
     const webviewUiToolkitUri: Uri =
       fileUtils.getWebviewUri(webview, extensionUri, ['web', 'scripts', 'toolkit.min.js']);
@@ -618,8 +623,14 @@ export class TableView {
     const tableViewStylesUri: Uri =
       fileUtils.getWebviewUri(webview, extensionUri, ['web', 'styles', 'table-view.css']);
 
+    // determine tabular data view type from config
+    let viewType = this.dataViewType.toLowerCase();
+    if (tableConfig?.view === 'perspective') {
+      // user perspective data view type override
+      viewType = 'perspective';
+    }
+
     // create data view script and styles Uris
-    const viewType = this.dataViewType.toLowerCase();
     const viewImports = config.viewImports[viewType];
     const dataViewScriptUri: Uri =
       fileUtils.getWebviewUri(webview, extensionUri, ['web', 'scripts', `${viewType}.js`]);

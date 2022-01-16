@@ -22,7 +22,7 @@ export class TableViewSerializer implements WebviewPanelSerializer {
    * @returns Disposable object for this webview panel serializer.
    */
   public static register(context: ExtensionContext): Disposable {
-    return window.registerWebviewPanelSerializer(ViewTypes.tableView,
+    return window.registerWebviewPanelSerializer(ViewTypes.TableView,
       new TableViewSerializer(context.extensionUri));
   }
 

@@ -10,13 +10,15 @@ import {
 
 import { TableView } from './tableView';
 import { ViewTypes } from './viewTypes';
+import { DataViewTypes } from './dataViewTypes';
 
 /**
- * Defines custom tabular data text editor provider.
+ * Defines custom tabular data text editor provider for Perspective viewer.
  * 
+ * @see https://github.com/finos/perspective
  * @see https://code.visualstudio.com/api/references/vscode-api#CustomTextEditorProvider
  */
-export class TableEditor implements CustomTextEditorProvider {
+export class PerspectiveEditor implements CustomTextEditorProvider {
 
 	/**
 	 * Registers custom Table editor.
@@ -28,7 +30,7 @@ export class TableEditor implements CustomTextEditorProvider {
 	 */
 	public static register(context: ExtensionContext): Disposable {
 		return window.registerCustomEditorProvider(
-			ViewTypes.TableEditor, new TableEditor(context), {
+			ViewTypes.PerspectiveEditor, new PerspectiveEditor(context), {
 			webviewOptions: {
 				enableFindWidget: true,
 				retainContextWhenHidden: true
@@ -37,7 +39,7 @@ export class TableEditor implements CustomTextEditorProvider {
 	}
 
 	/**
-	 * Creates new Table editor instance.
+	 * Creates new Perspective editor instance.
 	 * 
 	 * @param context Extension context.
 	 */
@@ -58,6 +60,8 @@ export class TableEditor implements CustomTextEditorProvider {
 		token: CancellationToken
 	): Promise<void> {
 		// create new table view for the given tabular text data document and render it
-		TableView.render(this.context.extensionUri, document.uri, webviewPanel);
+		TableView.render(this.context.extensionUri,	document.uri,	webviewPanel, {
+			view: DataViewTypes.PerspectiveViewer.toLowerCase()
+		});
 	}
 }

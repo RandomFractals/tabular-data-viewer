@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/naming-convention */
+
 /**
  * Supported tabular data file types.
  */
 export enum FileTypes {
-  csv = '.csv',
-  tsv = '.tsv',
-  tab = '.tab'
+	Csv = '.csv',
+	Tsv = '.tsv',
+	Tab = '.tab'
 }
