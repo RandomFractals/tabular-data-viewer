@@ -1,0 +1,112 @@
+{
+  "fields": [
+    {
+      "name": "Row ID",
+      "type": "integer",
+      "format": "default"
+    },
+    {
+      "name": "Order ID",
+      "type": "string",
+      "format": "default"
+    },
+    {
+      "name": "Order Date",
+      "type": "integer",
+      "format": "default"
+    },
+    {
+      "name": "Ship Date",
+      "type": "integer",
+      "format": "default"
+    },
+    {
+      "name": "Ship Mode",
+      "type": "string",
+      "format": "default"
+    },
+    {
+      "name": "Customer ID",
+      "type": "string",
+      "format": "default"
+    },
+    {
+      "name": "Customer Name",
+      "type": "string",
+      "format": "default"
+    },
+    {
+      "name": "Segment",
+      "type": "string",
+      "format": "default"
+    },
+    {
+      "name": "Country",
+      "type": "string",
+      "format": "default"
+    },
+    {
+      "name": "City",
+      "type": "string",
+      "format": "default"
+    },
+    {
+      "name": "State",
+      "type": "string",
+      "format": "default"
+    },
+    {
+      "name": "Postal Code",
+      "type": "integer",
+      "format": "default"
+    },
+    {
+      "name": "Region",
+      "type": "string",
+      "format": "default"
+    },
+    {
+      "name": "Product ID",
+      "type": "string",
+      "format": "default"
+    },
+    {
+      "name": "Category",
+      "type": "string",
+      "format": "default"
+    },
+    {
+      "name": "Sub-Category",
+      "type": "string",
+      "format": "default"
+    },
+    {
+      "name": "Product Name",
+      "type": "string",
+      "format": "default"
+    },
+    {
+      "name": "Sales",
+      "type": "number",
+      "format": "default"
+    },
+    {
+      "name": "Quantity",
+      "type": "integer",
+      "format": "default"
+    },
+    {
+      "name": "Discount",
+      "type": "any",
+      "format": "default"
+    },
+    {
+      "name": "Profit",
+      "type": "number",
+      "format": "default"
+    }
+  ],
+  "missingValues": [
+    ""
+  ]
+}
