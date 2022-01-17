@@ -1,5 +1,6 @@
-/** TODO: add Perspective Viewer styles **/
+/** perspective viewer styles **/
 perspective-viewer {
+	background-color: var(--vscode-editor-background);
   position: absolute;
   top: 40px;
   left: 0;
