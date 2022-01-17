@@ -59,6 +59,14 @@ const columnHeaderMenu = [
 	}
 ];
 
+// redraw table on window resize
+window.addEventListener('resize', function () {
+	// console.log('tableView.height:', window.innerHeight);
+	if (table) {
+		table.setHeight(window.innerHeight - toolbarHeight);
+	}
+});
+
 /**
  * Creates new Tabulator table with initial set of data to display.
  * 

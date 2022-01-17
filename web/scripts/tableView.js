@@ -28,14 +28,6 @@ let viewState = {
 // add page load handler
 window.addEventListener('load', initializeView);
 
-// redraw table on window resize
-window.addEventListener('resize', function () {
-  // console.log('tableView.height:', window.innerHeight);
-  if (table) {
-    table.setHeight(window.innerHeight - toolbarHeight);
-  }
-});
-
 // add data/config update handler
 window.addEventListener('message', event => {
   switch (event.data.command) {
