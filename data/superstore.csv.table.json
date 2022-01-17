@@ -1,0 +1,202 @@
+{
+  "columns": [
+    {
+      "minWidth": 40,
+      "download": false,
+      "formatter": "rowSelection",
+      "titleFormatter": "rowSelection",
+      "resizable": true,
+      "headerSort": false,
+      "width": 52
+    },
+    {
+      "field": "Row ID",
+      "title": "Row ID",
+      "minWidth": 40,
+      "resizable": true,
+      "sorter": "number",
+      "headerSort": true,
+      "width": 101
+    },
+    {
+      "field": "Order ID",
+      "title": "Order ID",
+      "minWidth": 40,
+      "resizable": true,
+      "sorter": "string",
+      "headerSort": true,
+      "width": 115
+    },
+    {
+      "field": "Order Date",
+      "title": "Order Date",
+      "minWidth": 40,
+      "resizable": true,
+      "sorter": "number",
+      "headerSort": true,
+      "width": 126
+    },
+    {
+      "field": "Ship Date",
+      "title": "Ship Date",
+      "minWidth": 40,
+      "resizable": true,
+      "sorter": "number",
+      "headerSort": true,
+      "width": 116
+    },
+    {
+      "field": "Ship Mode",
+      "title": "Ship Mode",
+      "minWidth": 40,
+      "resizable": true,
+      "sorter": "string",
+      "headerSort": true,
+      "width": 123
+    },
+    {
+      "field": "Customer ID",
+      "title": "Customer ID",
+      "minWidth": 40,
+      "resizable": true,
+      "sorter": "string",
+      "headerSort": true,
+      "width": 134
+    },
+    {
+      "field": "Customer Name",
+      "title": "Customer Name",
+      "minWidth": 40,
+      "resizable": true,
+      "sorter": "string",
+      "headerSort": true,
+      "width": 157
+    },
+    {
+      "field": "Segment",
+      "title": "Segment",
+      "minWidth": 40,
+      "resizable": true,
+      "sorter": "string",
+      "headerSort": true,
+      "width": 112
+    },
+    {
+      "field": "Country",
+      "title": "Country",
+      "minWidth": 40,
+      "resizable": true,
+      "sorter": "string",
+      "headerSort": true,
+      "width": 106
+    },
+    {
+      "field": "City",
+      "title": "City",
+      "minWidth": 40,
+      "resizable": true,
+      "sorter": "string",
+      "headerSort": true,
+      "width": 107
+    },
+    {
+      "field": "State",
+      "title": "State",
+      "minWidth": 40,
+      "resizable": true,
+      "sorter": "string",
+      "headerSort": true,
+      "width": 101
+    },
+    {
+      "field": "Postal Code",
+      "title": "Postal Code",
+      "minWidth": 40,
+      "resizable": true,
+      "sorter": "number",
+      "headerSort": true,
+      "width": 130
+    },
+    {
+      "field": "Region",
+      "title": "Region",
+      "minWidth": 40,
+      "resizable": true,
+      "sorter": "string",
+      "headerSort": true,
+      "width": 100
+    },
+    {
+      "field": "Product ID",
+      "title": "Product ID",
+      "minWidth": 40,
+      "resizable": true,
+      "sorter": "string",
+      "headerSort": true,
+      "width": 125
+    },
+    {
+      "field": "Category",
+      "title": "Category",
+      "minWidth": 40,
+      "resizable": true,
+      "sorter": "string",
+      "headerSort": true,
+      "width": 112
+    },
+    {
+      "field": "Sub-Category",
+      "title": "Sub-Category",
+      "minWidth": 40,
+      "resizable": true,
+      "sorter": "string",
+      "headerSort": true,
+      "width": 142
+    },
+    {
+      "field": "Product Name",
+      "title": "Product Name",
+      "minWidth": 40,
+      "resizable": true,
+      "sorter": "string",
+      "headerSort": true,
+      "width": 491
+    },
+    {
+      "field": "Sales",
+      "title": "Sales",
+      "minWidth": 40,
+      "resizable": true,
+      "sorter": "number",
+      "headerSort": true,
+      "width": 88
+    },
+    {
+      "field": "Quantity",
+      "title": "Quantity",
+      "minWidth": 40,
+      "resizable": true,
+      "sorter": "number",
+      "headerSort": true,
+      "width": 110
+    },
+    {
+      "field": "Discount",
+      "title": "Discount",
+      "minWidth": 40,
+      "resizable": true,
+      "sorter": "string",
+      "headerSort": true,
+      "width": 111
+    },
+    {
+      "field": "Profit",
+      "title": "Profit",
+      "minWidth": 40,
+      "resizable": true,
+      "sorter": "number",
+      "headerSort": true,
+      "width": 91
+    }
+  ]
+}
