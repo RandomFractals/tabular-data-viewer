@@ -118,6 +118,18 @@ Press `F5` to launch Tabular Data Viewer 🀄 extension debug session, or run th
 tabular-data-viewer>vsce package
 ```
 
+# Installation
+
+To install, just search for "tabular data viewer" in VSCode and install from there.
+
+If you use VSCodium, you need to download the .vsix file from [our latest build](https://github.com/RandomFractals/tabular-data-viewer/releases) and run the following command:
+
+```bash
+code --install-extension tabular-data-viewer-n.n.n.vsix
+```
+
+where `n.n.n` is the version number.
+
 # Contributing
 
 Any and all test, code or feedback contributions are welcome. Open an [issue](https://github.com/RandomFractals/tabular-data-viewer/issues) or submit a [pull request](https://docs.github.com/en/pull-requests) to make this Tabular Data Viewer 🀄 extension work better for all.
