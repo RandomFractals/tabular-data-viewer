@@ -50,6 +50,7 @@ body {
 	outline-offset: 2px !important;
 	color: var(--vscode-button-foreground);
 	background: var(--vscode-button-background);
+	border-bottom: 1px solid var(--vscode-panel-border);
 }
 
 #toolbar a:hover {
@@ -64,6 +65,7 @@ body {
 #table-container {
 	background-color: var(--vscode-editor-background);
 	border: 1px solid var(--vscode-panel-border);
+	border-top: 0px;
   height: calc(100% - 40);
 	overflow: hidden;
 }
