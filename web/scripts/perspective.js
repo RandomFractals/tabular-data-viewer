@@ -2,7 +2,17 @@
 // import perspective from 'https://unpkg.com/@finos/perspective@1.1.0/dist/cdn/perspective.js';
 
 // perspective viewer vars
-let viewer, worker, view;
+let viewer, worker, view, theme;
+let rowCounter,
+	dataUrl, dataFileName,
+	toggleConfig = true,
+	restoringConfig = true,
+	dataTable = '',
+	dataViews = {},
+	tableNames = [],
+	viewConfig = {},
+	viewData = [],
+	logLevel = 'info';
 
 // create Perspective viewer element
 document.addEventListener('DOMContentLoaded', async function () {
@@ -13,23 +23,30 @@ document.addEventListener('DOMContentLoaded', async function () {
 	viewer = document.createElement('perspective-viewer');
 	viewer.setAttribute('editable', true);
 	tableContainer.appendChild(viewer);
+
+	// add view update handler
+	viewer.addEventListener('perspective-view-update', event => {
+		logMessage(`viewer.perspective-view-update...`);
+		// updateStats();
+	});
+
+	// add viewer config change handler for saving view state
+	viewer.addEventListener('perspective-config-update', event => {
+		if (!restoringConfig) {
+			updateConfig();
+		}
+		// updateStats();
+	});
 });
 
 window.addEventListener('load', async function () {
-	// get sample arrow data
-	const dataRequest = fetch('https://cdn.jsdelivr.net/npm/superstore-arrow/superstore.arrow');
-
 	// create worker for table data loading
-	const worker = perspective.worker();
-	const dataResponse = await dataRequest;
-	const arrowData = await dataResponse.arrayBuffer();
+	worker = perspective.worker();
+});
 
-	// create sample data table
-	table = worker.table(arrowData);
-
-	// load sample data and toggle perspective grid view config
-	viewer.load(table);
-	viewer.toggleConfig();
+// tag viewer loading
+window.addEventListener('WebComponentsReady', event => {
+	logMessage('window.WebComponentsReady\n\n data viewer initialized!');
 });
 
 /**
@@ -43,6 +60,11 @@ function createTable(tableSchema, tableData) {
 		// show progress ring
 		progressRing.style.visibility = 'visible';
 
+		// create perspective table and load initial data into view
+		table = worker.table(tableData);
+		viewer.load(table);
+		viewer.toggleConfig();
+
 		// create table columns array from table schema fields
 		tableColumns = createTableColumns(tableSchema);
 		if (tableColumns.length > 0) {
@@ -54,7 +76,6 @@ function createTable(tableSchema, tableData) {
 		const tableOptions = createTableConfig(tableColumns);
 
 		// TODO: modify this to work with Perspective viewer grid
-		//table = new Tabulator('#table-container', tableOptions);
 
 		// update table settings after initial data rows load
 		// table.on('tableBuilt', onTableBuilt);
@@ -344,6 +365,134 @@ function saveData() {
 			break;
 		case 'html':
 			// table.download(dataFileType, saveDataFileName, { style: true });
+			break;
+	}
+}
+
+/**
+ * Restores data view config on new data view load or new view config load.
+ * 
+ * @param viewConfig Data view config to restore.
+ */
+function restoreConfig(viewConfig) {
+	// set updating view config flag
+	restoringConfig = true;
+
+	// restore view config
+	logMessage(`restoreConfig(\n${JSON.stringify(viewConfig, null, 2)})`);
+	viewer.restore(viewConfig);
+	//updateStats();
+
+	// clear updating view config flag
+	restoringConfig = false;
+}
+
+/**
+ * Updates view config caused by user interactions or new config load.
+ */
+function updateConfig() {
+	// get latest view config state from data viewer
+	const viewerConfig = viewer.save();
+
+	// strip out updating, render time and style properties for clean view config compare and save
+	deleteProperty('updating', viewerConfig);
+	deleteProperty('render_time', viewerConfig);
+	deleteProperty('style', viewerConfig);
+	deleteProperty('class', viewerConfig);
+	// logMessage(`viewer.perspective-config-update\n${logConfig(viewConfig)}\n${logConfig(viewerConfig)}`);
+
+	// update view config state and create config change log
+	let configChangeLog = '';
+	Object.keys(viewerConfig).forEach(propertyName => {
+		if (viewConfig[propertyName] === undefined ||
+			viewConfig[propertyName] !== viewerConfig[propertyName]) {
+			viewConfig[propertyName] = viewerConfig[propertyName];
+			configChangeLog += `\n ${propertyName}: ${viewConfig[propertyName]}`;
+		}
+	});
+
+	if (configChangeLog.length > 0) {
+		logMessage(`viewer.perspective-config-update \n${configChangeLog}`);
+		// save updated view config state for vscode data view panel reload
+		vscode.setState({
+			uri: dataUrl,
+			table: dataTable,
+			config: viewConfig,
+			theme: theme,
+			views: dataViews
+		});
+		// notify data preview
+		vscode.postMessage({
+			command: 'config',
+			table: dataTable,
+			config: viewConfig
+		});
+	}
+} // end of updateConfig()
+
+/**
+ * Deletes object property.
+ * @param propertyName Property name to delete.
+ */
+function deleteProperty(propertyName, obj) {
+	if (obj.hasOwnProperty(propertyName)) {
+		delete obj[propertyName];
+	}
+}
+
+/**
+ * Updates data stats on view config changes or data load/update.
+ */
+function updateStats() {
+	const numberOfRows = viewer.view ? viewer.view.num_rows() : viewer.table.size();
+	// get rows count and displayed columns info
+	numberOfRows.then(rowCount => {
+		let columns = viewer['columns'];
+		/*if (viewConfig.hasOwnProperty('columns')) {
+			// use view config columns property instead
+			columns = viewConfig['columns'].split('\",\"');
+		}*/
+
+		// notify webview for data stats status update
+		/* TODO: see if we need to post this to update columns and row count in status bar
+		vscode.postMessage({
+			command: 'stats',
+			columns: columns,
+			rowCount: rowCount
+		});*/
+
+		logMessage(`updateStats()\n\n columns: ${columns}\n rows: ${rowCount.toLocaleString()}`);
+	});
+}
+
+/**
+ * Converts data view config to string for console log display.
+ * @param dataViewConfig Data view config object or string.
+ */
+function logConfig(dataViewConfig) {
+	return (typeof dataViewConfig === 'string') ? dataViewConfig : JSON.stringify(dataViewConfig, null, 2);
+}
+
+/**
+ * Logs new data.view message to console for more info or debug.
+ * 
+ * @param message Log message text.
+ * @param logLevel Optional log level type.
+ */
+function logMessage(message, logLevel = 'debug') {
+	const category = 'data.view:';
+	switch (logLevel) {
+		case 'warn':
+			console.warn(category + message);
+			break;
+		case 'info':
+			console.info(category + message);
+			break;
+		case 'error':
+			console.error(category + message);
+			break;
+		default: // debug
+			console.log(category + message);
 			break;
 	}
 }
