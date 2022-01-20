@@ -49,10 +49,15 @@ async function onConfigUpdate() {
 		viewState.tableConfig = tableConfig;
 	}
 
+	if (!tableConfig.views) {
+		// create new views config collection
+		tableConfig.views = {};
+	}
+
 	// update perspective view config in table view state
 	const viewType = viewConfig.plugin;
 	tableConfig.view = viewType;
-	tableConfig[viewType] = viewConfig;
+	tableConfig.views[viewType] = viewConfig;
 
 	// update table view state
 	vscode.setState(viewState);

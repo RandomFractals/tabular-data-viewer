@@ -47,21 +47,37 @@
     }
   ],
   "view": "Datagrid",
-  "Datagrid": {
-    "plugin": "Datagrid",
-    "plugin_config": {},
-    "settings": true,
-    "row_pivots": [],
-    "column_pivots": [],
-    "columns": [
-      "lon",
-      "lat",
-      "city",
-      "state"
-    ],
-    "filter": [],
-    "sort": [],
-    "expressions": [],
-    "aggregates": {}
+  "views": {
+    "Datagrid": {
+      "plugin": "Datagrid",
+      "plugin_config": {},
+      "settings": true,
+      "row_pivots": [],
+      "column_pivots": [],
+      "columns": [
+        "lon",
+        "lat",
+        "state",
+        "city"
+      ],
+      "filter": [],
+      "sort": [],
+      "expressions": [],
+      "aggregates": {}
+    },
+    "X Bar": {
+      "plugin": "X Bar",
+      "plugin_config": {},
+      "settings": true,
+      "row_pivots": [],
+      "column_pivots": [],
+      "columns": [
+        "lon"
+      ],
+      "filter": [],
+      "sort": [],
+      "expressions": [],
+      "aggregates": {}
+    }
   }
 }
