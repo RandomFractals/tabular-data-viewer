@@ -36,13 +36,34 @@ document.addEventListener('DOMContentLoaded', async function () {
  * Perspective view config update handler.
  */
 async function onConfigUpdate() {
-	const config = await viewer.save();
-	console.log('perspective.configUpdate:', JSON.stringify(config, null, 2));
+	// get perspective viewer config
+	const viewConfig = await viewer.save();
+	console.log('perspective.onConfigUpdate():', JSON.stringify(viewConfig, null, 2));
 	if (!restoringConfig) {
 		updateConfig();
 	}
 	// updateStats();
-	
+
+	if (viewState.tableConfig === undefined) {
+		// add table config to table view state
+		viewState.tableConfig = tableConfig;
+	}
+
+	// update perspective view config in table view state
+	const viewType = viewConfig.plugin;
+	tableConfig.view = viewType;
+	tableConfig[viewType] = viewConfig;
+
+	// update table view state
+	vscode.setState(viewState);
+	console.log(`perspective.onConfigUpdate():viewState`, viewState);
+
+	// notify webview about table config changes
+	vscode.postMessage({
+		command: 'updateTableConfig',
+		tableConfig: tableConfig
+	});
+
 	// hide data loading progress ring
 	progressRing.style.visibility = 'hidden';
 }

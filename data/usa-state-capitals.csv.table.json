@@ -30,7 +30,7 @@
     {
       "field": "city",
       "title": "city",
-      "width": 208,
+      "width": 244,
       "minWidth": 40,
       "resizable": true,
       "sorter": "string",
@@ -39,17 +39,29 @@
     {
       "field": "state",
       "title": "state",
-      "width": 136,
+      "width": 1005,
       "minWidth": 40,
       "resizable": true,
       "sorter": "string",
       "headerSort": true
     }
   ],
-  "sort": [
-    {
-      "column": "state",
-      "dir": "asc"
-    }
-  ]
+  "view": "Datagrid",
+  "Datagrid": {
+    "plugin": "Datagrid",
+    "plugin_config": {},
+    "settings": true,
+    "row_pivots": [],
+    "column_pivots": [],
+    "columns": [
+      "lon",
+      "lat",
+      "city",
+      "state"
+    ],
+    "filter": [],
+    "sort": [],
+    "expressions": [],
+    "aggregates": {}
+  }
 }
