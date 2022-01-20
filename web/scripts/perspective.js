@@ -42,6 +42,9 @@ async function onConfigUpdate() {
 		updateConfig();
 	}
 	// updateStats();
+	
+	// hide data loading progress ring
+	progressRing.style.visibility = 'hidden';
 }
 
 /**
