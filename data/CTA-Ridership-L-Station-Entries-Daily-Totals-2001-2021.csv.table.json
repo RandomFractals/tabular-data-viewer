@@ -84,7 +84,28 @@
       ],
       "expressions": [],
       "aggregates": {}
+    },
+    "X Bar": {
+      "plugin": "X Bar",
+      "plugin_config": {},
+      "settings": true,
+      "row_pivots": [
+        "stationname"
+      ],
+      "column_pivots": [],
+      "columns": [
+        "rides"
+      ],
+      "filter": [],
+      "sort": [
+        [
+          "rides",
+          "desc"
+        ]
+      ],
+      "expressions": [],
+      "aggregates": {}
     }
   },
-  "view": "Datagrid"
+  "view": "X Bar"
 }
