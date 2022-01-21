@@ -51,14 +51,14 @@
     "Datagrid": {
       "plugin": "Datagrid",
       "plugin_config": {},
-      "settings": true,
+      "settings": false,
       "row_pivots": [],
       "column_pivots": [],
       "columns": [
         "lon",
         "lat",
-        "state",
-        "city"
+        "city",
+        "state"
       ],
       "filter": [],
       "sort": [],

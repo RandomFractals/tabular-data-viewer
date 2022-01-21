@@ -71,14 +71,15 @@
       "columns": [
         "station_id",
         "stationname",
+        "daytype",
         "rides",
         "date"
       ],
       "filter": [],
       "sort": [
         [
-          "date",
-          "asc"
+          "rides",
+          "desc"
         ]
       ],
       "expressions": [],
