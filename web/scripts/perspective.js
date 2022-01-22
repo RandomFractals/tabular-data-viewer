@@ -34,6 +34,19 @@ document.addEventListener('DOMContentLoaded', async function () {
 });
 
 /**
+ * Adds supported data format save options
+ * to the tabular data view toolbar Save dropdown.
+ * 
+ * @param {*} saveFileTypeSelector Save dropdown UI component.
+ */
+function addSaveOptions(saveFileTypeSelector) {
+	// add save JSON and arrow data options
+	saveFileTypeSelector.innerHTML += `
+    <option value="json">{} &nbsp;json</option>
+    <option value="arrow">⋙ arrow</option>`;
+}
+
+/**
  * Perspective view config update handler.
  */
 async function onConfigUpdate() {

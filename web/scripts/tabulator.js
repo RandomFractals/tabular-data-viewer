@@ -68,6 +68,21 @@ window.addEventListener('resize', function () {
 });
 
 /**
+ * Adds supported data format save options
+ * to the tabular data view toolbar Save dropdown.
+ * 
+ * @param {*} saveFileTypeSelector Save dropdown UI component.
+ */
+function addSaveOptions(saveFileTypeSelector) {
+	// add save semicolon delimited, tsv, json, and html table options
+	saveFileTypeSelector.innerHTML += `
+    <option value="ssv">;;; csv</option>
+    <option value="tsv">⇥ tsv</option>
+    <option value="json">{} &nbsp;json</option>
+    <option value="html">&lt;/&gt; &nbsp;html</option>`;
+}
+
+/**
  * Creates new Tabulator table with initial set of data to display.
  * 
  * @param {*} tableSchema Data table schema with inferred column fields info.

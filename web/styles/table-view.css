@@ -31,7 +31,7 @@ body {
   position: absolute;
   top: 5px;
   right: 0px;
-  width: 260px;
+  width: 264px;
   height: 32px;
   padding-left: 5px;
   background-color: var(--vscode-editor-background);

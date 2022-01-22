@@ -74,6 +74,7 @@ function initializeView() {
   // save file selector
   saveFileTypeSelector = document.getElementById('save-file-type-selector');
   saveFileTypeSelector.onchange = saveData;
+  addSaveOptions(saveFileTypeSelector);
 
   // restore previous table view state
   viewState = vscode.getState();
