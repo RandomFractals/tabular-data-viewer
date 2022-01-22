@@ -5,7 +5,7 @@
  */
 export enum Settings {
 	DataViewType = 'view',
-	DataViewTheme = 'ui.theme',
+	DataUiTheme = 'ui.theme',
 	DataPageSize = 'pageSize',
 	DynamicDataTyping = 'parser.dynamicTyping',
 	CreateTableSchemaConfig = 'createTableSchemaConfig',

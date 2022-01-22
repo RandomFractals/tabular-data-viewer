@@ -576,13 +576,6 @@ export class TableView {
   }
 
   /**
-   * Gets default data view theme configuration setting.
-   */
-  get dataViewTheme(): string {
-    return <string>config.get(Settings.DataViewTheme);
-  }
-
-  /**
    * Gets data page size configuration setting.
    */
   get dataPageSize(): number {
@@ -638,7 +631,7 @@ export class TableView {
     }
 
     // create data view script and styles Uris
-    const viewImports = config.viewImports[viewType];
+    const viewImports = config.getViewImports(viewType);
     const dataViewScriptUri: Uri =
       fileUtils.getWebviewUri(webview, extensionUri, ['web', 'scripts', `${viewType}.js`]);
     const dataViewStylesUri: Uri =
