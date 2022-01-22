@@ -1,10 +1,13 @@
+/* eslint-disable @typescript-eslint/naming-convention */
+
 /**
  * Tabular data view and parser configuraiton settings.
  */
 export enum Settings {
-	dataViewType = 'view',
-	dataPageSize = 'pageSize',
-	dynamicDataTyping = 'parser.dynamicTyping',
-	createTableSchemaConfig = 'createTableSchemaConfig',
-	createTableViewConfig = 'createTableViewConfig',
+	DataViewType = 'view',
+	DataViewTheme = 'ui.theme',
+	DataPageSize = 'pageSize',
+	DynamicDataTyping = 'parser.dynamicTyping',
+	CreateTableSchemaConfig = 'createTableSchemaConfig',
+	CreateTableViewConfig = 'createTableViewConfig',
 }

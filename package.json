@@ -202,6 +202,15 @@
 					"default": "Tabulator",
 					"description": "Default tabular data view to use for displaying data."
 				},
+				"tabular.data.ui.theme": {
+					"type": "string",
+					"enum": [
+						"light",
+						"dark"
+					],
+					"default": "light",
+					"description": "Default data view UI theme to use for tabular data display."
+				},
 				"tabular.data.pageSize": {
 					"type": "integer",
 					"enum": [

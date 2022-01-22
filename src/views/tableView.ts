@@ -572,35 +572,42 @@ export class TableView {
    * Gets default data view type configuration setting.
    */
   get dataViewType(): string {
-    return <string>config.get(Settings.dataViewType);
+    return <string>config.get(Settings.DataViewType);
+  }
+
+  /**
+   * Gets default data view theme configuration setting.
+   */
+  get dataViewTheme(): string {
+    return <string>config.get(Settings.DataViewTheme);
   }
 
   /**
    * Gets data page size configuration setting.
    */
   get dataPageSize(): number {
-    return <number>config.get(Settings.dataPageSize);
+    return <number>config.get(Settings.DataPageSize);
   }
 
   /**
    * Gets dynamic data typing configuration setting for CSV data parsing.
    */
   get dynamicDataTyping(): boolean {
-    return <boolean>config.get(Settings.dynamicDataTyping);
+    return <boolean>config.get(Settings.DynamicDataTyping);
   }
 
   /**
    * Gets create table schema configuration setting for CSV data parsing.
    */
   get createTableSchemaConfig(): boolean {
-    return <boolean>config.get(Settings.createTableSchemaConfig);
+    return <boolean>config.get(Settings.CreateTableSchemaConfig);
   }
 
   /**
    * Gets create table schema configuration setting for CSV data parsing.
    */
   get createTableViewConfig(): boolean {
-    return <boolean>config.get(Settings.createTableViewConfig);
+    return <boolean>config.get(Settings.CreateTableViewConfig);
   }
 
   /**
