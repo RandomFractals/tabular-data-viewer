@@ -105,7 +105,28 @@
       ],
       "expressions": [],
       "aggregates": {}
+    },
+    "Y Bar": {
+      "plugin": "Y Bar",
+      "plugin_config": {},
+      "settings": true,
+      "row_pivots": [
+        "stationname"
+      ],
+      "column_pivots": [],
+      "columns": [
+        "rides"
+      ],
+      "filter": [],
+      "sort": [
+        [
+          "rides",
+          "desc"
+        ]
+      ],
+      "expressions": [],
+      "aggregates": {}
     }
   },
-  "view": "X Bar"
+  "view": "Y Bar"
 }

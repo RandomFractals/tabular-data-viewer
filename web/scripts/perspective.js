@@ -51,20 +51,29 @@ async function onConfigUpdate() {
 		tableConfig.views = {};
 	}
 
-	// update perspective view config in table view state
+	// check perspective view type and last saved view config
 	const viewType = viewConfig.plugin;
-	tableConfig.view = viewType;
-	tableConfig.views[viewType] = viewConfig;
+	const lastViewConfig = viewState.tableConfig.views[viewType];
+	if (currentView !== viewType && lastViewConfig !== undefined) {
+		// restore previously saved view config
+		currentView = viewType;
+		await viewer.restore(lastViewConfig);
+	}
+	else {
+		// update current view config
+		tableConfig.view = viewType;
+		tableConfig.views[viewType] = viewConfig;
 
-	// update table view state
-	vscode.setState(viewState);
-	// console.log(`perspective.onConfigUpdate():viewState`, viewState);
+		// update table view state
+		vscode.setState(viewState);
+		// console.log(`perspective.onConfigUpdate():viewState`, viewState);
 
-	// notify webview about table config changes
-	vscode.postMessage({
-		command: 'updateTableConfig',
-		tableConfig: tableConfig
-	});
+		// notify webview about table config changes
+		vscode.postMessage({
+			command: 'updateTableConfig',
+			tableConfig: tableConfig
+		});
+	}
 
 	// hide data loading progress ring
 	progressRing.style.visibility = 'hidden';
