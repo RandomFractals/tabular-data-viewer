@@ -283,42 +283,33 @@ function scrollToLastRow() {
 /**
  * Saves table data as CSV, TSV, or JSON data array document.
  */
-function saveData() {
+async function saveData() {
 	// get requested data file format
 	let dataFileType = saveFileTypeSelector.value;
 
 	// construct save data file name
 	const dataFileName = fileName.substring(0, fileName.lastIndexOf('.') + 1);
 	saveDataFileName = dataFileName + dataFileType;
-	console.log('tabView:saveData(): saving data:', saveDataFileName);
+	console.log('perspective.saveData(): saving data:', saveDataFileName);
 
-	// adjust text data delimiter and file type
-	let delimiter = ',';
-	switch (dataFileType) {
-		case 'ssv': // semicolon delimited CSV
-			delimiter = ';';
-			dataFileType = 'csv';
-			saveDataFileName = `${dataFileName}.csv`;
-			break;
-		case 'tsv':
-			delimiter = '\t';
-			dataFileType = 'csv'; // download file type
-			break;
-	}
-
-	// TODO: use Perspective table API to generate data blob to save
+	// get current view data
+	const view = await viewer.getView();
+	let viewData;
 	switch (dataFileType) {
 		case 'csv':
-		case 'tsv':
-			// table.download(dataFileType, saveDataFileName, { delimiter: delimiter });
+			viewData = await view.to_csv();
 			break;
 		case 'json':
-			// table.download(dataFileType, saveDataFileName);
+			const jsonDataArray = await view.to_json();
+			viewData = JSON.stringify(jsonDataArray, null, 2);
 			break;
-		case 'html':
-			// table.download(dataFileType, saveDataFileName, { style: true });
+		case 'arrow':
+			viewData = await view.to_arrow();
 			break;
 	}
+
+	// send current view data to webview to save it
+	downloadData(viewData);
 }
 
 /**

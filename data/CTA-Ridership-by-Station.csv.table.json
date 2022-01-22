@@ -1,0 +1,49 @@
+{
+  "columns": [
+    {
+      "minWidth": 40,
+      "download": false,
+      "formatter": "rowSelection",
+      "titleFormatter": "rowSelection",
+      "resizable": true,
+      "headerSort": false,
+      "width": 52
+    },
+    {
+      "field": "stationname (Group by 1)",
+      "title": "stationname (Group by 1)",
+      "minWidth": 40,
+      "resizable": true,
+      "sorter": "string",
+      "headerSort": true,
+      "width": 215
+    },
+    {
+      "field": "daytype",
+      "title": "daytype",
+      "minWidth": 40,
+      "resizable": true,
+      "sorter": "number",
+      "headerSort": true,
+      "width": 106
+    },
+    {
+      "field": "rides",
+      "title": "rides",
+      "minWidth": 40,
+      "resizable": true,
+      "sorter": "number",
+      "headerSort": true,
+      "width": 86
+    },
+    {
+      "field": "date",
+      "title": "date",
+      "minWidth": 40,
+      "resizable": true,
+      "sorter": "number",
+      "headerSort": true,
+      "width": 346
+    }
+  ]
+}
