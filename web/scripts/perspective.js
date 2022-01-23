@@ -126,6 +126,14 @@ async function createTable(tableSchema, tableData) {
 			viewer.toggleConfig();
 		}
 	}
+
+	// TODO: implement scroll to 1st/last row for perspective view later
+	// remove scroll to 1st/last row toolbar UI options from display for now
+	const scrollToFirstRowButton = document.getElementById('scroll-to-first-row-button');
+	const scrollToLastRowButton = document.getElementById('scroll-to-last-row-button');
+	scrollToFirstRowButton.style.display = 'none';
+	scrollToLastRowButton.style.display = 'none';
+
 	return table;
 }
 
