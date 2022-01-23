@@ -317,7 +317,9 @@ async function saveData() {
 			viewData = JSON.stringify(jsonDataArray, null, 2);
 			break;
 		case 'arrow':
-			viewData = await view.to_arrow();
+			const arrayBuffer = await view.to_arrow();
+			const dataArray = new Uint8Array(arrayBuffer);
+			viewData = Array.from(dataArray);
 			break;
 	}
 

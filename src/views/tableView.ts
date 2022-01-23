@@ -414,6 +414,11 @@ export class TableView {
       defaultUri: Uri.parse(dataFilePath).with({ scheme: 'file' })
     });
 
+    if (dataFileType === 'arrow') {
+      // convert data array to a buffer to save
+      data = Buffer.from(data);
+    }
+
     if (dataFileUri) {
       // save data
       // TODO: switch to using workspace.fs for data save
