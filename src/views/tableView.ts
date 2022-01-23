@@ -409,9 +409,14 @@ export class TableView {
     let dataFilePath: string = path.dirname(this._fileInfo.filePath);
     dataFilePath = path.join(dataFilePath, dataFileName);
 
+    // file filter to use in save dialog
+    const fileFilter: any = {};
+    fileFilter[dataFileType] = [dataFileType];
+
     // display save file dialog
     const dataFileUri: Uri | undefined = await window.showSaveDialog({
-      defaultUri: Uri.parse(dataFilePath).with({ scheme: 'file' })
+      defaultUri: Uri.parse(dataFilePath).with({ scheme: 'file' }),
+      filters: fileFilter
     });
 
     if (dataFileType === 'arrow') {
