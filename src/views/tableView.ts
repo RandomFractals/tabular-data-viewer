@@ -27,7 +27,7 @@ import { DataViewTypes } from './dataViewTypes';
 import { statusBar } from './statusBar';
 
 import { ViewCommands } from '../commands/viewCommands';
-import { Settings } from '../configuration/Settings';
+import { Settings } from '../configuration/settings';
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const {Table} = require('tableschema');
