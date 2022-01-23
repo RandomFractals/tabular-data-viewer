@@ -76,6 +76,8 @@ Tabular Data Viewer 中 Settings, Commands, Languages, Custom Editors and Activa
 
 You can view Tabular Data Viewer 中 Configuration Settings via standard vscode `Preferences -> Settings -> Extensions -> Tabular Data Viewer` Settings view or use custom `Tabular Data: View Settings` command from `View -> Command Palette...` menu prompt by typing `Tabular` in it. Hit Reload ↺ button in open Table View 🀄 after you toggle Tabular Data Settings to activate your configuration changes for an open table view.
 
+**Note**: `tabular.data.view` type default and `tabular.data.ui.theme` setting changes might require you to close and reopen currently open Tabular Data Views for those settings to take effect.
+
 ![Tabular Data Viewer 中 Configuration Settings](https://github.com/RandomFractals/tabular-data-viewer/blob/main/docs/images/tabular-data-viewer-settings.png?raw=true 
  "Tabular Data Viewer 中 Configuration Settings")
 
