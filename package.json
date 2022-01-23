@@ -200,7 +200,7 @@
 						"Perspective"
 					],
 					"default": "Tabulator",
-					"description": "Default tabular data view to use for displaying data."
+					"description": "Default tabular data view type to use for displaying data."
 				},
 				"tabular.data.ui.theme": {
 					"type": "string",
