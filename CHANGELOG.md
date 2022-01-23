@@ -2,7 +2,7 @@
 
 See [releases](https://github.com/RandomFractals/tabular-data-viewer/releases) for source code and `tabular-data-viewer-x.x.x.vsix` extension package download.
 
-## v1.6.0 - [2022-01-23]
+## v1.6.0 - [2022-01-24]
 - [#6](https://github.com/RandomFractals/tabular-data-viewer/issues/6)
 Document CUDA drivers and native node modules setup, extraction, and integration in this vscode extension
 - [#15](https://github.com/RandomFractals/tabular-data-viewer/issues/15)
