@@ -2,9 +2,39 @@
 
 See [releases](https://github.com/RandomFractals/tabular-data-viewer/releases) for source code and `tabular-data-viewer-x.x.x.vsix` extension package download.
 
+## v1.6.0 - [2022-01-23]
+- [#6](https://github.com/RandomFractals/tabular-data-viewer/issues/6)
+Document CUDA drivers and native node modules setup, extraction, and integration in this vscode extension
+- [#15](https://github.com/RandomFractals/tabular-data-viewer/issues/15)
+Adopt frictionless data standards
+- [#56](https://github.com/RandomFractals/tabular-data-viewer/issues/56)
+Add large data files for testing data loading and table view display
+- [#62](https://github.com/RandomFractals/tabular-data-viewer/issues/62)
+Evaluate RevoGrid for displaying large datasets as alternative to Tabulator
+- [#63](https://github.com/RandomFractals/tabular-data-viewer/issues/63)
+Evaluate regular-table web component and switch to using its virtual data model for large datasets
+- [#65](https://github.com/RandomFractals/tabular-data-viewer/issues/65)
+Add Perspective library and Open CSV data file with Perspective Viewer option
+- [#75](https://github.com/RandomFractals/tabular-data-viewer/issues/75)
+Add tabular.data.view configuration option for alternative data views
+- [#77](https://github.com/RandomFractals/tabular-data-viewer/issues/77)
+Move Tabulator JS and CSS to separate files in /web folder
+- [#79](https://github.com/RandomFractals/tabular-data-viewer/issues/79)
+Implement Perspective View data loading
+- [#80](https://github.com/RandomFractals/tabular-data-viewer/issues/80)
+Add tabular.data.ui.theme light and dark options
+- [#85](https://github.com/RandomFractals/tabular-data-viewer/issues/85)
+Save and restore Perspective view configs in data file *.table.json
+- [#88](https://github.com/RandomFractals/tabular-data-viewer/issues/88)
+Implement Save as CSV, JSON and Arrow data in Perspective view
+- [#90](https://github.com/RandomFractals/tabular-data-viewer/issues/90)
+Package and publish new Perspective view release
+
 ## v1.5.0 - [2022-01-13]
 - [#28](https://github.com/RandomFractals/tabular-data-viewer/issues/28)
 Persist table view config settings for restore on vscode reload or after table view tab close
+- [#51](https://github.com/RandomFractals/tabular-data-viewer/issues/51)
+Add Tabular Data Viewer config options
 - [#52](https://github.com/RandomFractals/tabular-data-viewer/issues/52)
 Add tabular data viewer config option to auto-save inferred table shema
 - [#67](https://github.com/RandomFractals/tabular-data-viewer/issues/67)
