@@ -237,7 +237,7 @@
 				"tabular.data.createTableViewConfig": {
 					"type": "boolean",
 					"default": true,
-					"description": "Create *.table.json configuration file to save and restore customized Table View 🀄 columns and sort settings."
+					"description": "Create *.table.json configuration file to save and restore customized Table View 🀄 columns, sort settings, Perspective View and D3FC Charts config options."
 				}
 			}
 		}
