@@ -66,11 +66,46 @@
     {
       "field": "longitude",
       "title": "longitude",
-      "width": 201,
+      "width": 377,
       "minWidth": 40,
       "resizable": true,
       "sorter": "number",
       "headerSort": true
     }
-  ]
+  ],
+  "views": {
+    "Datagrid": {
+      "plugin": "Datagrid",
+      "plugin_config": {
+        "latitude": {
+          "fixed": 6
+        },
+        "longitude": {
+          "fixed": 6
+        }
+      },
+      "settings": true,
+      "row_pivots": [],
+      "column_pivots": [],
+      "columns": [
+        "iata",
+        "name",
+        "city",
+        "state",
+        "country",
+        "latitude",
+        "longitude"
+      ],
+      "filter": [],
+      "sort": [
+        [
+          "city",
+          "asc"
+        ]
+      ],
+      "expressions": [],
+      "aggregates": {}
+    }
+  },
+  "view": "Datagrid"
 }
