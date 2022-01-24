@@ -67,12 +67,12 @@ Tabular Data Viewer 中 Settings, Commands, Languages, Custom Editors and Activa
 
 | Setting | Type | Default Value | Description |
 | ------- | ---- | ------------- | ----------- |
-| `tabular.data.view` | string | `Tabulator` | Default Tabular Data View type to use for displaying data. Current options include  [`Tabulator`](http://tabulator.info) and [`Perspective`](https://perspective.finos.org). |
-| `tabular.data.ui.theme` | string | `light` | Default data view UI theme to use for tabular data display. Current options include `light` and `dark` UI themes for `Tabulator` and `Perspective` data views. |
-| `tabular.data.pageSize` | integer | `100000` | Default Data Page Size to use for incremental loading and display of large datasets. |
-| `tabular.data.parser.dynamicTyping` | boolean | `true` | Enable type conversions for numeric and boolean data fields when parsing CSV data. Set this option to `false` to speed up large datasets parsing and loading. |
 | `tabular.data.createTableSchemaConfig` | boolean | `true` | Create [table `*.schema.json`](https://specs.frictionlessdata.io/table-schema/#descriptor) configuration file alongside data file when parsing CSV data. |
 | `tabular.data.createTableViewConfig` | boolean | `true` | Create `*.table.json` configuration file alongside data file for saving and restoring customized Table View 🀄 columns, sort settings, Perspective View and D3FC Charts 📊📈 config options. |
+| `tabular.data.pageSize` | integer | `100000` | Default Data Page Size to use for incremental loading and display of large datasets. |
+| `tabular.data.parser.dynamicTyping` | boolean | `true` | Enable type conversions for numeric and boolean data fields when parsing CSV data. Set this option to `false` to speed up large datasets parsing and loading. |
+| `tabular.data.ui.theme` | string | `light` | Default data view UI theme to use for tabular data display. Current options include `light` and `dark` UI themes for `Tabulator` and `Perspective` data views. |
+| `tabular.data.view` | string | `Tabulator` | Default Tabular Data View type to use for displaying data. Current options include  [`Tabulator`](http://tabulator.info) and [`Perspective`](https://perspective.finos.org). |
 
 You can view Tabular Data Viewer 中 Configuration Settings via standard vscode `Preferences -> Settings -> Extensions -> Tabular Data Viewer` Settings view or use custom `Tabular Data: View Settings` command from `View -> Command Palette...` menu prompt by typing `Tabular` in it. Hit Reload ↺ button in open Table View 🀄 after you toggle Tabular Data Settings to activate your configuration changes for an open table view.
 
