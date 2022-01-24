@@ -13,7 +13,7 @@
   Tabular Data Viewer 中 for Visual Studio Code
 </h1>
 
-See [Data Preview](https://github.com/RandomFractals/vscode-data-preview) 🈸 vscode extension for advanced [Grid Data Viewer](https://marketplace.visualstudio.com/items?itemName=RandomFractalsInc.vscode-data-preview) with support of many other common [data formats](https://github.com/RandomFractals/vscode-data-preview#supported-json-config-binary--excel-data-file-formats) and Save options for smaller datasets.
+See [Data Preview](https://github.com/RandomFractals/vscode-data-preview) 🈸 vscode extension for advanced [Grid Data Viewer](https://marketplace.visualstudio.com/items?itemName=RandomFractalsInc.vscode-data-preview) with support of many common [data formats](https://github.com/RandomFractals/vscode-data-preview#supported-json-config-binary--excel-data-file-formats) and Save options for smaller datasets.
 
 # Tabular Data Viewer 中
 
@@ -23,25 +23,20 @@ See [Data Preview](https://github.com/RandomFractals/vscode-data-preview) 🈸 v
  "Tabular Data View 中")
 # Features
 
-- View large [`CSV`](https://en.wikipedia.org/wiki/Comma-separated_values) and [`TSV`](https://en.wikipedia.org/wiki/Tab-separated_values) data files in a custom [Tabulator](http://tabulator.info/) Table View 🀄
+- View large [`CSV`](https://en.wikipedia.org/wiki/Comma-separated_values) and [`TSV`](https://en.wikipedia.org/wiki/Tab-separated_values) data files in a custom [Tabulator](http://tabulator.info/) Table or [Perspective](https://perspective.finos.org) Data View 🀄
 - Open Data File Table View 🀄 via quick file path input prompt
 - Load large datasets with millions of rows and over 1GB of tabular data using [Papa Parse](https://www.papaparse.com/) CSV parser in a worker thread with data streaming and incremental loading into Table View 🀄
 - View data loading progress, file size, colulmns, rows and load time stats display in vscode status bar
 - Sort displayed table data by multiple columns
-- Resize table columns
-- Rearrange table columns and rows
-- Hide, freeze, or delete table columns
-- Freeze or delete table rows
-- Select table rows column
-- Persist table columns layout and sort order
-- Restore customized table columns and sort configuration on vscode reload
-- Copy tab delimited table data to Clipboard
-- Save displayed table data in `CSV` (`,` or `;` delimited), `TSV`, `HTML` table, or `JSON` data array format
+- Resize and rearrange table columns
+- Auto-save table columns layout, sort order, and Perspective View configs
+- Restore customized Table View 🀄 configuration on vscode reload
+- Copy displayed table data to Clipboard in tab delimited format from Tabulator Table View or in CSV format from Perspective View
+- Save displayed table data in `CSV` (`,` or `;` delimited), `TSV`, `HTML` table, or `JSON` data array format from Tabulator Table View
+- Save displayed data in [Apache Arrow ⋙](https://arrow.apache.org/) data from Perspective View
 - Generate and view [Frictionless Table](https://specs.frictionlessdata.io/table-schema/) `*.schema.json` configration file created with [`tableschema-js.infer()`](https://github.com/frictionlessdata/tableschema-js#working-with-validateinfer)
 - Load saved table configuration options from auto-generated `*.table.json` config file when reopening previously customized Table View 🀄
-- Set default Data Page Size to 1K, 10K, or 100K (default) rows per page via standard vscode `Preferences -> Settings -> Extensions -> Tabular Data Viewer` configuration options to speed up large datasets parsing and loading into Table View 🀄
-
-...
+- Set default Data Page Size to 1K, 10K, or 100K (default) rows per page to speed up large datasets parsing and loading into Table View 🀄
 
 # Limitations
 
