@@ -1,7 +1,7 @@
 {
 	"name": "tabular-data-viewer",
 	"displayName": "Tabular Data Viewer 中",
-	"description": "Tabular Data Viewer provides fast DSV data loading and custom Table View 🀄 display for large .csv, .tsv and .tab data files via Tabulator table and Papa Parse CSV parser.",
+	"description": "Tabular Data Viewer provides fast DSV data loading and custom Table Views 🀄 for large .csv, .tsv and .tab data files with Tabulator Table, Perspective View, D3FC Chart Views 📊📈 and Papa Parse CSV parser.",
 	"version": "1.6.0",
 	"engines": {
 		"vscode": "^1.63.0"
@@ -36,10 +36,13 @@
 		"CSV",
 		"DSV",
 		"TSV",
+		"D3FC charts 📊📈",
 		"flat data",
 		"large data",
 		"text data",
 		"table view",
+		"tabular data view config",
+		"tabulator",
 		"data streaming",
 		"data perspective view"
 	],
