@@ -13,7 +13,7 @@
   Tabular Data Viewer 中 for Visual Studio Code
 </h1>
 
-See [Data Preview](https://github.com/RandomFractals/vscode-data-preview) 🈸 vscode extension for advanced [Grid Data Viewer](https://marketplace.visualstudio.com/items?itemName=RandomFractalsInc.vscode-data-preview) with support of many other common data formats and Save options for smaller datasets.
+See [Data Preview](https://github.com/RandomFractals/vscode-data-preview) 🈸 vscode extension for advanced [Grid Data Viewer](https://marketplace.visualstudio.com/items?itemName=RandomFractalsInc.vscode-data-preview) with support of many other common [data formats](https://github.com/RandomFractals/vscode-data-preview#supported-json-config-binary--excel-data-file-formats) and Save options for smaller datasets.
 
 # Tabular Data Viewer 中
 
