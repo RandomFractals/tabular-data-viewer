@@ -17,7 +17,7 @@ See [Data Preview](https://github.com/RandomFractals/vscode-data-preview) 🈸 v
 
 # Tabular Data Viewer 中
 
-[Tabular Data Viewer](https://marketplace.visualstudio.com/items?itemName=RandomFractalsInc.tabular-data-viewer) provides fast [`DSV`](https://en.wikipedia.org/wiki/Delimiter-separated_values) data loading and custom Table View 🀄 display for very large (1-8 GB) `.csv`, `.tsv` and `.tab` data files via <a title="Tabulator" href="http://tabulator.info"><img width="95" height="20" src="docs/images/tabulator.png" /></a> table and [Papa Parse](https://www.papaparse.com/) CSV parser with [NodeJS File Streams](https://nodejs.dev/learn/nodejs-streams) and [Worker threads](https://nodejs.org/api/worker_threads.html):
+[Tabular Data Viewer](https://marketplace.visualstudio.com/items?itemName=RandomFractalsInc.tabular-data-viewer) provides fast [`DSV`](https://en.wikipedia.org/wiki/Delimiter-separated_values) data loading and custom Table Views 🀄 for very large (1-8 GB) `.csv`, `.tsv` and `.tab` data files with <a title="Tabulator" href="http://tabulator.info"><img width="95" height="20" src="docs/images/tabulator.png" /></a> table, <a title="Perspective" href="https://perspective.finos.org"><img width="116" height="10" src="docs/images/perspective.png" /></a> View, [D3FC](https://d3fc.io) Chart Views 📊📈, [Papa Parse](https://www.papaparse.com/) CSV parser, [NodeJS File Streams](https://nodejs.dev/learn/nodejs-streams) and [Worker threads](https://nodejs.org/api/worker_threads.html):
 
 ![Tabular Data View 中](https://github.com/RandomFractals/tabular-data-viewer/blob/main/docs/images/tabular-data-view.png?raw=true 
  "Tabular Data View 中")
@@ -49,7 +49,7 @@ Large CSV data files streaming and display is very alpha and has the following l
 
 - Large datasets are paged and loaded into view for display with default page size set to 100K rows per page
 - Columns sort only works for the paged data loaded and displayed in Table View 🀄 and doesn't sort data for the whole dataset
-- Save data uses [Tabulator Download Table Data](http://tabulator.info/docs/5.0/download) feature and is also limited to max 100k rows for the currently displayed tabular data in Table View 🀄
+- Save data is also limited to max 100k rows for the currently displayed tabular data in Table View 🀄
 
 ![Tabular Data View 中 Large Dataset](https://github.com/RandomFractals/tabular-data-viewer/blob/main/docs/images/tabular-data-view-large-dataset.png?raw=true 
  "Tabular Data View 中 Large Dataset")
@@ -90,7 +90,7 @@ You can try [Tabular Data Viewer 🀄 Observable Notebook 📓](https://observab
 
 # Recommended Extensions
 
-Recommended custom dataViz extensions produced by [Random Fractals Inc.](https://marketplace.visualstudio.com/publishers/RandomFractalsInc) and other 3rd party vscode extension devs for working with data 🈸 charts 📈 geo 🗺️ data formats and Interactive Notebooks 📚 in [VSCode](https://code.visualstudio.com/):
+Recommended custom dataViz extensions produced by [Random Fractals Inc.](https://marketplace.visualstudio.com/publishers/RandomFractalsInc) and other 3rd party vscode extension authors for working with data 🈸 charts 📈 geo 🗺️ data formats and Interactive Notebooks 📚 in [VSCode](https://code.visualstudio.com/):
 
 | Extension | Description |
 | --- | --- |
