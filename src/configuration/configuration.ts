@@ -24,8 +24,8 @@ export function get(settingName: string): any {
  */
 // TODO: refactor this later and switch to using JS modules and JSX for data view templates.
 export const viewImports: any = {
-	tabulator: `<link href="https://unpkg.com/tabulator-tables@5.0.10/dist/css/tabulator.min.css" rel="stylesheet">
-    <script type="text/javascript" src="https://unpkg.com/tabulator-tables@5.0.10/dist/js/tabulator.min.js"></script>`,
+	tabulator: `<link href="https://unpkg.com/tabulator-tables@5.1.0/dist/css/tabulator.min.css" rel="stylesheet">
+    <script type="text/javascript" src="https://unpkg.com/tabulator-tables@5.1.0/dist/js/tabulator.min.js"></script>`,
 	
 	perspective: `<script type="text/javascript" src="https://unpkg.com/@finos/perspective@1.1.0/dist/umd/perspective.js"></script>
     <script type="module" src="https://unpkg.com/@finos/perspective-viewer@1.1.0/dist/cdn/perspective-viewer.js"></script>

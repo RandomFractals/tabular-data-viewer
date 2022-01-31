@@ -39,7 +39,7 @@
     {
       "field": "rides",
       "title": "rides",
-      "width": 81,
+      "width": 135,
       "minWidth": 40,
       "resizable": true,
       "sorter": "number",
@@ -48,7 +48,7 @@
     {
       "field": "date",
       "title": "date",
-      "width": 410,
+      "width": 317,
       "minWidth": 40,
       "resizable": true,
       "sorter": "string",
@@ -66,11 +66,11 @@
       "plugin": "Datagrid",
       "plugin_config": {},
       "settings": true,
-      "row_pivots": [
-        "stationname"
-      ],
+      "row_pivots": [],
       "column_pivots": [],
       "columns": [
+        "station_id",
+        "stationname",
         "daytype",
         "rides",
         "date"
@@ -78,7 +78,7 @@
       "filter": [],
       "sort": [
         [
-          "rides",
+          "stationname",
           "desc"
         ]
       ],
@@ -128,5 +128,5 @@
       "aggregates": {}
     }
   },
-  "view": "Y Bar"
+  "view": "X Bar"
 }
