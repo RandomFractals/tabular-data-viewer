@@ -107,10 +107,19 @@ function createTable(tableSchema, tableData) {
 		// update table settings after initial data rows load
 		table.on('tableBuilt', onTableBuilt);
 
-		// log loaded table data counts for debug
+		// log loaded table data item counts for debug
 		table.on('dataLoaded', data => {
-			console.log('tableView.table.dataLoaded():loadedData:', data.length.toLocaleString());
+			// console.log('tableView.table.dataLoaded():loadedData:', data.length.toLocaleString());
 		});
+
+		// log processed table row counts for debug
+		table.on('dataProcessed', data => {
+			const rowCount = data.length;
+			if (rowCount > 0) {
+				console.log('tableView.table.dataProcessed():processedRows:', rowCount.toLocaleString());
+			}
+		});
+
 	}
 	return table;
 }
