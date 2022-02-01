@@ -15,7 +15,8 @@ import {
 
 import * as fs from 'fs';
 import * as path from 'path';
-import { Stream } from 'stream';
+import { ClientRequest } from 'http';
+import { Stream, Readable, Writable } from 'stream';
 
 import * as config from '../configuration/configuration';
 import * as fileUtils from '../utils/fileUtils';
@@ -29,11 +30,14 @@ import { statusBar } from './statusBar';
 import { ViewCommands } from '../commands/viewCommands';
 import { Settings } from '../configuration/settings';
 
-// eslint-disable-next-line @typescript-eslint/naming-convention
-const {Table} = require('tableschema');
+// import nodejs https module for loading remote data files
+const https = require('https');
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const Papa = require('papaparse');
+
+// eslint-disable-next-line @typescript-eslint/naming-convention
+const { Table } = require('tableschema');
 
 /**
  * Defines Table view class for managing state and behaviour of Table webview panels.
@@ -246,7 +250,7 @@ export class TableView {
     this._loadTime = 0;
 
     // load tabular data file
-    const table = await Table.load(this._fileInfo.filePath);
+    const table = await Table.load(this._fileInfo.fileUrl); //.filePath);
     statusBar.showFileStats(this._fileInfo);
 
     // infer table shema
@@ -263,20 +267,59 @@ export class TableView {
       tableSchema: this._tableSchema
     }); */
 
-    // create readable CSV data file stream
-    const startReadTime: Date = new Date();
-    const dataFileStream: fs.ReadStream =
-      fs.createReadStream(this._fileInfo.filePath, 'utf-8');
+    // TODO: move CSV data parsing to loaders/readers
 
-    // pipe data file reads to Papa parse for CSV data parsing in a worker thread
-    const dataStream: Stream = dataFileStream.pipe(
-      Papa.parse(Papa.NODE_STREAM_INPUT, {
-        header: true, // key results by header fields
-        dynamicTyping: this.dynamicDataTyping, // enable dynamic typing
-        skipEmptyLines: true, // ignore empty lines to avoid errors
-        worker: true, // parse data lines in a worker thread
-      }));
-    
+    // create Papa parse data stream for CSV data parsing in a worker thread
+    const parseDataStream: Writable =
+      Papa.parse(Papa.NODE_STREAM_INPUT, this.getDataParseOptions());
+
+    // read data file
+    let dataStream: Stream;
+    let dataFileStream: Readable;
+    if (this._fileInfo.isRemote) {
+      try {
+        // get remote data
+        const dataRequest: ClientRequest =
+          https.get(this._fileInfo.fileUrl, (response: Readable) => {
+          dataFileStream = response;
+          dataStream = dataFileStream.pipe(parseDataStream);
+          this.processData(dataStream);
+        });
+      }
+      catch (error: any) {
+        console.error(`tabular.data.view.refresh(): Error:`, error.message);
+        window.showErrorMessage(`Error reading ${this._fileInfo.fileUrl}: \n${error.message}`);
+        return;
+      }
+    }
+    else {
+      // read local data file
+      dataFileStream = fs.createReadStream(this._fileInfo.filePath, 'utf-8');
+      dataStream = dataFileStream.pipe(parseDataStream);
+      await this.processData(dataStream);
+    }    
+  }
+
+  /**
+   * Gets data parse options for Papa parse CSV library.
+   */
+  private getDataParseOptions(): any {
+    return {
+      header: true, // key results by header fields
+      dynamicTyping: this.dynamicDataTyping, // enable dynamic typing
+      skipEmptyLines: true, // ignore empty lines to avoid errors
+      worker: true, // parse data lines in a worker thread
+    };
+  }
+
+  /**
+   * Processed parsed row data from a data stream.
+   * 
+   * @param dataStream Data stream with parsed row data.
+   */
+  public async processData(dataStream: Stream): Promise<void> {
+    const startReadTime: Date = new Date();
+
     // process parsed data rows
     const tableRows: Array<any> = [];
     let rowCount: number = 0;
@@ -284,7 +327,7 @@ export class TableView {
       tableRows.push(row);
       rowCount++;
       if ((rowCount % (this.dataPageSize * 10)) === 0) {
-        console.log(`tabular.data.view:refresh(): parsing rows ${rowCount.toLocaleString()}+ ...`);
+        console.log(`tabular.data.view:processData(): parsing rows ${rowCount.toLocaleString()}+ ...`);
         if (this.visible) {
           statusBar.showMessage(`Parsing rows ${rowCount.toLocaleString()}+`);
         }
@@ -295,6 +338,11 @@ export class TableView {
         this.loadData(tableRows);
         // TODO: add pause/resume stream later
       }
+    });
+
+    dataStream.on('error', (error) => {
+      console.error(`tabular.data.view.processData(): Error:`, error.message);
+      window.showErrorMessage(`Error reading ${this._fileInfo.fileUrl}: \n${error.message}`);
     });
 
     dataStream.on('end', () => {
@@ -450,7 +498,7 @@ export class TableView {
    * @param tableSchema Table schema object to save.
   */
   private async saveTableSchema(tableSchema: any): Promise<void> {
-    if (tableSchema && this.createTableSchemaConfig) {
+    if (tableSchema && this.createTableSchemaConfig && !this._fileInfo.isRemote) {
       // save updated table schema from tableschema infer call
       fileUtils.createJsonFile(this._fileInfo.tableSchemaFilePath, tableSchema);
     }
@@ -463,7 +511,7 @@ export class TableView {
    * @param tableConfig Table config object to save.
    */
   private async updateTableConfig(tableConfig: any): Promise<void> {
-    if (tableConfig) {
+    if (tableConfig && !this._fileInfo.isRemote) {
       this._tableConfig = tableConfig;
       if (this.createTableViewConfig) {
         // save updated table config for restoring table view after tab close
@@ -479,7 +527,7 @@ export class TableView {
    */
   private loadTableConfig(configFilePath: string): any {
     let tableConfig: any = {};
-    if (fs.existsSync(configFilePath)) {
+    if (!this._fileInfo.isRemote && fs.existsSync(configFilePath)) {
       // load and parse previously saved table config
       tableConfig = JSON.parse(fs.readFileSync(configFilePath, 'utf8'));
     }

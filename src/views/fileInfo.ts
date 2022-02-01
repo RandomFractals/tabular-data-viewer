@@ -12,8 +12,9 @@ export class FileInfo {
 	private _fileName: string;
 	private _fileExtension: string;
 	private _fileSize: number = 0;
+	private _fileUrl: string;
 	private _viewUri: Uri;
-
+	private _isRemote: boolean = false;
 
 	/**
 	 * Creates new FileInfo instance for data file Uri.
@@ -27,12 +28,41 @@ export class FileInfo {
 
 		// create custom table view Uri
 		this._viewUri = fileUri.with({ scheme: 'tabular-data' });
+
+		// initialize file Url string
+		this._fileUrl = fileUri.toString(true); // skip encoding
+
+		// check for remote data file Uri
+		if (this._fileUrl.startsWith('https://')) {
+			this._isRemote = true;
+		}
+		else {
+			// use fs path for local data file url
+			this._fileUrl = this.fileUri.fsPath;
+		}
+	}
+
+	/**
+	 * Gets remote data file flag.
+	 */
+	public get isRemote(): boolean {
+		return this._isRemote;
+	}
+
+	/**
+	 * Gets full local file fs path or remote data file url.
+	 */
+	public get fileUrl(): string {
+		return this._fileUrl;
 	}
 
 	/**
 	 * Gets data file path.
 	 */
 	public get filePath(): string {
+		if (this._isRemote) {
+			return this.fileUri.path;
+		}
 		return this.fileUri.fsPath;
 	}
 
@@ -54,7 +84,7 @@ export class FileInfo {
 	 * Gets file size in bytes.
 	 */
 	public get fileSize(): number {
-		if (this._fileSize <= 0) {
+		if (!this._isRemote && this._fileSize <= 0) {
 			this._fileSize = fileUtils.getFileSize(this.fileUri.fsPath);
 		}
 		return this._fileSize;
