@@ -259,7 +259,6 @@ export class TableView {
     }); */
 
     // TODO: move CSV data parsing to loaders/readers
-
     // create Papa parse data stream for CSV data parsing in a worker thread
     const parseDataStream: Writable =
       Papa.parse(Papa.NODE_STREAM_INPUT, this.getDataParseOptions());
@@ -270,8 +269,8 @@ export class TableView {
     if (this._fileInfo.isRemote) {
       try {
         // get remote data
-        const dataRequest: ClientRequest =
-          https.get(this._fileInfo.fileUrl, (response: Readable) => {
+        const dataRequest: ClientRequest = https.get(this._fileInfo.fileUrl, (response: Readable) => {
+          // pipe data response to parse data stream
           dataFileStream = response;
           dataStream = dataFileStream.pipe(parseDataStream);
           this.processData(dataStream);
