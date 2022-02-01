@@ -62,8 +62,10 @@ export class StatusBar {
 		this.clear();
 		this._fileInfo = fileInfo;
 
-		// create file size info label
-		this._fileSizeInfo = `FileSize: ${formatUtils.formatBytes(this._fileInfo.fileSize)}`;
+		if (!fileInfo.isRemote) {
+			// create file size info label
+			this._fileSizeInfo = `FileSize: ${formatUtils.formatBytes(this._fileInfo.fileSize)}`;
+		}
 	}
 
 	/**
@@ -134,12 +136,14 @@ export class StatusBar {
 			this._statusBarItem.text += ` ${this._columnsInfo} |`;
 		}
 
-		// append file size info
-		this._statusBarItem.text += ` ${this._fileSizeInfo}`;
+		if (!this._fileInfo?.isRemote) {
+			// append file size info
+			this._statusBarItem.text += ` ${this._fileSizeInfo} |`;
+		}
 
 		if (this._loadTime > 0) {
 			// append load time info
-			this._statusBarItem.text += ` | ${this._loadTimeInfo}`;
+			this._statusBarItem.text += ` ${this._loadTimeInfo}`;
 		}
 
 		this.show();
