@@ -1,0 +1,27 @@
+{
+  "fields": [
+    {
+      "name": "name",
+      "type": "string",
+      "format": "default"
+    },
+    {
+      "name": "country",
+      "type": "string",
+      "format": "default"
+    },
+    {
+      "name": "subcountry",
+      "type": "string",
+      "format": "default"
+    },
+    {
+      "name": "geonameid",
+      "type": "integer",
+      "format": "default"
+    }
+  ],
+  "missingValues": [
+    ""
+  ]
+}
