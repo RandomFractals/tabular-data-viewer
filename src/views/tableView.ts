@@ -17,6 +17,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { ClientRequest } from 'http';
 import { Stream, Readable, Writable } from 'stream';
+import { Table } from 'tableschema';
 
 import * as config from '../configuration/configuration';
 import * as fileUtils from '../utils/fileUtils';
@@ -35,9 +36,6 @@ const https = require('https');
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const Papa = require('papaparse');
-
-// eslint-disable-next-line @typescript-eslint/naming-convention
-const { Table } = require('tableschema');
 
 /**
  * Defines Table view class for managing state and behaviour of Table webview panels.
@@ -249,15 +247,8 @@ export class TableView {
     this._tableData.length = 0;
     this._loadTime = 0;
 
-    // load tabular data file
-    const table = await Table.load(this._fileInfo.fileUrl); //.filePath);
-    statusBar.showFileStats(this._fileInfo);
-
-    // infer table shema
-    this._tableSchema = await table.infer(this._inferDataSize);
-    console.log('tabular.data.view:tableSchema: columns:', this._tableSchema.fields);
-    statusBar.showColumns(this._tableSchema.fields);
-    this.saveTableSchema(this._tableSchema);
+    // inspect data file
+    this.inferTableSchema(this._fileInfo);
 
     // create table in table view before loading data
     /*
@@ -301,6 +292,28 @@ export class TableView {
   }
 
   /**
+   * Inspects data file, infers table schema and updates data file stats in status bar.
+   * 
+   * @param fileInfo File info with data file url.
+   */
+  public async inferTableSchema(fileInfo: FileInfo) {
+    try {
+      // load tabular data file
+      const table = await Table.load(fileInfo.fileUrl); //.filePath);
+      statusBar.showFileStats(fileInfo);
+
+      // infer table shema
+      this._tableSchema = await table.infer(this._inferDataSize);
+      console.log('tabular.data.view:tableSchema: columns:', this._tableSchema.fields);
+      statusBar.showColumns(this._tableSchema.fields);
+      this.saveTableSchema(this._tableSchema);
+    }
+    catch (error: any) {
+      window.showErrorMessage(`Error reading ${fileInfo.fileUrl}: \n${error.message}`);
+    }
+  }
+
+  /**
    * Gets data parse options for Papa parse CSV library.
    */
   private getDataParseOptions(): any {
@@ -313,7 +326,7 @@ export class TableView {
   }
 
   /**
-   * Processed parsed row data from a data stream.
+   * Processes parsed row data from a data stream.
    * 
    * @param dataStream Data stream with parsed row data.
    */
