@@ -2,6 +2,20 @@
 
 See [releases](https://github.com/RandomFractals/tabular-data-viewer/releases) for source code and `tabular-data-viewer-x.x.x.vsix` extension package download.
 
+## v1.7.0 - [2022-02-02]
+- [#53](https://github.com/RandomFractals/tabular-data-viewer/issues/53)
+Add remote data loading and display for public https datasets and supported data formats
+- [#93](https://github.com/RandomFractals/tabular-data-viewer/issues/93)
+Update vscode webview UI toolkit to v0.9.0
+- [#97](https://github.com/RandomFractals/tabular-data-viewer/issues/97)
+Update Tabulator to v5.1.0
+- [#98](https://github.com/RandomFractals/tabular-data-viewer/issues/98)
+Use table icon for View Table context menu in open CSV files
+- [#99](https://github.com/RandomFractals/tabular-data-viewer/issues/99)
+Refine tabular data loading errors
+- [#100](https://github.com/RandomFractals/tabular-data-viewer/issues/100)
+Package and publish https data files loading release
+
 ## v1.6.0 - [2022-01-24]
 - [#6](https://github.com/RandomFractals/tabular-data-viewer/issues/6)
 Document CUDA drivers and native node modules setup, extraction, and integration in this vscode extension
