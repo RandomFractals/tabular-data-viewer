@@ -1,0 +1,42 @@
+{
+  "fields": [
+    {
+      "name": "iata",
+      "type": "string",
+      "format": "default"
+    },
+    {
+      "name": "name",
+      "type": "string",
+      "format": "default"
+    },
+    {
+      "name": "city",
+      "type": "string",
+      "format": "default"
+    },
+    {
+      "name": "state",
+      "type": "string",
+      "format": "default"
+    },
+    {
+      "name": "country",
+      "type": "string",
+      "format": "default"
+    },
+    {
+      "name": "latitude",
+      "type": "number",
+      "format": "default"
+    },
+    {
+      "name": "longitude",
+      "type": "number",
+      "format": "default"
+    }
+  ],
+  "missingValues": [
+    ""
+  ]
+}

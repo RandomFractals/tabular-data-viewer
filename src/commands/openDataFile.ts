@@ -18,15 +18,20 @@ export async function registerOpenDataFileCommand(context: ExtensionContext) {
 			window.showInputBox({
 				ignoreFocusOut: true,
 				placeHolder: 'file:/// or https://',
-				prompt: 'Enter Data File Url'
-			}).then((dataFileUrl: string | undefined) => {
+				prompt: 'Enter Data File Url for Table View'
+			}).then((dataFileUrl: string | undefined) => {				
 				if (dataFileUrl && dataFileUrl !== undefined && dataFileUrl.length > 0) {
 					// create data file Uri
 					const dataFileUri: Uri = Uri.parse(dataFileUrl);
 
 					// check supported data files
 					const fileExtension: string = path.extname(dataFileUrl);
-					if ((<any>Object).values(FileTypes).includes(fileExtension)) {
+					if (!dataFileUrl?.startsWith('file:///') && !dataFileUrl?.startsWith('https://')) {
+						window.showErrorMessage(
+							`Tabular Data Viewer requires a valid \`file:///\` or \`https://\` data file Url \
+							to display Table View. Invalid data document Url: \`${dataFileUrl}\`.`);
+					}
+					else if ((<any>Object).values(FileTypes).includes(fileExtension)) {
 						// open table view for the data file
 						commands.executeCommand(ViewCommands.viewTable, dataFileUri);
 					}
