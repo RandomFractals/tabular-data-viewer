@@ -13,7 +13,7 @@
   Tabular Data Viewer 中 for Visual Studio Code
 </h1>
 
-See [Data Preview](https://github.com/RandomFractals/vscode-data-preview) 🈸 vscode extension for advanced [Grid Data Viewer](https://marketplace.visualstudio.com/items?itemName=RandomFractalsInc.vscode-data-preview) with support of many common [data formats](https://github.com/RandomFractals/vscode-data-preview#supported-json-config-binary--excel-data-file-formats) and Save options for smaller datasets.
+See [Data Preview](https://github.com/RandomFractals/vscode-data-preview) 🈸 vscode extension for advanced [Data Grid Viewer](https://marketplace.visualstudio.com/items?itemName=RandomFractalsInc.vscode-data-preview) with support of many common [data formats](https://github.com/RandomFractals/vscode-data-preview#supported-json-config-binary--excel-data-file-formats) and Save options for smaller datasets.
 
 # Tabular Data Viewer 中
 
@@ -24,9 +24,9 @@ See [Data Preview](https://github.com/RandomFractals/vscode-data-preview) 🈸 v
 # Features
 
 - View large [`CSV`](https://en.wikipedia.org/wiki/Comma-separated_values) and [`TSV`](https://en.wikipedia.org/wiki/Tab-separated_values) data files in a custom [Tabulator](http://tabulator.info/) Table or [Perspective](https://perspective.finos.org) Data View 🀄
-- Open Data File Table View 🀄 via quick file path input prompt
+- Open local or remote Data File Table View 🀄 via quick Data File URL input prompt
 - Load large datasets with millions of rows and over 1GB of tabular data using [Papa Parse](https://www.papaparse.com/) CSV parser in a worker thread with data streaming and incremental loading into Table View 🀄
-- View data loading progress, file size, colulmns, rows and load time stats display in vscode status bar
+- View data loading progress, local data file size, colulmns, rows and load time stats display in vscode status bar
 - Sort displayed table data by multiple columns
 - Resize and rearrange table columns
 - Auto-save table columns layout, sort order, and Perspective View configs
