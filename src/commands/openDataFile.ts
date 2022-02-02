@@ -6,6 +6,7 @@ import {
 	Uri
 } from 'vscode';
 
+import * as fs from 'fs';
 import * as path from 'path';
 
 import { ViewCommands } from './viewCommands';
@@ -31,8 +32,12 @@ export async function registerOpenDataFileCommand(context: ExtensionContext) {
 							`Tabular Data Viewer requires a valid \`file:///\` or \`https://\` data file Url \
 							to display Table View. Invalid data document Url: \`${dataFileUrl}\`.`);
 					}
+					else if (dataFileUrl?.startsWith('file:///') && !fs.existsSync(dataFileUri.fsPath)) {
+						window.showErrorMessage(
+							`Unable to locate requested data file: \`${dataFileUrl}\`.`);
+					}
 					else if ((<any>Object).values(FileTypes).includes(fileExtension)) {
-						// open table view for the data file
+						// open table view for requested remote or local data file
 						commands.executeCommand(ViewCommands.viewTable, dataFileUri);
 					}
 					else if (fileExtension.length === 0) {
