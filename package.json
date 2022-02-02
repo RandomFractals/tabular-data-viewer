@@ -72,7 +72,8 @@
 			{
 				"command": "tabular.data.viewTable",
 				"title": "View Table",
-				"category": "Tabular Data"
+				"category": "Tabular Data",
+				"icon": "$(table)"
 			},
 			{
 				"command": "tabular.data.viewSettings",
