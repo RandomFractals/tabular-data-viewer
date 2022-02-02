@@ -1,202 +1,244 @@
 {
   "columns": [
     {
+      "width": 52,
       "minWidth": 40,
       "download": false,
       "formatter": "rowSelection",
       "titleFormatter": "rowSelection",
       "resizable": true,
-      "headerSort": false,
-      "width": 52
+      "headerSort": false
     },
     {
       "field": "Row ID",
       "title": "Row ID",
+      "width": 101,
       "minWidth": 40,
       "resizable": true,
       "sorter": "number",
-      "headerSort": true,
-      "width": 101
+      "headerSort": true
     },
     {
       "field": "Order ID",
       "title": "Order ID",
+      "width": 115,
       "minWidth": 40,
       "resizable": true,
       "sorter": "string",
-      "headerSort": true,
-      "width": 115
+      "headerSort": true
     },
     {
       "field": "Order Date",
       "title": "Order Date",
+      "width": 126,
       "minWidth": 40,
       "resizable": true,
       "sorter": "number",
-      "headerSort": true,
-      "width": 126
+      "headerSort": true
     },
     {
       "field": "Ship Date",
       "title": "Ship Date",
+      "width": 116,
       "minWidth": 40,
       "resizable": true,
       "sorter": "number",
-      "headerSort": true,
-      "width": 116
+      "headerSort": true
     },
     {
       "field": "Ship Mode",
       "title": "Ship Mode",
+      "width": 123,
       "minWidth": 40,
       "resizable": true,
       "sorter": "string",
-      "headerSort": true,
-      "width": 123
+      "headerSort": true
     },
     {
       "field": "Customer ID",
       "title": "Customer ID",
+      "width": 134,
       "minWidth": 40,
       "resizable": true,
       "sorter": "string",
-      "headerSort": true,
-      "width": 134
+      "headerSort": true
     },
     {
       "field": "Customer Name",
       "title": "Customer Name",
+      "width": 157,
       "minWidth": 40,
       "resizable": true,
       "sorter": "string",
-      "headerSort": true,
-      "width": 157
+      "headerSort": true
     },
     {
       "field": "Segment",
       "title": "Segment",
+      "width": 112,
       "minWidth": 40,
       "resizable": true,
       "sorter": "string",
-      "headerSort": true,
-      "width": 112
+      "headerSort": true
     },
     {
       "field": "Country",
       "title": "Country",
+      "width": 106,
       "minWidth": 40,
       "resizable": true,
       "sorter": "string",
-      "headerSort": true,
-      "width": 106
+      "headerSort": true
     },
     {
       "field": "City",
       "title": "City",
+      "width": 107,
       "minWidth": 40,
       "resizable": true,
       "sorter": "string",
-      "headerSort": true,
-      "width": 107
+      "headerSort": true
     },
     {
       "field": "State",
       "title": "State",
+      "width": 101,
       "minWidth": 40,
       "resizable": true,
       "sorter": "string",
-      "headerSort": true,
-      "width": 101
+      "headerSort": true
     },
     {
       "field": "Postal Code",
       "title": "Postal Code",
+      "width": 130,
       "minWidth": 40,
       "resizable": true,
       "sorter": "number",
-      "headerSort": true,
-      "width": 130
+      "headerSort": true
     },
     {
       "field": "Region",
       "title": "Region",
+      "width": 100,
       "minWidth": 40,
       "resizable": true,
       "sorter": "string",
-      "headerSort": true,
-      "width": 100
+      "headerSort": true
     },
     {
       "field": "Product ID",
       "title": "Product ID",
+      "width": 125,
       "minWidth": 40,
       "resizable": true,
       "sorter": "string",
-      "headerSort": true,
-      "width": 125
+      "headerSort": true
     },
     {
       "field": "Category",
       "title": "Category",
+      "width": 112,
       "minWidth": 40,
       "resizable": true,
       "sorter": "string",
-      "headerSort": true,
-      "width": 112
+      "headerSort": true
     },
     {
       "field": "Sub-Category",
       "title": "Sub-Category",
+      "width": 142,
       "minWidth": 40,
       "resizable": true,
       "sorter": "string",
-      "headerSort": true,
-      "width": 142
+      "headerSort": true
     },
     {
       "field": "Product Name",
       "title": "Product Name",
+      "width": 491,
       "minWidth": 40,
       "resizable": true,
       "sorter": "string",
-      "headerSort": true,
-      "width": 491
+      "headerSort": true
     },
     {
       "field": "Sales",
       "title": "Sales",
+      "width": 88,
       "minWidth": 40,
       "resizable": true,
       "sorter": "number",
-      "headerSort": true,
-      "width": 88
+      "headerSort": true
     },
     {
       "field": "Quantity",
       "title": "Quantity",
+      "width": 110,
       "minWidth": 40,
       "resizable": true,
       "sorter": "number",
-      "headerSort": true,
-      "width": 110
+      "headerSort": true
     },
     {
       "field": "Discount",
       "title": "Discount",
+      "width": 111,
       "minWidth": 40,
       "resizable": true,
       "sorter": "string",
-      "headerSort": true,
-      "width": 111
+      "headerSort": true
     },
     {
       "field": "Profit",
       "title": "Profit",
+      "width": 91,
       "minWidth": 40,
       "resizable": true,
       "sorter": "number",
-      "headerSort": true,
-      "width": 91
+      "headerSort": true
     }
-  ]
+  ],
+  "views": {
+    "Datagrid": {
+      "plugin": "Datagrid",
+      "plugin_config": {},
+      "settings": false,
+      "row_pivots": [],
+      "column_pivots": [],
+      "columns": [
+        "Row ID",
+        "Order ID",
+        "Order Date",
+        "Ship Date",
+        "Ship Mode",
+        "Customer ID",
+        "Customer Name",
+        "Segment",
+        "Country",
+        "City",
+        "State",
+        "Postal Code",
+        "Region",
+        "Product ID",
+        "Category",
+        "Sub-Category",
+        "Product Name",
+        "Sales",
+        "Quantity",
+        "Discount",
+        "Profit"
+      ],
+      "filter": [],
+      "sort": [
+        [
+          "Order Date",
+          "asc"
+        ]
+      ],
+      "expressions": [],
+      "aggregates": {}
+    }
+  },
+  "view": "Datagrid"
 }

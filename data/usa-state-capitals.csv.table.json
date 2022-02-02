@@ -39,7 +39,7 @@
     {
       "field": "state",
       "title": "state",
-      "width": 1005,
+      "width": 437,
       "minWidth": 40,
       "resizable": true,
       "sorter": "string",
@@ -61,7 +61,12 @@
         "state"
       ],
       "filter": [],
-      "sort": [],
+      "sort": [
+        [
+          "state",
+          "asc"
+        ]
+      ],
       "expressions": [],
       "aggregates": {}
     },
@@ -78,6 +83,26 @@
       "sort": [],
       "expressions": [],
       "aggregates": {}
+    },
+    "Y Bar": {
+      "plugin": "Y Bar",
+      "plugin_config": {},
+      "settings": true,
+      "row_pivots": [],
+      "column_pivots": [],
+      "columns": [
+        "lon"
+      ],
+      "filter": [],
+      "sort": [],
+      "expressions": [],
+      "aggregates": {}
     }
-  }
+  },
+  "sort": [
+    {
+      "column": "state",
+      "dir": "asc"
+    }
+  ]
 }

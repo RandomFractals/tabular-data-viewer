@@ -1,0 +1,47 @@
+{
+  "fields": [
+    {
+      "name": "stationname (Group by 1)",
+      "type": {
+        "indices": {
+          "isSigned": true,
+          "bitWidth": 32
+        },
+        "dictionary": {},
+        "isOrdered": false,
+        "id": 0
+      },
+      "nullable": true,
+      "metadata": {}
+    },
+    {
+      "name": "daytype",
+      "type": {
+        "isSigned": true,
+        "bitWidth": 64
+      },
+      "nullable": true,
+      "metadata": {}
+    },
+    {
+      "name": "rides",
+      "type": {
+        "isSigned": true,
+        "bitWidth": 64
+      },
+      "nullable": true,
+      "metadata": {}
+    },
+    {
+      "name": "date",
+      "type": {
+        "isSigned": true,
+        "bitWidth": 64
+      },
+      "nullable": true,
+      "metadata": {}
+    }
+  ],
+  "metadata": {},
+  "dictionaries": {}
+}

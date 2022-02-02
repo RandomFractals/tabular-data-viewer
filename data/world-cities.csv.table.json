@@ -1,49 +1,49 @@
 {
   "columns": [
     {
+      "width": 52,
       "minWidth": 40,
       "download": false,
       "formatter": "rowSelection",
       "titleFormatter": "rowSelection",
       "resizable": true,
-      "headerSort": false,
-      "width": 52
+      "headerSort": false
     },
     {
       "field": "name",
       "title": "name",
+      "width": 123,
       "minWidth": 40,
       "resizable": true,
       "sorter": "string",
-      "headerSort": true,
-      "width": 123
+      "headerSort": true
     },
     {
       "field": "country",
       "title": "country",
+      "width": 131,
       "minWidth": 40,
       "resizable": true,
       "sorter": "string",
-      "headerSort": true,
-      "width": 131
+      "headerSort": true
     },
     {
       "field": "subcountry",
       "title": "subcountry",
+      "width": 167,
       "minWidth": 40,
       "resizable": true,
       "sorter": "string",
-      "headerSort": true,
-      "width": 167
+      "headerSort": true
     },
     {
       "field": "geonameid",
       "title": "geonameid",
+      "width": 428,
       "minWidth": 40,
       "resizable": true,
       "sorter": "number",
-      "headerSort": true,
-      "width": 428
+      "headerSort": true
     }
   ]
 }

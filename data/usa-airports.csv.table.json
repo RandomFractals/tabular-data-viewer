@@ -66,7 +66,7 @@
     {
       "field": "longitude",
       "title": "longitude",
-      "width": 377,
+      "width": 249,
       "minWidth": 40,
       "resizable": true,
       "sorter": "number",
@@ -105,7 +105,49 @@
       ],
       "expressions": [],
       "aggregates": {}
+    },
+    "X Bar": {
+      "plugin": "X Bar",
+      "plugin_config": {},
+      "settings": true,
+      "row_pivots": [
+        "state"
+      ],
+      "column_pivots": [],
+      "columns": [
+        "iata"
+      ],
+      "filter": [],
+      "sort": [
+        [
+          "iata",
+          "desc"
+        ]
+      ],
+      "expressions": [],
+      "aggregates": {}
+    },
+    "Y Bar": {
+      "plugin": "Y Bar",
+      "plugin_config": {},
+      "settings": true,
+      "row_pivots": [
+        "state"
+      ],
+      "column_pivots": [],
+      "columns": [
+        "iata"
+      ],
+      "filter": [],
+      "sort": [
+        [
+          "iata",
+          "desc"
+        ]
+      ],
+      "expressions": [],
+      "aggregates": {}
     }
   },
-  "view": "Datagrid"
+  "view": "Y Bar"
 }
