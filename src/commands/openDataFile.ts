@@ -22,6 +22,12 @@ export async function registerOpenDataFileCommand(context: ExtensionContext) {
 				prompt: 'Enter Data File Url for Table View'
 			}).then((dataFileUrl: string | undefined) => {				
 				if (dataFileUrl && dataFileUrl !== undefined && dataFileUrl.length > 0) {
+					if (dataFileUrl.startsWith('https://github.com')) {
+						// rewrite github data url to use raw.githubusercontent
+						dataFileUrl = dataFileUrl.replace('https://github.com/', 'https://raw.githubusercontent.com/');
+						dataFileUrl = dataFileUrl.replace('/blob/', '/'); // strip out blob part
+					}
+
 					// create data file Uri
 					const dataFileUri: Uri = Uri.parse(dataFileUrl);
 
