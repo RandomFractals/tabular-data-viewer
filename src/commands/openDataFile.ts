@@ -35,6 +35,12 @@ export async function registerOpenDataFileCommand(context: ExtensionContext) {
 						// open table view for the data file
 						commands.executeCommand(ViewCommands.viewTable, dataFileUri);
 					}
+					else if (fileExtension.length === 0) {
+						window.showErrorMessage(
+							`Tabular Data Viewer doesn't support data directory views yet.\
+							Use View Table menu option from VSCode File Explorer to open tabular data file in Table View.
+							Requested data directory: \`${dataFileUrl}\`.`);
+					}
 					else {
 						window.showErrorMessage(
 							`Tabular Data Viewer doesn't support ${fileExtension} data files.\
