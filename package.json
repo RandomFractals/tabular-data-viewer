@@ -2,7 +2,7 @@
 	"name": "tabular-data-viewer",
 	"displayName": "Tabular Data Viewer 中",
 	"description": "Tabular Data Viewer provides fast DSV data loading and custom Table Views 🀄 for large local and remote .csv, .tsv and .tab data files with Tabulator Table, Perspective View, D3FC Chart Views 📊📈 and Papa Parse CSV parser.",
-	"version": "1.7.0",
+	"version": "1.8.0",
 	"engines": {
 		"vscode": "^1.63.0"
 	},
@@ -48,6 +48,7 @@
 		"data perspective view"
 	],
 	"activationEvents": [
+		"onUri",
 		"onLanguage:csv",
 		"onLanguage:tsv",
 		"onCommand:tabular.data.openDataFile",
