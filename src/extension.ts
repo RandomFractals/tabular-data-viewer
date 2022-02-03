@@ -1,5 +1,6 @@
 import { ExtensionContext, TextEditor, window } from 'vscode';
 
+import { registerUriHandler } from './uriHandler';
 import { registerOpenDataFileCommand } from './commands/openDataFile';
 import { registerViewTableCommand } from './commands/viewTable';
 import { registerViewSettingsCommand } from './commands/viewSettings';
@@ -19,10 +20,8 @@ import { PerspectiveEditor } from './views/perspectiveEditor';
  * @see https://code.visualstudio.com/api/references/activation-events
  */
 export function activate(context: ExtensionContext) {
-	
-	console.log('tabular.data.viewer:activate(): activated!');
-
-	// register tabular data viewer commands
+	// register tabular data Uri handler and commands
+	registerUriHandler(context);
 	registerOpenDataFileCommand(context);
 	registerViewTableCommand(context);
 	registerViewSettingsCommand(context);
