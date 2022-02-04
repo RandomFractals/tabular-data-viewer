@@ -7,16 +7,13 @@
       "row_pivots": [],
       "column_pivots": [],
       "columns": [
-        "code",
         "user",
         "repo",
         "branch",
         "path",
         "stars",
-        "download_url",
         "title",
-        "description",
-        "content"
+        "description"
       ],
       "filter": [],
       "sort": [

@@ -44,11 +44,6 @@
       "name": "description",
       "type": "string",
       "format": "default"
-    },
-    {
-      "name": "content",
-      "type": "object",
-      "format": "default"
     }
   ],
   "missingValues": [
