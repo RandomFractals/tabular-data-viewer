@@ -45,5 +45,25 @@
       "sorter": "number",
       "headerSort": true
     }
-  ]
+  ],
+  "views": {
+    "Datagrid": {
+      "plugin": "Datagrid",
+      "plugin_config": {},
+      "settings": false,
+      "row_pivots": [],
+      "column_pivots": [],
+      "columns": [
+        "name",
+        "country",
+        "subcountry",
+        "geonameid"
+      ],
+      "filter": [],
+      "sort": [],
+      "expressions": [],
+      "aggregates": {}
+    }
+  },
+  "view": "Datagrid"
 }

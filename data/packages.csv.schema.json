@@ -1,0 +1,57 @@
+{
+  "fields": [
+    {
+      "name": "code",
+      "type": "string",
+      "format": "default"
+    },
+    {
+      "name": "user",
+      "type": "string",
+      "format": "default"
+    },
+    {
+      "name": "repo",
+      "type": "string",
+      "format": "default"
+    },
+    {
+      "name": "branch",
+      "type": "string",
+      "format": "default"
+    },
+    {
+      "name": "path",
+      "type": "string",
+      "format": "default"
+    },
+    {
+      "name": "stars",
+      "type": "integer",
+      "format": "default"
+    },
+    {
+      "name": "download_url",
+      "type": "string",
+      "format": "uri"
+    },
+    {
+      "name": "title",
+      "type": "string",
+      "format": "default"
+    },
+    {
+      "name": "description",
+      "type": "string",
+      "format": "default"
+    },
+    {
+      "name": "content",
+      "type": "object",
+      "format": "default"
+    }
+  ],
+  "missingValues": [
+    ""
+  ]
+}

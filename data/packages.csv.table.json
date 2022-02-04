@@ -1,0 +1,33 @@
+{
+  "views": {
+    "Datagrid": {
+      "plugin": "Datagrid",
+      "plugin_config": {},
+      "settings": true,
+      "row_pivots": [],
+      "column_pivots": [],
+      "columns": [
+        "code",
+        "user",
+        "repo",
+        "branch",
+        "path",
+        "stars",
+        "download_url",
+        "title",
+        "description",
+        "content"
+      ],
+      "filter": [],
+      "sort": [
+        [
+          "stars",
+          "desc"
+        ]
+      ],
+      "expressions": [],
+      "aggregates": {}
+    }
+  },
+  "view": "Datagrid"
+}
