@@ -9,6 +9,12 @@ import { ViewThemes } from '../views/viewThemes';
 export const extensionId: string = 'tabular.data';
 
 /**
+ * Data packages for the built-in Data Packages gallery
+ * and tabular.data.listDataPackages sample data picker command.
+ */
+export const dataPackages = require('./packages.json');
+
+/**
  * Gets tabular data configuration setting
  * from global user or project workspace settings.
  * 
