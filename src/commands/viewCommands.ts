@@ -2,7 +2,8 @@
  * Tabular data view commands.
  */
 export const enum ViewCommands {
-	// table view commands
+	// tabular data viewer commands
+	listDataPackages = 'tabular.data.listDataPackages',
 	openDataFile = 'tabular.data.openDataFile',
 	viewTable = 'tabular.data.viewTable',
 	viewSettings = 'tabular.data.viewSettings',
