@@ -51,6 +51,7 @@
 		"onUri",
 		"onLanguage:csv",
 		"onLanguage:tsv",
+		"onCommand:tabular.data.listDataPackages",
 		"onCommand:tabular.data.openDataFile",
 		"onCommand:tabular.data.viewTable",
 		"onCommand:tabular.data.viewSettings",
@@ -66,6 +67,11 @@
 	},
 	"contributes": {
 		"commands": [
+			{
+				"command": "tabular.data.listDataPackages",
+				"title": "List Data Packages",
+				"category": "Tabular Data"
+			},
 			{
 				"command": "tabular.data.openDataFile",
 				"title": "Open Data File",
@@ -85,6 +91,10 @@
 			}
 		],
 		"keybindings": [
+			{
+				"command": "tabular.data.listDataPackages",
+				"key": "alt+shift+d"
+			},
 			{
 				"command": "tabular.data.openDataFile",
 				"key": "alt+shift+o"
