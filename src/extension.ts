@@ -2,6 +2,7 @@ import { ExtensionContext, TextEditor, window } from 'vscode';
 
 import { registerUriHandler } from './uriHandler';
 import { registerListDataPackagesCommand } from './commands/listDataPackages';
+import { registerListDataResourcesCommand } from './commands/listDataResources';
 import { registerOpenDataFileCommand } from './commands/openDataFile';
 import { registerViewTableCommand } from './commands/viewTable';
 import { registerViewSettingsCommand } from './commands/viewSettings';
@@ -24,6 +25,7 @@ export function activate(context: ExtensionContext) {
 	// register tabular data Uri handler and commands
 	registerUriHandler(context);
 	registerListDataPackagesCommand(context);
+	registerListDataResourcesCommand(context);
 	registerOpenDataFileCommand(context);
 	registerViewTableCommand(context);
 	registerViewSettingsCommand(context);

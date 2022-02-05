@@ -52,6 +52,7 @@
 		"onLanguage:csv",
 		"onLanguage:tsv",
 		"onCommand:tabular.data.listDataPackages",
+		"onCommand:tabular.data.listDataResources",
 		"onCommand:tabular.data.openDataFile",
 		"onCommand:tabular.data.viewTable",
 		"onCommand:tabular.data.viewSettings",
@@ -71,6 +72,12 @@
 				"command": "tabular.data.listDataPackages",
 				"title": "List Data Packages",
 				"category": "Tabular Data"
+			},
+			{
+				"command": "tabular.data.listDataResources",
+				"title": "List Data Resources",
+				"category": "Tabular Data",
+				"icon": "$(package)"
 			},
 			{
 				"command": "tabular.data.openDataFile",
@@ -96,8 +103,16 @@
 				"key": "alt+shift+d"
 			},
 			{
+				"command": "tabular.data.listDataResources",
+				"key": "alt+shift+r"
+			},
+			{
 				"command": "tabular.data.openDataFile",
 				"key": "alt+shift+o"
+			},
+			{
+				"command": "tabular.data.viewTable",
+				"key": "alt+shift+t"
 			}
 		],
 		"languages": [
@@ -132,6 +147,11 @@
 					"when": "resourceLangId == tsv",
 					"command": "tabular.data.viewTable",
 					"group": "navigation"
+				},
+				{
+					"when": "resourceFilename =~ /*(datapackage.json)/",
+					"command": "tabular.data.listDataResources",
+					"group": "navigation"
 				}
 			],
 			"editor/title/context": [
@@ -143,6 +163,11 @@
 				{
 					"when": "resourceLangId == tsv",
 					"command": "tabular.data.viewTable",
+					"group": "navigation"
+				},
+				{
+					"when": "resourceFilename =~ /*(datapackage.json)/",
+					"command": "tabular.data.listDataResources",
 					"group": "navigation"
 				}
 			],
@@ -156,6 +181,11 @@
 					"when": "editorLangId == tsv",
 					"command": "tabular.data.viewTable",
 					"group": "navigation"
+				},
+				{
+					"when": "resourceFilename =~ /*(datapackage.json)/",
+					"command": "tabular.data.listDataResources",
+					"group": "navigation"
 				}
 			],
 			"commandPalette": [
@@ -167,6 +197,11 @@
 				{
 					"when": "editorLangId == tsv",
 					"command": "tabular.data.viewTable",
+					"group": "navigation"
+				},
+				{
+					"when": "resourceFilename =~ /*(datapackage.json)/",
+					"command": "tabular.data.listDataResources",
 					"group": "navigation"
 				}
 			]

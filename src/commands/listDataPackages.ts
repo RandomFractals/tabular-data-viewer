@@ -39,8 +39,8 @@ async function listDataPackages(): Promise<void> {
 		const dataPackageUrl: string | undefined = selectedDataPackage.detail;
 		if (dataPackageUrl) {
 			const dataPackageUri: Uri = Uri.parse(dataPackageUrl);
-			// TODO: show data package tabular data resources
-			// commands.executeCommand(ViewCommands.listDataResources, dataPackageUri);
+			// show data package tabular data resources
+			commands.executeCommand(ViewCommands.listDataResources, dataPackageUri);
 		}
 	}
 }

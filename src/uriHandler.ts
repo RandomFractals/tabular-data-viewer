@@ -58,6 +58,12 @@ class DataUriHandler implements UriHandler {
 			case ViewCommands.listDataPackages:
 				commands.executeCommand(ViewCommands.listDataPackages);
 				break;
+			case ViewCommands.listDataResources:
+				if (dataUrl && dataUrl?.length > 0) {
+					const dataPackageUri: Uri = Uri.parse(dataUrl);
+					commands.executeCommand(ViewCommands.listDataResources, dataPackageUri);
+				}
+				break;
 			case ViewCommands.openDataFile:
 				commands.executeCommand(ViewCommands.openDataFile);
 				break;
