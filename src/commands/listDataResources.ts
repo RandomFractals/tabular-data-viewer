@@ -54,4 +54,12 @@ async function listDataResources(dataPackageUri: Uri): Promise<void> {
 	// create and display data resources quick pick list
 	const selectedDataResource: QuickPickItem | undefined =
 		await window.showQuickPick(dataResources, { canPickMany: false });
+	if (selectedDataResource) {
+		let dataResourceUrl: string | undefined = selectedDataResource.detail;
+		if (dataResourceUrl) {
+			// create tabular data resource Uri and display a table view
+			const dataResourceUri: Uri = Uri.parse(dataResourceUrl);
+			commands.executeCommand(ViewCommands.viewTable, dataResourceUri);
+		}
+	}
 }
