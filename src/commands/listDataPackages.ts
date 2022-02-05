@@ -36,10 +36,14 @@ async function listDataPackages(): Promise<void> {
 	const selectedDataPackage: QuickPickItem | undefined =
 		await window.showQuickPick(dataPackageItems, { canPickMany: false });
 	if (selectedDataPackage) {
-		const dataPackageUrl: string | undefined = selectedDataPackage.detail;
+		let dataPackageUrl: string | undefined = selectedDataPackage.detail;
 		if (dataPackageUrl) {
+			// rewrite github data package url to use raw.githubusercontent
+			dataPackageUrl = dataPackageUrl.replace('https://github.com/', 'https://raw.githubusercontent.com/');
+			dataPackageUrl = dataPackageUrl.replace('/blob/', '/'); // strip out blob part
+
+			// create public data package Uri and display tabular data resources
 			const dataPackageUri: Uri = Uri.parse(dataPackageUrl);
-			// show data package tabular data resources
 			commands.executeCommand(ViewCommands.listDataResources, dataPackageUri);
 		}
 	}
