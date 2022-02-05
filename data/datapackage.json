@@ -1,0 +1,99 @@
+{
+  "name": "world-cities",
+  "title": "Major cities of the world",
+  "description": "List of the world's major cities (above 15,000 inhabitants)",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/datasets/world-cities.git"
+  },
+  "sources": [
+    {
+      "name": "Geonames",
+      "path": "http://www.geonames.org/",
+      "title": "Geonames"
+    }
+  ],
+  "keywords": [
+    "geodata",
+    "city"
+  ],
+  "licensces": [
+    {
+      "name": "ODC-PDDL-1.0",
+      "path": "http://opendatacommons.org/licenses/pddl/",
+      "title": "Open Data Commons Public Domain Dedication and License v1.0"
+    }
+  ],
+  "resources": [
+    {
+      "name": "world-cities",
+      "path": "data/world-cities.csv",
+      "format": "csv",
+      "mediatype": "text/csv",
+      "schema": {
+        "fields": [
+          {
+            "name": "name",
+            "description": "English name of the city",
+            "type": "string"
+          },
+          {
+            "name": "country",
+            "description": "Common name of the country, in english",
+            "type": "string"
+          },
+          {
+            "name": "subcountry",
+            "description": "Name of the major administrative area",
+            "type": "string"
+          },
+          {
+            "name": "geonameid",
+            "description": "id from geonames",
+            "type": "integer"
+          }
+        ]
+      },
+      "primaryKey": "geonamesid"
+    }
+  ],
+  "homepage": "http://github.com/datasets/world-cities",
+  "related": [
+    {
+      "title": "Country list",
+      "path": "/core/country-list",
+      "publisher": "core",
+      "formats": [
+        "CSV",
+        "JSON"
+      ]
+    },
+    {
+      "title": "Continent codes",
+      "path": "/core/continent-codes",
+      "publisher": "core",
+      "formats": [
+        "CSV",
+        "JSON"
+      ]
+    },
+    {
+      "title": "Airport codes",
+      "path": "/core/airport-codes",
+      "publisher": "core",
+      "formats": [
+        "CSV",
+        "JSON"
+      ]
+    },
+    {
+      "title": "Language codes",
+      "path": "/core/language-codes",
+      "publisher": "core",
+      "formats": [
+        "CSV",
+        "JSON"
+      ]
+    }
+  ]
+}
