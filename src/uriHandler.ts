@@ -55,6 +55,9 @@ class DataUriHandler implements UriHandler {
 			case ViewCommands.viewSettings:
 				commands.executeCommand(ViewCommands.viewSettings);
 				break;
+			case ViewCommands.listDataPackages:
+				commands.executeCommand(ViewCommands.listDataPackages);
+				break;
 			case ViewCommands.openDataFile:
 				commands.executeCommand(ViewCommands.openDataFile);
 				break;
