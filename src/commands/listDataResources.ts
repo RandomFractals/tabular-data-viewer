@@ -7,11 +7,9 @@ import {
 	Uri
 } from 'vscode';
 
-import * as fs from 'fs';
-import * as path from 'path';
-
 import { ViewCommands } from './viewCommands';
 import { FileTypes } from '../views/fileTypes';
+import * as fileUtils from '../utils/fileUtils';
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const DataPackage = require('datapackage');

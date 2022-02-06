@@ -14,6 +14,24 @@ export function getWebviewUri(webview: Webview, extensionUri: Uri, pathList: str
 	return webview.asWebviewUri(Uri.joinPath(extensionUri, ...pathList));
 }
 
+/**
+ * Converts github data file url to raw github user content url
+ * for loading data files from public github repositories.
+ * 
+ * @param dataFileUrl User frinedly data file url from a github repository.
+ * @returns Github content Url to use for loading raw file data.
+ */
+export function convertToGitHubContentUrl(dataFileUrl: string): string {
+	let gitHubContentUrl: string = dataFileUrl;
+	if (dataFileUrl.startsWith('https://github.com')) {
+		// rewrite github data url to use raw.githubusercontent.com
+		gitHubContentUrl = dataFileUrl.replace('https://github.com/', 'https://raw.githubusercontent.com/');
+
+		// strip out blob part
+		gitHubContentUrl = gitHubContentUrl.replace('/blob/', '/');
+	}
+	return gitHubContentUrl;
+}
 
 /**
  * Gets file name path token from a document Uri.

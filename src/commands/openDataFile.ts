@@ -11,6 +11,7 @@ import * as path from 'path';
 
 import { ViewCommands } from './viewCommands';
 import { FileTypes } from '../views/fileTypes';
+import * as fileUtils from '../utils/fileUtils';
 
 export async function registerOpenDataFileCommand(context: ExtensionContext) {
 	// register open data file command
@@ -22,14 +23,8 @@ export async function registerOpenDataFileCommand(context: ExtensionContext) {
 				prompt: 'Enter Data File Url for Table View'
 			}).then((dataFileUrl: string | undefined) => {				
 				if (dataFileUrl && dataFileUrl !== undefined && dataFileUrl.length > 0) {
-					if (dataFileUrl.startsWith('https://github.com')) {
-						// rewrite github data url to use raw.githubusercontent
-						dataFileUrl = dataFileUrl.replace('https://github.com/', 'https://raw.githubusercontent.com/');
-						dataFileUrl = dataFileUrl.replace('/blob/', '/'); // strip out blob part
-					}
-
 					// create data file Uri
-					const dataFileUri: Uri = Uri.parse(dataFileUrl);
+					const dataFileUri: Uri = Uri.parse(fileUtils.convertToGitHubContentUrl(dataFileUrl));
 
 					// check supported data files
 					const fileExtension: string = path.extname(dataFileUrl);

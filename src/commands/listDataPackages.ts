@@ -7,11 +7,9 @@ import {
 	Uri
 } from 'vscode';
 
-import * as fs from 'fs';
-import * as path from 'path';
-
 import { dataPackages } from '../configuration/configuration';
 import { ViewCommands } from './viewCommands';
+import * as fileUtils from '../utils/fileUtils';
 
 export async function registerListDataPackagesCommand(context: ExtensionContext) {
 	// register list data packages command
@@ -38,12 +36,8 @@ async function listDataPackages(): Promise<void> {
 	if (selectedDataPackage) {
 		let dataPackageUrl: string | undefined = selectedDataPackage.detail;
 		if (dataPackageUrl) {
-			// rewrite github data package url to use raw.githubusercontent
-			dataPackageUrl = dataPackageUrl.replace('https://github.com/', 'https://raw.githubusercontent.com/');
-			dataPackageUrl = dataPackageUrl.replace('/blob/', '/'); // strip out blob part
-
 			// create public data package Uri and display tabular data resources
-			const dataPackageUri: Uri = Uri.parse(dataPackageUrl);
+			const dataPackageUri: Uri = Uri.parse(fileUtils.convertToGitHubContentUrl(dataPackageUrl));
 			commands.executeCommand(ViewCommands.listDataResources, dataPackageUri);
 		}
 	}
