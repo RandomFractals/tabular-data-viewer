@@ -40,11 +40,10 @@ async function listDataResources(dataPackageUri: Uri): Promise<void> {
 	const dataResources: Array<QuickPickItem> = [];
 	dataPackage.resources.forEach((resource: any) => {
 		if (resource.tabular) { // supportedDataFormats.includes(resource.descriptor.format)) {
-			const dataRepositoryUrl: string = ''; // `https://github.com/${dataPackage.user}/${dataPackage.repo}`;
 			dataResources.push({
 				label: `$(table) ${resource.name}`,
 				description: dataPackage.title,
-				detail: resource.source
+				detail: fileUtils.convertToGitHubRepositoryUrl(resource.source)
 			});
 		}
 	});
@@ -56,7 +55,7 @@ async function listDataResources(dataPackageUri: Uri): Promise<void> {
 		let dataResourceUrl: string | undefined = selectedDataResource.detail;
 		if (dataResourceUrl) {
 			// create tabular data resource Uri and display a table view
-			const dataResourceUri: Uri = Uri.parse(dataResourceUrl);
+			const dataResourceUri: Uri = Uri.parse(fileUtils.convertToGitHubContentUrl(dataResourceUrl));
 			commands.executeCommand(ViewCommands.viewTable, dataResourceUri);
 		}
 	}

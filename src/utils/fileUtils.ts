@@ -34,6 +34,26 @@ export function convertToGitHubContentUrl(dataFileUrl: string): string {
 }
 
 /**
+ * Converts github content url to user friendly github repository url for display
+ * and linking to external public data sources hosted on github.
+ * 
+ * @param dataFileUrl Github content data file url from a github repository.
+ * @returns User friendly github data file url for display, linking and copy/paste in a browser.
+ */
+export function convertToGitHubRepositoryUrl(dataFileUrl: string): string {
+	let gitHubContentUrl: string = dataFileUrl;
+	if (dataFileUrl.startsWith('https://raw.githubusercontent.com/')) {
+		// rewrite github content url to use github repository url for display
+		gitHubContentUrl = dataFileUrl.replace('https://raw.githubusercontent.com/', 'https://github.com/');
+
+		// add blob part
+		gitHubContentUrl = gitHubContentUrl.replace('/main/', '/blob/main/');
+		gitHubContentUrl = gitHubContentUrl.replace('/master/', '/blob/master/');
+	}
+	return gitHubContentUrl;
+}
+
+/**
  * Gets file name path token from a document Uri.
  * 
  * @param documentUri Document Uri.
