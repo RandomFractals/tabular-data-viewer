@@ -66,15 +66,22 @@ async function listDataResources(dataPackageUri: Uri): Promise<void> {
 		}
 	});
 
-	// create and display data resources quick pick list
-	const selectedDataResource: QuickPickItem | undefined =
-		await window.showQuickPick(dataResources, { canPickMany: false });
-	if (selectedDataResource) {
-		let dataResourceUrl: string | undefined = selectedDataResource.detail;
-		if (dataResourceUrl) {
-			// create tabular data resource Uri and display a table view
-			const dataResourceUri: Uri = Uri.parse(fileUtils.convertToGitHubContentUrl(dataResourceUrl));
-			commands.executeCommand(ViewCommands.viewTable, dataResourceUri);
+	if (dataResources.length <= 0) {
+		window.showInformationMessage(`There are not tabular data resources listed in \
+			\`${dataPackage.descriptor.title}\` data package.\
+			Data package Url: ${fileUtils.convertToGitHubRepositoryUrl(dataPackageUrl)}.`);
+	}
+	else {
+		// create and display data resources quick pick list
+		const selectedDataResource: QuickPickItem | undefined =
+			await window.showQuickPick(dataResources, { canPickMany: false });
+		if (selectedDataResource) {
+			let dataResourceUrl: string | undefined = selectedDataResource.detail;
+			if (dataResourceUrl) {
+				// create tabular data resource Uri and display a table view
+				const dataResourceUri: Uri = Uri.parse(fileUtils.convertToGitHubContentUrl(dataResourceUrl));
+				commands.executeCommand(ViewCommands.viewTable, dataResourceUri);
+			}
 		}
 	}
 }
