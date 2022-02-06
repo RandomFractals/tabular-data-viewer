@@ -149,7 +149,7 @@
 					"group": "navigation"
 				},
 				{
-					"when": "resourceFilename =~ /*(datapackage.json)/",
+					"when": "resourceFilename =~ /datapackage.json/",
 					"command": "tabular.data.listDataResources",
 					"group": "navigation"
 				}
@@ -166,7 +166,7 @@
 					"group": "navigation"
 				},
 				{
-					"when": "resourceFilename =~ /*(datapackage.json)/",
+					"when": "resourceFilename =~ /datapackage.json/",
 					"command": "tabular.data.listDataResources",
 					"group": "navigation"
 				}
@@ -183,7 +183,7 @@
 					"group": "navigation"
 				},
 				{
-					"when": "resourceFilename =~ /*(datapackage.json)/",
+					"when": "resourceFilename =~ /datapackage.json/",
 					"command": "tabular.data.listDataResources",
 					"group": "navigation"
 				}
@@ -200,7 +200,7 @@
 					"group": "navigation"
 				},
 				{
-					"when": "resourceFilename =~ /*(datapackage.json)/",
+					"when": "resourceFilename =~ /datapackage.json/",
 					"command": "tabular.data.listDataResources",
 					"group": "navigation"
 				}
