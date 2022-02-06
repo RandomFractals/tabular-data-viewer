@@ -103,10 +103,6 @@
 				"key": "alt+shift+d"
 			},
 			{
-				"command": "tabular.data.listDataResources",
-				"key": "alt+shift+r"
-			},
-			{
 				"command": "tabular.data.openDataFile",
 				"key": "alt+shift+o"
 			},
