@@ -45,13 +45,21 @@ export async function registerOpenDataFileCommand(context: ExtensionContext) {
 						// load and display data package resource list
 						commands.executeCommand(ViewCommands.listDataResources, dataFileUri);
 					}
+					else if (fileExtension.length === 0 && // data directory
+						fs.existsSync(path.join(dataFileUri.fsPath, 'datapackage.json'))) { 
+						// show data resources for a data package from directory
+						commands.executeCommand(
+							ViewCommands.listDataResources, Uri.joinPath(dataFileUri, 'datapackage.json'));
+					}
 					else if (fileExtension.length === 0) {
+						// must be a data directory without the datapackage.json descriptor
 						window.showErrorMessage(
 							`Tabular Data Viewer doesn't support data directory views yet.\
 							Use View Table menu option from VSCode File Explorer to open tabular data file in Table View.
 							Requested data directory: \`${dataFileUrl}\`.`);
 					}
 					else {
+						// unsupported data format
 						window.showErrorMessage(
 							`Tabular Data Viewer doesn't support ${fileExtension} data files.\
 							Unable to show Table View for data file: \`${dataFileUrl}\`.`);
