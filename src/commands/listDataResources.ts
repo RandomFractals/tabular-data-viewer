@@ -31,7 +31,8 @@ async function listDataResources(dataPackageUri: Uri): Promise<void> {
 	// load data package
 	const dataPackage: any = 
 		await DataPackage.Package.load(dataPackageUri.toString(true)); // skip encoding
-	console.log('dataPackage.resources:', dataPackage.resources);
+	console.log('tabular.data.package:', dataPackage);
+	console.log('tabular.data.package.resources:', dataPackage.resources);
 
 	// get supported data formats from view file types
 	const supportedDataFormats: Array<string> = Object.values(FileTypes);
@@ -42,7 +43,7 @@ async function listDataResources(dataPackageUri: Uri): Promise<void> {
 		if (resource.tabular) { // supportedDataFormats.includes(resource.descriptor.format)) {
 			dataResources.push({
 				label: `$(table) ${resource.name}`,
-				description: dataPackage.title,
+				description: dataPackage.descriptor.title,
 				detail: fileUtils.convertToGitHubRepositoryUrl(resource.source)
 			});
 		}
