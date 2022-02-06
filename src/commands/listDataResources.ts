@@ -7,9 +7,12 @@ import {
 	Uri
 } from 'vscode';
 
+import * as fs from 'fs';
+import * as path from 'path';
+import * as fileUtils from '../utils/fileUtils';
+
 import { ViewCommands } from './viewCommands';
 import { FileTypes } from '../views/fileTypes';
-import * as fileUtils from '../utils/fileUtils';
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const DataPackage = require('datapackage');
@@ -28,9 +31,16 @@ export async function registerListDataResourcesCommand(context: ExtensionContext
  * @param dataPackageUri Local (file:///) or remote/public (https://) data package uri.
  */
 async function listDataResources(dataPackageUri: Uri): Promise<void> {
+	// create data package url for loading package info and resource list
+	let dataPackageUrl: string = dataPackageUri.toString(true); // skip encoding
+	if (dataPackageUrl.startsWith('file:///')) {
+		// use fs path
+		dataPackageUrl = dataPackageUri.fsPath;
+	}
+
 	// load data package
 	const dataPackage: any = 
-		await DataPackage.Package.load(dataPackageUri.toString(true)); // skip encoding
+		await DataPackage.Package.load(dataPackageUrl);
 	// console.log('tabular.data.package:', dataPackage);
 	// console.log('tabular.data.package.resources:', dataPackage.resources);
 
@@ -41,10 +51,17 @@ async function listDataResources(dataPackageUri: Uri): Promise<void> {
 	const dataResources: Array<QuickPickItem> = [];
 	dataPackage.resources.forEach((resource: any) => {
 		if (resource.tabular) { // supportedDataFormats.includes(resource.descriptor.format)) {
+			// construct github repository resource Url
+			let resourceUrl: string = fileUtils.convertToGitHubRepositoryUrl(resource.source);
+			if (!dataPackageUrl.startsWith('https://')) {
+				// use local resource path
+				const resourceUri: Uri = Uri.joinPath(dataPackageUri, `../${resource.source}`);
+				resourceUrl = resourceUri.toString(true); // skip encoding
+			}
 			dataResources.push({
 				label: `$(table) ${resource.name}`,
 				description: dataPackage.descriptor.title,
-				detail: fileUtils.convertToGitHubRepositoryUrl(resource.source)
+				detail: resourceUrl
 			});
 		}
 	});
