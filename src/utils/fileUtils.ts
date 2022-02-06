@@ -47,8 +47,10 @@ export function convertToGitHubRepositoryUrl(dataFileUrl: string): string {
 		gitHubContentUrl = dataFileUrl.replace('https://raw.githubusercontent.com/', 'https://github.com/');
 
 		// add blob part
+		// TODO: fix this with regex or branch name tocken extraction later
 		gitHubContentUrl = gitHubContentUrl.replace('/main/', '/blob/main/');
 		gitHubContentUrl = gitHubContentUrl.replace('/master/', '/blob/master/');
+		gitHubContentUrl = gitHubContentUrl.replace('/gh-pages/', '/blob/gh-pages/');
 	}
 	return gitHubContentUrl;
 }

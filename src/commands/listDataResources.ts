@@ -41,7 +41,7 @@ async function listDataResources(dataPackageUri: Uri): Promise<void> {
 	// load data package
 	const dataPackage: any = 
 		await DataPackage.Package.load(dataPackageUrl);
-	// console.log('tabular.data.package:', dataPackage);
+	console.log('tabular.data.package:', dataPackage);
 	// console.log('tabular.data.package.resources:', dataPackage.resources);
 
 	// get supported data formats from view file types
@@ -53,7 +53,7 @@ async function listDataResources(dataPackageUri: Uri): Promise<void> {
 		if (resource.tabular) { // supportedDataFormats.includes(resource.descriptor.format)) {
 			// construct github repository resource Url
 			let resourceUrl: string = fileUtils.convertToGitHubRepositoryUrl(resource.source);
-			if (!dataPackageUrl.startsWith('https://')) {
+			if (dataPackageUrl.startsWith('file:///')) {
 				// use local resource path
 				const resourceUri: Uri = Uri.joinPath(dataPackageUri, `../${resource.source}`);
 				resourceUrl = resourceUri.toString(true); // skip encoding
