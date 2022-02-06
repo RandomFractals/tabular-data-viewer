@@ -41,6 +41,10 @@ export async function registerOpenDataFileCommand(context: ExtensionContext) {
 						// open table view for requested remote or local data file
 						commands.executeCommand(ViewCommands.viewTable, dataFileUri);
 					}
+					else if (dataFileUrl.endsWith('datapackage.json')) {
+						// load and display data package resource list
+						commands.executeCommand(ViewCommands.listDataResources, dataFileUri);
+					}
 					else if (fileExtension.length === 0) {
 						window.showErrorMessage(
 							`Tabular Data Viewer doesn't support data directory views yet.\

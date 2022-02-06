@@ -27,7 +27,7 @@
   "resources": [
     {
       "name": "world-cities",
-      "path": "data/world-cities.csv",
+      "path": "world-cities.csv",
       "format": "csv",
       "mediatype": "text/csv",
       "schema": {
