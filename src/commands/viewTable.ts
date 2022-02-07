@@ -13,9 +13,9 @@ import { ViewCommands } from './viewCommands';
 import { TableView } from '../views/tableView';
 
 /**
- * Registers View Table command for the supported data documents.
+ * Registers Tabular Data: View Table command for the supported data documents.
  * 
- * @param context 
+ * @param context Extension context.
  */
 export async function registerViewTableCommand(context: ExtensionContext) {
 	// register view table command
@@ -27,6 +27,8 @@ export async function registerViewTableCommand(context: ExtensionContext) {
 				// use active text editor document Uri
 				dataDocumentUri = window.activeTextEditor.document.uri;
 			}
+
+			// render table view for the requested data document
 			TableView.render(context.extensionUri, dataDocumentUri);
 		});
 

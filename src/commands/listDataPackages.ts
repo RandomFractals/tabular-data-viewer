@@ -7,10 +7,20 @@ import {
 	Uri
 } from 'vscode';
 
-import { dataPackages } from '../configuration/configuration';
-import { ViewCommands } from './viewCommands';
 import * as fileUtils from '../utils/fileUtils';
 
+import { ViewCommands } from './viewCommands';
+
+import { dataPackages } from '../configuration/configuration';
+
+
+/**
+ * Registers Tabular Data: List Data Packages command
+ * for the built-in list of demo datasets from public github respositories
+ * imported from data packages json configuration file.
+ * 
+ * @param context Extension context.
+ */
 export async function registerListDataPackagesCommand(context: ExtensionContext) {
 	// register list data packages command
 	const listDataPackagesCommand: Disposable =
@@ -22,6 +32,7 @@ export async function registerListDataPackagesCommand(context: ExtensionContext)
  * Creates and displays Data Packages quick pick list.
  */
 async function listDataPackages(): Promise<void> {
+	// create built-in data packages list
 	const dataPackageItems: Array<QuickPickItem> = [];
 	dataPackages.forEach((dataPackage: any) => {
 		const dataRepositoryUrl: string = `https://github.com/${dataPackage.user}/${dataPackage.repo}`;
@@ -31,6 +42,8 @@ async function listDataPackages(): Promise<void> {
 			detail: `${dataRepositoryUrl}/blob/${dataPackage.branch}/${dataPackage.path}`
 		});
 	});
+
+	// display demo data packages
 	const selectedDataPackage: QuickPickItem | undefined =
 		await window.showQuickPick(dataPackageItems, { canPickMany: false });
 	if (selectedDataPackage) {

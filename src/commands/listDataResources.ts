@@ -14,6 +14,12 @@ import { ViewCommands } from './viewCommands';
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const DataPackage = require('datapackage');
 
+/**
+ * Registers Tabular Data: List Data Resources command
+ * for local and remote datapackage.json configuration files.
+ * 
+ * @param context Extension context.
+ */
 export async function registerListDataResourcesCommand(context: ExtensionContext) {
 	// register list data resources command
 	const listDataResourcesCommand: Disposable =

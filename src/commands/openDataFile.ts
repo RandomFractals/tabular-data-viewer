@@ -12,6 +12,12 @@ import * as fileUtils from '../utils/fileUtils';
 
 import { ViewCommands } from './viewCommands';
 
+/**
+ * Registers Tabular Data: Open Data File prompt command
+ * for the supported data formats and file types.
+ * 
+ * @param context Extension context.
+ */
 export async function registerOpenDataFileCommand(context: ExtensionContext) {
 	// register open data file command
 	const openDataFileCommand: Disposable =
