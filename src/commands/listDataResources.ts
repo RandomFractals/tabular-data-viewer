@@ -7,12 +7,9 @@ import {
 	Uri
 } from 'vscode';
 
-import * as fs from 'fs';
-import * as path from 'path';
 import * as fileUtils from '../utils/fileUtils';
 
 import { ViewCommands } from './viewCommands';
-import { FileTypes } from '../views/fileTypes';
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const DataPackage = require('datapackage');
@@ -46,18 +43,15 @@ async function listDataResources(dataPackageUri: Uri): Promise<void> {
 	}
 
 	// load data package
-	const dataPackage: any = 
-		await DataPackage.Package.load(dataPackageUrl);
+	const dataPackage: any = await DataPackage.Package.load(dataPackageUrl);
 	console.log('tabular.data.package:', dataPackage);
 	// console.log('tabular.data.package.resources:', dataPackage.resources);
-
-	// get supported data formats from view file types
-	const supportedDataFormats: Array<string> = Object.values(FileTypes);
 
 	// get data package resources
 	const dataResources: Array<QuickPickItem> = [];
 	dataPackage.resources.forEach((resource: any) => {
-		if (resource.tabular) { // supportedDataFormats.includes(resource.descriptor.format)) {
+		if (resource.tabular &&
+			fileUtils.supportedDataFormats.includes(`.${resource.descriptor.format}`)) {
 			// construct github repository resource Url
 			let resourceUrl: string = fileUtils.convertToGitHubRepositoryUrl(resource.source);
 			if (dataPackageUrl.startsWith('file:///')) {

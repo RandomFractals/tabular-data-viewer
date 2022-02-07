@@ -2,6 +2,14 @@ import { Uri, Webview, window } from 'vscode';
 
 import * as fs from 'fs';
 
+import { FileTypes } from '../views/fileTypes';
+
+/**
+ * Supported data formats for the tabular data views
+ * as string array of the supported data file extensions.
+ */
+export const supportedDataFormats: Array<string> = Object.values(FileTypes);
+
 /**
  * Gets webview Uri for a given file or resource.
  * 

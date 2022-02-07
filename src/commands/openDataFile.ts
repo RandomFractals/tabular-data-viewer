@@ -8,10 +8,9 @@ import {
 
 import * as fs from 'fs';
 import * as path from 'path';
+import * as fileUtils from '../utils/fileUtils';
 
 import { ViewCommands } from './viewCommands';
-import { FileTypes } from '../views/fileTypes';
-import * as fileUtils from '../utils/fileUtils';
 
 export async function registerOpenDataFileCommand(context: ExtensionContext) {
 	// register open data file command
@@ -37,7 +36,7 @@ export async function registerOpenDataFileCommand(context: ExtensionContext) {
 						window.showErrorMessage(
 							`Unable to locate requested data file: \`${dataFileUrl}\`.`);
 					}
-					else if ((<any>Object).values(FileTypes).includes(fileExtension)) {
+					else if (fileUtils.supportedDataFormats.includes(fileExtension)) {
 						// open table view for requested remote or local data file
 						commands.executeCommand(ViewCommands.viewTable, dataFileUri);
 					}
