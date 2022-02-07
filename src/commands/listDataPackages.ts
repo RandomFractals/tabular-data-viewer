@@ -45,7 +45,10 @@ async function listDataPackages(): Promise<void> {
 
 	// display demo data packages
 	const selectedDataPackage: QuickPickItem | undefined =
-		await window.showQuickPick(dataPackageItems, { canPickMany: false });
+		await window.showQuickPick(dataPackageItems, {
+			canPickMany: false,
+			title: 'Select Data Package to View Tabular Data Resources'
+		});
 	if (selectedDataPackage) {
 		let dataPackageUrl: string | undefined = selectedDataPackage.detail;
 		if (dataPackageUrl) {
