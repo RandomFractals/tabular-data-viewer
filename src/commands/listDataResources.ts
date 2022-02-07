@@ -31,8 +31,15 @@ export async function registerListDataResourcesCommand(context: ExtensionContext
  * @param dataPackageUri Local (file:///) or remote/public (https://) data package uri.
  */
 async function listDataResources(dataPackageUri: Uri): Promise<void> {
+	if (!dataPackageUri && window.activeTextEditor &&
+			window.activeTextEditor.document.fileName.endsWith('datapackage.json')) {
+		// use active text editor document Uri
+		dataPackageUri = window.activeTextEditor.document.uri;
+	}
+
 	// create data package url for loading package info and resource list
 	let dataPackageUrl: string = dataPackageUri.toString(true); // skip encoding
+	console.log('tabular.data.package:Url:', dataPackageUrl);
 	if (dataPackageUrl.startsWith('file:///')) {
 		// use fs path
 		dataPackageUrl = dataPackageUri.fsPath;
