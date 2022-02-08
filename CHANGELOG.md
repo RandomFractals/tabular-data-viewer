@@ -2,6 +2,26 @@
 
 See [releases](https://github.com/RandomFractals/tabular-data-viewer/releases) for source code and `tabular-data-viewer-x.x.x.vsix` extension package download.
 
+## v1.8.0 - [2022-02-10]
+- [#96](https://github.com/RandomFractals/tabular-data-viewer/issues/96)
+Add UriHandler to open remote tabular data sources from vscode:// Urls in a browser
+- [#102](https://github.com/RandomFractals/tabular-data-viewer/issues/102)
+Create built-in Data Packages picker
+- [#103](https://github.com/RandomFractals/tabular-data-viewer/issues/103)
+Update vscode dev dependencies to the latest v1.64.0
+- [#104](https://github.com/RandomFractals/tabular-data-viewer/issues/104)
+List tabular data resources for a data package
+- [#106](https://github.com/RandomFractals/tabular-data-viewer/issues/106)
+Use active text editor document Uri for View Table command
+- [#107](https://github.com/RandomFractals/tabular-data-viewer/issues/107)
+Add Open Text Document command and context menu options for data files displayed in Table View
+- [#108](https://github.com/RandomFractals/tabular-data-viewer/issues/108)
+Add View Data File on GitHub command and context menus for Table views with public datasets from github
+- [#109](https://github.com/RandomFractals/tabular-data-viewer/issues/109)
+Move commands registration from src/extension.ts to src/commands/commands.ts
+- [#110](https://github.com/RandomFractals/tabular-data-viewer/issues/110)
+Package and publish Data Packages feature release
+
 ## v1.7.0 - [2022-02-02]
 - [#53](https://github.com/RandomFractals/tabular-data-viewer/issues/53)
 Add remote data loading and display for public https datasets and supported data formats
