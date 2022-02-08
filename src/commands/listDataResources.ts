@@ -43,8 +43,8 @@ async function listDataResources(dataPackageUri: Uri): Promise<void> {
 	// create data package url for loading package info and resource list
 	let dataPackageUrl: string = dataPackageUri.toString(true); // skip encoding
 	console.log('tabular.data.package:Url:', dataPackageUrl);
-	if (dataPackageUrl.startsWith('file:///')) {
-		// use fs path
+	if (dataPackageUri.scheme === 'file') {
+		// use fs path to load data package info
 		dataPackageUrl = dataPackageUri.fsPath;
 	}
 
@@ -57,14 +57,18 @@ async function listDataResources(dataPackageUri: Uri): Promise<void> {
 	const dataResources: Array<QuickPickItem> = [];
 	dataPackage.resources.forEach((resource: any) => {
 		if (resource.tabular &&
-			fileUtils.supportedDataFormats.includes(`.${resource.descriptor.format}`)) {
+				fileUtils.supportedDataFormats.includes(`.${resource.descriptor.format}`)) {
+			
 			// construct github repository resource Url
 			let resourceUrl: string = fileUtils.convertToGitHubRepositoryUrl(resource.source);
-			if (dataPackageUrl.startsWith('file:///')) {
-				// use local resource path
+
+			if (dataPackageUri.scheme === 'file') {
+				// create local resource path using data package Uri as resource base path
 				const resourceUri: Uri = Uri.joinPath(dataPackageUri, `../${resource.source}`);
 				resourceUrl = resourceUri.toString(true); // skip encoding
 			}
+
+			// add tabular data resource to the list to display
 			dataResources.push({
 				label: `$(table) ${resource.name}`,
 				description: dataPackage.descriptor.title,
