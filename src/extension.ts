@@ -6,15 +6,7 @@ import {
 } from 'vscode';
 
 import { registerUriHandler } from './uriHandler';
-
-import { registerListDataPackagesCommand } from './commands/listDataPackages';
-import { registerListDataResourcesCommand } from './commands/listDataResources';
-import { registerOpenDataFileCommand } from './commands/openDataFile';
-import { registerOpenTextDocumentCommand } from './commands/openTextDocument';
-import { registerViewTableCommand } from './commands/viewTable';
-import { registerViewDataFileOnGitHubCommand } from './commands/viewDataFileOnGitHub';
-import { registerViewSettingsCommand } from './commands/viewSettings';
-
+import { registerTabularDataCommands } from './commands/commands';
 import { statusBar } from './views/statusBar';
 
 import { TableEditor } from './views/tableEditor';
@@ -34,13 +26,7 @@ import { ViewContexts } from './views/viewContexts';
 export function activate(context: ExtensionContext) {
 	// register tabular data Uri handler and commands
 	registerUriHandler(context);
-	registerListDataPackagesCommand(context);
-	registerListDataResourcesCommand(context);
-	registerOpenDataFileCommand(context);
-	registerOpenTextDocumentCommand(context);
-	registerViewTableCommand(context);
-	registerViewDataFileOnGitHubCommand(context);
-	registerViewSettingsCommand(context);
+	registerTabularDataCommands(context);
 
 	// register table view serializer for restore on vscode reload
 	context.subscriptions.push(TableViewSerializer.register(context));
