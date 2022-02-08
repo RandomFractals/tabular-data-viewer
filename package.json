@@ -216,6 +216,11 @@
 					"when": "resourceFilename =~ /datapackage.json/",
 					"command": "tabular.data.listDataResources",
 					"group": "navigation"
+				},
+				{
+					"when": "tabular.data.view.visible && tabular.data.uri =~ /^(file:///)/",
+					"command": "tabular.data.openTextDocument",
+					"group": "navigation"
 				}
 			]
 		},
