@@ -42,7 +42,7 @@ async function listDataResources(dataPackageUri: Uri): Promise<void> {
 
 	// create data package url for loading package info and resource list
 	let dataPackageUrl: string = dataPackageUri.toString(true); // skip encoding
-	console.log('tabular.data.package:Url:', dataPackageUrl);
+	// console.log('tabular.data.package:Url:', dataPackageUrl);
 	if (dataPackageUri.scheme === 'file') {
 		// use fs path to load data package info
 		dataPackageUrl = dataPackageUri.fsPath;
@@ -50,7 +50,7 @@ async function listDataResources(dataPackageUri: Uri): Promise<void> {
 
 	// load data package
 	const dataPackage: any = await DataPackage.Package.load(dataPackageUrl);
-	console.log('tabular.data.package:', dataPackage);
+	// console.log('tabular.data.package:', dataPackage);
 	// console.log('tabular.data.package.resources:', dataPackage.resources);
 
 	// get data package resources
