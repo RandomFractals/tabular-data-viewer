@@ -12,6 +12,7 @@ import { registerListDataResourcesCommand } from './commands/listDataResources';
 import { registerOpenDataFileCommand } from './commands/openDataFile';
 import { registerOpenTextDocumentCommand } from './commands/openTextDocument';
 import { registerViewTableCommand } from './commands/viewTable';
+import { registerViewDataFileOnGitHubCommand } from './commands/viewDataFileOnGitHub';
 import { registerViewSettingsCommand } from './commands/viewSettings';
 
 import { statusBar } from './views/statusBar';
@@ -38,6 +39,7 @@ export function activate(context: ExtensionContext) {
 	registerOpenDataFileCommand(context);
 	registerOpenTextDocumentCommand(context);
 	registerViewTableCommand(context);
+	registerViewDataFileOnGitHubCommand(context);
 	registerViewSettingsCommand(context);
 
 	// register table view serializer for restore on vscode reload

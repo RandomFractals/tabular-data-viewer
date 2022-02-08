@@ -8,10 +8,12 @@ export const enum ViewCommands {
 	openDataFile = 'tabular.data.openDataFile',
 	openTextDocument = 'tabular.data.openTextDocument',
 	viewTable = 'tabular.data.viewTable',
+	viewDataFileOnGithub = 'tabular.data.viewDataFileOnGithub',
 	viewSettings = 'tabular.data.viewSettings',
 
 	// built-in vscode commands
-	workbenchOpenSettings = 'workbench.action.openSettings',
+	setContext = 'setContext',
 	vscodeOpen = 'vscode.open',
-	setContext = 'setContext'
+	vscodeOpenExternal = 'vscode.openExternal',
+	workbenchOpenSettings = 'workbench.action.openSettings',
 }
