@@ -67,6 +67,12 @@ class DataUriHandler implements UriHandler {
 			case ViewCommands.openDataFile:
 				commands.executeCommand(ViewCommands.openDataFile);
 				break;
+			case ViewCommands.openTextDocument:
+				if (dataUrl && dataUrl?.length > 0) {
+					const textDocumentUri: Uri = Uri.parse(dataUrl);
+					commands.executeCommand(ViewCommands.openTextDocument, textDocumentUri);
+				}
+				break;
 			case ViewCommands.viewTable:
 				if (dataUrl && dataUrl?.length > 0) {
 					const dataFileUri: Uri = Uri.parse(dataUrl);
