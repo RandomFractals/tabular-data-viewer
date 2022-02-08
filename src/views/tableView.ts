@@ -246,7 +246,8 @@ export class TableView {
             Uri.parse(this._fileInfo.fileUri.toString(true) + '.table.json'));
           break;
         case 'viewTextData':
-          commands.executeCommand(ViewCommands.vscodeOpen, this.documentUri);
+          commands.executeCommand(ViewCommands.vscodeOpen, 
+            Uri.parse(fileUtils.convertToGitHubRepositoryUrl(this._fileInfo.fileUrl)));
           break;
       }
     }, undefined, this._disposables);
