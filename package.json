@@ -54,6 +54,7 @@
 		"onCommand:tabular.data.listDataPackages",
 		"onCommand:tabular.data.listDataResources",
 		"onCommand:tabular.data.openDataFile",
+		"onCommand:tabular.data.openTextDocument",
 		"onCommand:tabular.data.viewTable",
 		"onCommand:tabular.data.viewSettings",
 		"onCustomEditor:tabular.data.tableEditor",
@@ -83,6 +84,12 @@
 				"command": "tabular.data.openDataFile",
 				"title": "Open Data File",
 				"category": "Tabular Data"
+			},
+			{
+				"command": "tabular.data.openTextDocument",
+				"title": "Open Text Document",
+				"category": "Tabular Data",
+				"icon": "$(go-to-file)"
 			},
 			{
 				"command": "tabular.data.viewTable",
@@ -165,6 +172,11 @@
 					"when": "resourceFilename =~ /datapackage.json/",
 					"command": "tabular.data.listDataResources",
 					"group": "navigation"
+				},
+				{
+					"when": "tabular.data.view.visible && tabular.data.uri =~ /^(file:///)/",
+					"command": "tabular.data.openTextDocument",
+					"group": "navigation"
 				}
 			],
 			"editor/title": [
@@ -181,6 +193,11 @@
 				{
 					"when": "resourceFilename =~ /datapackage.json/",
 					"command": "tabular.data.listDataResources",
+					"group": "navigation"
+				},
+				{
+					"when": "tabular.data.view.visible && tabular.data.uri =~ /^(file:///)/",
+					"command": "tabular.data.openTextDocument",
 					"group": "navigation"
 				}
 			],

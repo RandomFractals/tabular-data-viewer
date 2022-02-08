@@ -60,6 +60,10 @@ function initializeView() {
   const reloadButton = document.getElementById('reload-button');
   reloadButton.addEventListener('click', reloadData);
 
+  // view text data UI
+  const viewTextButton = document.getElementById('view-text-button');
+  viewTextButton.addEventListener('click', viewTextData);
+
   // scroll to rows UI
   const scrollToFirstRowButton = document.getElementById('scroll-to-first-row-button');
   scrollToFirstRowButton.addEventListener('click', scrollToFirstRow);
@@ -132,6 +136,15 @@ function reloadData() {
   progressRing.style.visibility = 'visible';
   vscode.postMessage({
     command: 'refresh',
+  });
+}
+
+/**
+ * Opens text data document in code editor.
+ */
+function viewTextData() {
+  vscode.postMessage({
+    command: 'viewTextData',
   });
 }
 

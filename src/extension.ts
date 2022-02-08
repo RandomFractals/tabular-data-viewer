@@ -1,9 +1,16 @@
-import { ExtensionContext, TextEditor, window } from 'vscode';
+import {
+	commands,
+	window,
+	ExtensionContext,
+	TextEditor,
+} from 'vscode';
 
 import { registerUriHandler } from './uriHandler';
+
 import { registerListDataPackagesCommand } from './commands/listDataPackages';
 import { registerListDataResourcesCommand } from './commands/listDataResources';
 import { registerOpenDataFileCommand } from './commands/openDataFile';
+import { registerOpenTextDocumentCommand } from './commands/openTextDocument';
 import { registerViewTableCommand } from './commands/viewTable';
 import { registerViewSettingsCommand } from './commands/viewSettings';
 
@@ -12,6 +19,8 @@ import { statusBar } from './views/statusBar';
 import { TableEditor } from './views/tableEditor';
 import { TableViewSerializer } from './views/tableViewSerializer';
 import { PerspectiveEditor } from './views/perspectiveEditor';
+import { ViewCommands } from './commands/viewCommands';
+import { ViewContexts } from './views/viewContexts';
 
 /**
  * Activates this extension per rules set in package.json.
@@ -27,6 +36,7 @@ export function activate(context: ExtensionContext) {
 	registerListDataPackagesCommand(context);
 	registerListDataResourcesCommand(context);
 	registerOpenDataFileCommand(context);
+	registerOpenTextDocumentCommand(context);
 	registerViewTableCommand(context);
 	registerViewSettingsCommand(context);
 
@@ -40,6 +50,9 @@ export function activate(context: ExtensionContext) {
 	window.onDidChangeActiveTextEditor((textEditor: TextEditor | undefined) => {
 		// hide tabular data stats display on active editor change
 		statusBar.hide();
+
+		// clear tabular data view visible context value
+		commands.executeCommand(ViewCommands.setContext, ViewContexts.tableViewVisible, false);
 	});
 }
 

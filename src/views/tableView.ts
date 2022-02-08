@@ -30,6 +30,7 @@ import { statusBar } from './statusBar';
 
 import { ViewCommands } from '../commands/viewCommands';
 import { Settings } from '../configuration/settings';
+import { ViewContexts } from './viewContexts';
 
 // import nodejs https module for loading remote data files
 const https = require('https');
@@ -106,6 +107,10 @@ export class TableView {
       // set as current table view
       TableView.currentView = new TableView(webviewPanel, extensionUri, documentUri, tableConfig);
     }
+
+    // update table view context values
+    commands.executeCommand(ViewCommands.setContext, ViewContexts.tableViewVisible, true);
+    commands.executeCommand(ViewCommands.setContext, ViewContexts.tabularDataUri, documentUri);
   }
 
   /**
@@ -182,6 +187,9 @@ export class TableView {
     
     // clear and hide current table view stats display
     statusBar.hide();
+
+    // clear tabular data view visible context value
+    commands.executeCommand(ViewCommands.setContext, ViewContexts.tableViewVisible, false);
   }
 
   /**
@@ -199,6 +207,10 @@ export class TableView {
     }
     statusBar.totalRows = this._totalRows;
     statusBar.loadTime = this._loadTime;
+
+    // update table view context values
+    commands.executeCommand(ViewCommands.setContext, ViewContexts.tableViewVisible, true);
+    commands.executeCommand(ViewCommands.setContext, ViewContexts.tabularDataUri, this.documentUri);
   }
 
   /**
@@ -232,6 +244,9 @@ export class TableView {
         case 'openTableConfig':
           commands.executeCommand(ViewCommands.vscodeOpen,
             Uri.parse(this._fileInfo.fileUri.toString(true) + '.table.json'));
+          break;
+        case 'viewTextData':
+          commands.executeCommand(ViewCommands.vscodeOpen, this.documentUri);
           break;
       }
     }, undefined, this._disposables);
@@ -741,14 +756,22 @@ export class TableView {
             </div>
             <div id="toolbar-right">
               <vscode-button id="reload-button"
+                title="Reload Data"
                 appearance="icon" aria-label="Reload Data">
 	              <span class="codicon codicon-refresh">↺</span>
               </vscode-button>
+              <vscode-button id="view-text-button"
+                title="View Text Data"
+                appearance="icon" aria-label="View Text Data">
+	              <span class="codicon codicon-refresh">🗎</span>
+              </vscode-button>
               <vscode-button id="scroll-to-last-row-button"
+                title="Scroll to Last Row"
                 appearance="icon" aria-label="Scroll to Last Row">
 	              <span class="codicon codicon-arrow-down">⤓</span>
               </vscode-button>
               <vscode-button id="scroll-to-first-row-button"
+                title="Scroll to First Row"
                 appearance="icon" aria-label="Scroll to First Row">
 	              <span class="codicon codicon-arrow-up">⤒</span>
               </vscode-button>
@@ -761,6 +784,7 @@ export class TableView {
                 <option value="csv">,,, csv</option>
               </select>
               <vscode-button id="view-table-config-button"
+                title="View Table Config"
                 appearance="icon" aria-label="View Table Config">
 	              <span class="codicon codicon-gear">⚙</span>
               </vscode-button>
