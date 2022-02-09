@@ -30,44 +30,48 @@ export async function registerOpenDataFileCommand(context: ExtensionContext) {
 				if (dataFileUrl && dataFileUrl !== undefined && dataFileUrl.length > 0) {
 					// create data file Uri
 					const dataFileUri: Uri = Uri.parse(fileUtils.convertToGitHubContentUrl(dataFileUrl));
-
-					// check supported data files
+					const isLocalDataFile: boolean = dataFileUrl?.startsWith('file:///');
+					const isRemoteDataFile: boolean = dataFileUrl?.startsWith('https://');
 					const fileExtension: string = path.extname(dataFileUrl);
-					if (!dataFileUrl?.startsWith('file:///') && !dataFileUrl?.startsWith('https://')) {
+					const isFileDirectory: boolean = (fileExtension.length <= 0);
+
+					// check supported data files and call the corresponding tabular data view command
+					if ((!isLocalDataFile && !isRemoteDataFile) ||
+							(isRemoteDataFile && isFileDirectory)) {
 						window.showErrorMessage(
-							`Tabular Data Viewer requires a valid \`file:///\` or \`https://\` data file Url \
-							to display Table View. Invalid data document Url: \`${dataFileUrl}\`.`);
+							`Tabular Data Viewer requires a valid \`file:///\` or \`https://\` Data File Url \
+							to display a Table View. Invalid Data Url: \`${dataFileUrl}\`.`);
 					}
-					else if (dataFileUrl?.startsWith('file:///') && !fs.existsSync(dataFileUri.fsPath)) {
+					else if (isLocalDataFile && !fs.existsSync(dataFileUri.fsPath)) {
 						window.showErrorMessage(
 							`Unable to locate requested data file: \`${dataFileUrl}\`.`);
-					}
-					else if (fileUtils.supportedDataFormats.includes(fileExtension)) {
-						// open table view for requested remote or local data file
-						commands.executeCommand(ViewCommands.viewTable, dataFileUri);
 					}
 					else if (dataFileUrl.endsWith('datapackage.json')) {
 						// load and display data package resource list
 						commands.executeCommand(ViewCommands.listDataResources, dataFileUri);
 					}
-					else if (fileExtension.length === 0 && // data directory
+					else if (fileUtils.supportedDataFormats.includes(fileExtension)) {
+						// open table view for a remote or local data file
+						commands.executeCommand(ViewCommands.viewTable, dataFileUri);
+					}
+					else if (isLocalDataFile && isFileDirectory &&
 						fs.existsSync(path.join(dataFileUri.fsPath, 'datapackage.json'))) { 
-						// show data resources for a data package from directory
+						// show data resources for a data package from local file directory
 						commands.executeCommand(
 							ViewCommands.listDataResources, Uri.joinPath(dataFileUri, 'datapackage.json'));
 					}
-					else if (fileExtension.length === 0) {
+					else if (isLocalDataFile && isFileDirectory) {
 						// must be a data directory without the datapackage.json descriptor
 						window.showErrorMessage(
-							`Tabular Data Viewer doesn't support data directory views yet.\
+							`Tabular Data Viewer doesn't support local data directory views yet.\
 							Use View Table menu option from VSCode File Explorer to open tabular data file in Table View.
 							Requested data directory: \`${dataFileUrl}\`.`);
 					}
-					else {
+					else if (!fileUtils.supportedDataFormats.includes(fileExtension)) {
 						// unsupported data format
 						window.showErrorMessage(
 							`Tabular Data Viewer doesn't support ${fileExtension} data files.\
-							Unable to show Table View for data file: \`${dataFileUrl}\`.`);
+							Unable to show Table View for a data file: \`${dataFileUrl}\`.`);
 					}
 				}
 			});
