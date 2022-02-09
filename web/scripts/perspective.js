@@ -162,7 +162,7 @@ function createTableColumns(tableSchema) {
 			tableColumns.push(field.name);
 		});
 	}
-	console.log('perspective.createTableColumns():columns:', tableColumns);
+	// console.log('perspective.createTableColumns():columns:', tableColumns);
 	return tableColumns;
 }
 

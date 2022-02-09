@@ -318,7 +318,7 @@ export class TableView {
 
       // infer table shema
       this._tableSchema = await table.infer(this._inferDataSize);
-      console.log('tabular.data.view:tableSchema: columns:', this._tableSchema.fields);
+      // console.log('tabular.data.view:tableSchema: columns:', this._tableSchema.fields);
       statusBar.showColumns(this._tableSchema.fields);
       this.saveTableSchema(this._tableSchema);
     }
