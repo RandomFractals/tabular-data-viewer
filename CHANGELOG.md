@@ -20,7 +20,7 @@ Add View Data File on GitHub command and context menus for Table views with publ
 - [#109](https://github.com/RandomFractals/tabular-data-viewer/issues/109)
 Move commands registration from src/extension.ts to src/commands/commands.ts
 - [#110](https://github.com/RandomFractals/tabular-data-viewer/issues/110)
-Package and publish Data Packages feature release
+Package and publish Uri handler and Data Packages support release
 
 ## v1.7.0 - [2022-02-02]
 - [#53](https://github.com/RandomFractals/tabular-data-viewer/issues/53)
