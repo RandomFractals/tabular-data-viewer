@@ -48,6 +48,7 @@ async function listDataPackages(): Promise<void> {
 		await window.showQuickPick(dataPackageItems, {
 			title: 'Select Data Package to View Tabular Data Resources',
 			canPickMany: false,
+			matchOnDescription: true,
 			matchOnDetail: true
 		});
 	if (selectedDataPackage) {
