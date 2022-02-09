@@ -3,6 +3,8 @@
 See [releases](https://github.com/RandomFractals/tabular-data-viewer/releases) for source code and `tabular-data-viewer-x.x.x.vsix` extension package download.
 
 ## v1.8.0 - [2022-02-10]
+- [#81](https://github.com/RandomFractals/tabular-data-viewer/issues/81)
+Add datapackage.json support to Tabular Data Viewer with a dropdown of listed data sources to load and view
 - [#96](https://github.com/RandomFractals/tabular-data-viewer/issues/96)
 Add UriHandler to open remote tabular data sources from vscode:// Urls in a browser
 - [#102](https://github.com/RandomFractals/tabular-data-viewer/issues/102)
