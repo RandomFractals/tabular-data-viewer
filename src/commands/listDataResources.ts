@@ -48,10 +48,17 @@ async function listDataResources(dataPackageUri: Uri): Promise<void> {
 		dataPackageUrl = dataPackageUri.fsPath;
 	}
 
-	// load data package
-	const dataPackage: any = await DataPackage.Package.load(dataPackageUrl);
-	// console.log('tabular.data.package:', dataPackage);
-	// console.log('tabular.data.package.resources:', dataPackage.resources);
+	let dataPackage: any = undefined;
+	try {
+		// load data package
+		dataPackage = await DataPackage.Package.load(dataPackageUrl);
+		// console.log('tabular.data.package:', dataPackage);
+		// console.log('tabular.data.package.resources:', dataPackage.resources);
+	}
+	catch (error: any) {
+		window.showErrorMessage(error.message);
+		return;
+	}
 
 	// get data package resources
 	const dataResources: Array<QuickPickItem> = [];
@@ -61,7 +68,7 @@ async function listDataResources(dataPackageUri: Uri): Promise<void> {
 			
 			// construct github repository resource Url
 			let resourceUrl: string = fileUtils.convertToGitHubRepositoryUrl(resource.source);
-			
+
 			if (dataPackageUri.scheme === 'file') {
 				// create local resource path using data package Uri as resource base path
 				const resourceUri: Uri = Uri.joinPath(dataPackageUri, `../${resource.source}`);
