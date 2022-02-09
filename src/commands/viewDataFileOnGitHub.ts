@@ -1,5 +1,6 @@
 import {
 	commands,
+	env,
 	Disposable,
 	ExtensionContext,
 	Uri
@@ -20,9 +21,9 @@ export async function registerViewDataFileOnGitHubCommand(context: ExtensionCont
 	const viewDataFileOnGitHubCommand: Disposable =
 		commands.registerCommand(ViewCommands.viewDataFileOnGithub, () => {
 			const dataFileUri: Uri | undefined = TableView.currentView?.documentUri;
-			if (dataFileUri && dataFileUri.authority === 'raw.githubuserconent.com') {
-				commands.executeCommand(ViewCommands.vscodeOpenExternal,
-					Uri.parse(fileUtils.convertToGitHubRepositoryUrl(dataFileUri.toString(true)))); // skip encoding
+			if (dataFileUri && dataFileUri.authority === 'raw.githubusercontent.com') {
+				env.openExternal(Uri.parse(
+					fileUtils.convertToGitHubRepositoryUrl(dataFileUri.toString(true)))); // skip encoding
 			}
 		});
 	context.subscriptions.push(viewDataFileOnGitHubCommand);

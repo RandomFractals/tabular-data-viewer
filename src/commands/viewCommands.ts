@@ -14,6 +14,5 @@ export const enum ViewCommands {
 	// built-in vscode commands
 	setContext = 'setContext',
 	vscodeOpen = 'vscode.open',
-	vscodeOpenExternal = 'vscode.openExternal',
 	workbenchOpenSettings = 'workbench.action.openSettings',
 }
