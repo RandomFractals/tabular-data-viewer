@@ -61,7 +61,7 @@ async function listDataResources(dataPackageUri: Uri): Promise<void> {
 			
 			// construct github repository resource Url
 			let resourceUrl: string = fileUtils.convertToGitHubRepositoryUrl(resource.source);
-
+			
 			if (dataPackageUri.scheme === 'file') {
 				// create local resource path using data package Uri as resource base path
 				const resourceUri: Uri = Uri.joinPath(dataPackageUri, `../${resource.source}`);

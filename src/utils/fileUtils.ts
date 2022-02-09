@@ -42,7 +42,7 @@ export function convertToGitHubContentUrl(dataFileUrl: string): string {
 }
 
 /**
- * Converts github content url to user friendly github repository url for display
+ * Converts github content url to user-friendly github repository url for display
  * and linking to external public data sources hosted on github.
  * 
  * @param dataFileUrl Github content data file url from a github repository.
@@ -51,15 +51,25 @@ export function convertToGitHubContentUrl(dataFileUrl: string): string {
 export function convertToGitHubRepositoryUrl(dataFileUrl: string): string {
 	let gitHubContentUrl: string = dataFileUrl;
 	if (dataFileUrl.startsWith('https://raw.githubusercontent.com/')) {
-		// rewrite github content url to use github repository url for display
-		gitHubContentUrl = dataFileUrl.replace('https://raw.githubusercontent.com/', 'https://github.com/');
 
-		// add blob part
-		// TODO: fix this with regex or branch name tocken extraction later
-		gitHubContentUrl = gitHubContentUrl.replace('/main/', '/blob/main/');
-		gitHubContentUrl = gitHubContentUrl.replace('/master/', '/blob/master/');
-		gitHubContentUrl = gitHubContentUrl.replace('/gh-pages/', '/blob/gh-pages/');
+		// rewrite github content url to user-friendly github repository url for display
+		const gitHubContentUri: Uri = Uri.parse(dataFileUrl);
+
+		// parse github content path tokens
+		const contentPathTokens: Array<string> = gitHubContentUri.path.split('/');
+
+		if (contentPathTokens.length > 4) {
+			// extract github user, repository, and branch name
+			const user: string = contentPathTokens[1];
+			const repository: string = contentPathTokens[2];
+			const branch: string = contentPathTokens[3];
+
+			// rewrite github content url to github.com url
+			gitHubContentUrl = dataFileUrl.replace(`https://raw.githubusercontent.com/${user}/${repository}/${branch}/`,
+				`https://github.com/${user}/${repository}/blob/${branch}/`);
+		}
 	}
+	
 	return gitHubContentUrl;
 }
 
