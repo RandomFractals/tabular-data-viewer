@@ -167,6 +167,24 @@ export class TableView {
     // add it to the tracked table webviews
     TableView._views.set(this.viewUri.toString(true), this);
 
+    // update tablew view context values on webview state change
+    this._webviewPanel.onDidChangeViewState(
+      (viewChangeEvent: WebviewPanelOnDidChangeViewStateEvent) => {
+        if (this._webviewPanel.active) {
+          // update table view context values
+          commands.executeCommand(ViewCommands.setContext, ViewContexts.tableViewVisible, true);
+          commands.executeCommand(ViewCommands.setContext, ViewContexts.tabularDataUri, documentUri);
+          statusBar.showFileStats(this._fileInfo);
+          TableView.currentView = this;
+        }
+        else {
+          // clear and hide current table view stats display
+          statusBar.hide();
+          commands.executeCommand(ViewCommands.setContext, ViewContexts.tableViewVisible, false);
+          TableView.currentView = undefined;
+        }
+      });
+
     // dispose table view resources when table view panel is closed by the user or via vscode apis
     this._webviewPanel.onDidDispose(this.dispose, this, this._disposables);
   }
