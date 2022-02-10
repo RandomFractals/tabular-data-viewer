@@ -54,17 +54,26 @@ Large CSV data files streaming and display is very alpha and has the following l
 
 # Installation
 
-Install Tabular Data Viewer 中 from VSCode Extensions tab (`ctrl+shift+x`) by searching for `tabular data` in `Extensions: Marketplace` sidebar view, or install it directly from VS Code Marketplace [Tabular Data Viewer 中](https://marketplace.visualstudio.com/items?itemName=RandomFractalsInc.tabular-data-viewer) extension page in a browser:
+Install Tabular Data Viewer 中 from VSCode Extensions tab (`ctrl+shift+x`) by searching for `tabular data` in `Extensions: Marketplace` sidebar view, or install it directly from VS Code Marketplace [Tabular Data Viewer 中](https://marketplace.visualstudio.com/items?itemName=RandomFractalsInc.tabular-data-viewer) extension page in a browser.
 
 ![Tabular Data Viewer 中 Installation](https://github.com/RandomFractals/tabular-data-viewer/blob/main/docs/images/tabular-data-viewer-installation.png?raw=true 
  "Tabular Data Viewer 中 Installation")
 
 ## Deployments
 
-Tabular Data Viewer 中 is designed to work with [VSCode Desktop](https://code.visualstudio.com/) IDE version and also works in [GitHub Codespaces](https://github.com/features/codespaces) in a browser. 
+Tabular Data Viewer 中 is designed to work with [VSCode Desktop](https://code.visualstudio.com/) IDE version and also works with [GitHub Codespaces](https://github.com/features/codespaces) in a browser: 
 
 ![Tabular Data Viewer 中 in Github Codespaces](https://github.com/RandomFractals/tabular-data-viewer/blob/main/docs/images/tabular-data-viewer-codespaces.png?raw=true 
  "Tabular Data Viewer 中 in Github Codespaces")
+
+Tabular Data Viewer 中 also works in [VSCodium](https://vscodium.com/). Use `tabular-data-viewer-x.y.z.vsix` extension packages attached in `Assets` section with every published [release](https://github.com/RandomFractals/tabular-data-viewer/releases) of this extension on github. Follow [install from .vsix](https://code.visualstudio.com/docs/editor/extension-marketplace#_install-from-a-vsix) instructions in that IDE to install it.
+
+VSCodium and other vscode extension compatible IDE flavors are not officially supported as they require additional testing for those variants.
+
+If you prefer to use other IDEs that support VSCode extensions published in `.vsix` format and download your extensions from [open-vsx.org](https://open-vsx.org/), we recommend you try older [Data Preview](https://open-vsx.org/extension/RandomFractalsInc/vscode-data-preview) version of this extension.
+
+Currently, there are no plans to publish this extension to Open VSX Registry due to poor publishing experience in that vscode extensions marketplace and low usage by majority of developers.
+
 # Contributions
 
 Tabular Data Viewer 中 Settings, Commands, Languages, Custom Editors and Activation Events contributed to VSCode IDE:
