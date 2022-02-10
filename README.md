@@ -52,6 +52,13 @@ Large CSV data files streaming and display is very alpha and has the following l
 ![Tabular Data View 中 Large Dataset](https://github.com/RandomFractals/tabular-data-viewer/blob/main/docs/images/tabular-data-view-large-dataset.png?raw=true 
  "Tabular Data View 中 Large Dataset")
 
+# Installation
+
+Install Tabular Data Viewer 中 from VSCode Extensions tab (`ctrl+shift+x`) by searching for `tabular data` in `Extensions: Marketplace` sidebar view, or install it directly from VS Code Marketplace [Tabular Data Viewer 中](https://marketplace.visualstudio.com/items?itemName=RandomFractalsInc.tabular-data-viewer) extension page in a browser.
+
+![Tabular Data Viewer 中 Installation](https://github.com/RandomFractals/tabular-data-viewer/blob/main/docs/images/tabular-data-viewer-installation.png?raw=true 
+ "Tabular Data Viewer 中 Installation")
+
 # Contributions
 
 Tabular Data Viewer 中 Settings, Commands, Languages, Custom Editors and Activation Events contributed to VSCode IDE:
