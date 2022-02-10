@@ -119,24 +119,26 @@ Hit Reload ↺ button in an open Table View 🀄 after you toggle Tabular Data S
 
 Tabular Data Viewer 中 provides a number of global and context specific commands to load and view tabular data files and [Data Packages](https://specs.frictionlessdata.io/data-package/#introduction) 📦.
 
-You can access custom Tabular Data Commands from `View -> Command Palette...` menu (`ctrl+shift+p`) by typing `Tabular` in command the search box:
+You can access custom Tabular Data Commands from `View -> Command Palette...` menu (`ctrl+shift+p`) by typing `Tabular` in the command search box:
 
 ![Tabular Data 中 Commands](https://github.com/RandomFractals/tabular-data-viewer/blob/main/docs/images/tabular-data-commands.png?raw=true 
  "Tabular Data 中 Commands")
 
-All Tabular Data Commands start with `Tabular Data:` prefix and custom command Ids use `tabular.data.` prefix. Some of the Tabular Data Commands like `View Table` and `List Data Resources` are enabled in vscode file explorer and in code editors for the supported data file types and formats via the corresponding context menues in vscode IDE.
+All Tabular Data Commands start with `Tabular Data:` prefix, and exposed public Tabular Data Viewer 中 command Ids use `tabular.data.` prefix to enable other extensions to use Table View 🀄 and tabular data list commands.
+
+Some of the Tabular Data Commands like `View Table` and `List Data Resources` are enabled in vscode file explorer and in code editors for the supported data file types and formats via the corresponding context menues in vscode IDE.
 
 Currently supported Tabular Data 中 Commands include:
 
 | Command `tabular.data.` | Name | Description |
 | --- | --- | --- |
-| `listDataPackages` | List Data Packages | |
-| `listDataResources` | List Data Resources | |
-| `openDataFile` | Open Data File | |
-| `openTextDocument` | Open Text Document | |
-| `viewTable` | View Table | |
-| `viewDataFileOnGitHub` | View Data File on GitHub | |
-| `viewSettings` | View Settings | View Tabular Data Viewer 中 Configuration Settings |
+| `listDataPackages` | List Data Packages | Lists over 750 public Data GitHub Repositories with [`datapackage.json`](https://specs.frictionlessdata.io/data-package/#introduction) configuration files that ship with Tabular Data Viewer 中 v1.8.0 and above for exploring public datasets and Tabular Data Resources. Curated list of those Data Packages 📦 is configured in our [`packages.json`](https://github.com/RandomFractals/tabular-data-viewer/blob/main/src/configuration/packages.json) configuration file. |
+| `listDataResources` | List Data Resources | Lists Tabular Data 中 Resources for an open `datapackage.json` file in an active vscode editor or a public dataset GitHub repository selected from the Data Package 📦 Quick Pick List above.|
+| `openDataFile` | Open Data File | Prompts for a local `file:///` or remote `https://` Tabular Data Resource or a Data Package 📦 Url to load and view the Data Resource List or a Table View 🀄 for data files. |
+| `openTextDocument` | Open Text Document | Opens local Tabular Data Resource in bilt-in vscode Text Editor, or opens it in a browser for GitHub hosted data sources and other data files loaded via remote `https://` urls. |
+| `viewTable` | View Table | Displays Table View 🀄 for an open Tabular Data file in vsode Editor or from context menus in built-in File Explorer. |
+| `viewDataFileOnGitHub` | View Data File on GitHub | Opens public GitHub Repository Data File or a Data Package in a browser. |
+| `viewSettings` | View Settings | Displays Tabular Data Viewer 中 Configuration Settings. |
 
 # Observable JS Notebook
 
