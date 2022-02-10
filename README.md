@@ -84,7 +84,7 @@ Tabular Data Viewer 中 Settings, Commands, Languages, Custom Editors and Activa
 
 ## Settings
 
-[Create User or Workspace Settings in vscode](http://code.visualstudio.com/docs/customization/userandworkspace#_creating-user-and-workspace-settings) to change Tabular Data Viewer 中 extension Settings listed below. All Tabular Data Viewer Settings start with `tabular.data.` prefix, which is omottied in the Settings table below for better display in VSCode marketplace.
+[Create User or Workspace Settings in vscode](http://code.visualstudio.com/docs/customization/userandworkspace#_creating-user-and-workspace-settings) to change Tabular Data Viewer 中 extension Settings listed below. All Tabular Data Viewer Settings start with `tabular.data.` prefix, which is omottied in the Settings table below for better display in [VSCode marketplace](https://marketplace.visualstudio.com/items?itemName=RandomFractalsInc.tabular-data-viewer).
 
 | Setting `tabular.data.` | Type | Default Value | Description |
 | ------- | ---- | ------------- | ----------- |
@@ -96,7 +96,7 @@ Tabular Data Viewer 中 Settings, Commands, Languages, Custom Editors and Activa
 | `view` | string | `Tabulator` | Default Tabular Data View type to use for displaying data. Current options include  [`Tabulator`](http://tabulator.info) and [`Perspective`](https://perspective.finos.org). |
 
 
-You can set your Tabular Data viewer settings by adding them to [`./vscode/settings.json`](https://github.com/RandomFractals/tabular-data-viewer/blob/main/.vscode/settings.json#L14) in your project workspace. The following workspace configuration settings will default Table views to use Perspective Viewer and Dark UI theme for Data Grid and basic D3FC Charts display:
+You can set your Tabular Data Viewer 中 Configuration Settings by adding them to [`./vscode/settings.json`](https://github.com/RandomFractals/tabular-data-viewer/blob/main/.vscode/settings.json#L14) in your project workspace. The following workspace configuration settings will default Table Views 🀄 to use [Perspective](https://perspective.finos.org/) Data Grid and Dark UI theme for tabular data and basic [D3FC](https://d3fc.io/) Charts 📊📈 display:
 
 ```
 {
@@ -106,12 +106,14 @@ You can set your Tabular Data viewer settings by adding them to [`./vscode/setti
 }
 ```
 
-You can view Tabular Data Viewer 中 Configuration Settings via standard vscode `Preferences -> Settings -> Extensions -> Tabular Data Viewer` Settings view or use custom `Tabular Data: View Settings` command from `View -> Command Palette...` menu prompt by typing `Tabular` in it. Hit Reload ↺ button in open Table View 🀄 after you toggle Tabular Data Settings to activate your configuration changes for an open table view.
-
-**Note**: `tabular.data.view` type default and `tabular.data.ui.theme` setting changes might require you to close and reopen currently open Tabular Data Views for those settings to take effect.
+You can also view Tabular Data Viewer 中 Configuration Settings via standard vscode `Preferences -> Settings -> Extensions -> Tabular Data Viewer` Settings view or use custom `Tabular Data: View Settings` command from `View -> Command Palette...` menu prompt by typing `Tabular` in it.
 
 ![Tabular Data Viewer 中 Configuration Settings](https://github.com/RandomFractals/tabular-data-viewer/blob/main/docs/images/tabular-data-viewer-settings.png?raw=true 
  "Tabular Data Viewer 中 Configuration Settings")
+
+Hit Reload ↺ button in an open Table View 🀄 after you toggle Tabular Data Settings to activate your configuration changes.
+
+**Note**: `tabular.data.view` type default and `tabular.data.ui.theme` Setting changes might require you to close and reopen Tabular Data Views for those settings to take effect.
 
 # Observable JS Notebook
 
