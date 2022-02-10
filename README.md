@@ -24,19 +24,20 @@ See [Data Preview](https://github.com/RandomFractals/vscode-data-preview) 🈸 v
 # Features
 
 - View large [`CSV`](https://en.wikipedia.org/wiki/Comma-separated_values) and [`TSV`](https://en.wikipedia.org/wiki/Tab-separated_values) data files in a custom [Tabulator](http://tabulator.info/) Table or [Perspective](https://perspective.finos.org) Data View 🀄
-- Open local or remote Data File Table View 🀄 via quick Data File URL input prompt
+- Open local `file:///` or remote `https://` Data File Table View 🀄 with quick Data File URL input prompt
 - Load large datasets with millions of rows and over 1GB of tabular data using [Papa Parse](https://www.papaparse.com/) CSV parser in a worker thread with data streaming and incremental loading into Table View 🀄
 - View data loading progress, local data file size, colulmns, rows and load time stats display in vscode status bar
 - Sort displayed table data by multiple columns
-- Resize and rearrange table columns
+- Resize table columns in Tabulator Table View
+- Rearrange table columns in Tabulator Table and Perspective Data Grid views
+- Set default Data Page Size to 1K, 10K, or 100K (default) rows per page to speed up large datasets parsing and loading into Table View 🀄
 - Auto-save table columns layout, sort order, and Perspective View configs
 - Restore customized Table View 🀄 configuration on vscode reload
-- Copy displayed table data to Clipboard in tab delimited format from Tabulator Table View or in CSV format from Perspective View
-- Save displayed table data in `CSV` (`,` or `;` delimited), `TSV`, `HTML` table, or `JSON` data array format from Tabulator Table View
-- Save displayed data in [Apache Arrow ⋙](https://arrow.apache.org/) data format from Perspective View
-- Generate and view [Frictionless Table](https://specs.frictionlessdata.io/table-schema/) `*.schema.json` configration file created with [`tableschema-js.infer()`](https://github.com/frictionlessdata/tableschema-js#working-with-validateinfer)
 - Load saved table configuration options from auto-generated `*.table.json` config file when reopening previously customized Table View 🀄
-- Set default Data Page Size to 1K, 10K, or 100K (default) rows per page to speed up large datasets parsing and loading into Table View 🀄
+- Generate and view [Frictionless Table](https://specs.frictionlessdata.io/table-schema/) `*.schema.json` configration file created with [`tableschema-js.infer()`](https://github.com/frictionlessdata/tableschema-js#working-with-validateinfer)
+- Copy displayed table data to Clipboard in `TSV` format from Tabulator Table View or in `CSV` format from Perspective View
+- Save displayed table data in `CSV` (`,` or `;` delimited), `TSV`, `HTML` table, or `JSON` data array format from Tabulator Table View
+- Save displayed table data in [Apache Arrow ⋙](https://arrow.apache.org/) data format from Perspective View:
 
 ![Data Perspective View 中](https://github.com/RandomFractals/tabular-data-viewer/blob/main/docs/images/tabular-data-perspective-view.png?raw=true 
  "Data Perspective View 中")
