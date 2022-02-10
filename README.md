@@ -115,6 +115,13 @@ Hit Reload ↺ button in an open Table View 🀄 after you toggle Tabular Data S
 
 **Note**: `tabular.data.view` type default and `tabular.data.ui.theme` Setting changes might require you to close and reopen Tabular Data Views for those settings to take effect.
 
+# Commands
+
+Tabular Data Viewer 中 provides a number of global and context specific commands to load and view tabular data files and [Data Packages](https://specs.frictionlessdata.io/data-package/#introduction) 📦:
+
+![Tabular Data 中 Commands](https://github.com/RandomFractals/tabular-data-viewer/blob/main/docs/images/tabular-data-commands.png?raw=true 
+ "Tabular Data 中 Commands")
+
 # Observable JS Notebook
 
 You can try [Tabular Data Viewer 🀄 Observable Notebook 📓](https://observablehq.com/@randomfractals/tabular-data-viewer) with public datasets and supported data formats in a browser:
