@@ -95,6 +95,17 @@ Tabular Data Viewer 中 Settings, Commands, Languages, Custom Editors and Activa
 | `ui.theme` | string | `light` | Default data view UI theme to use for tabular data display. Current options include `light` and `dark` UI themes for `Tabulator` and `Perspective` data views. |
 | `view` | string | `Tabulator` | Default Tabular Data View type to use for displaying data. Current options include  [`Tabulator`](http://tabulator.info) and [`Perspective`](https://perspective.finos.org). |
 
+
+You can set your Tabular Data viewer settings by adding them to [`./vscode/settings.json`](https://github.com/RandomFractals/tabular-data-viewer/blob/main/.vscode/settings.json#L14) in your project workspace. The following workspace configuration settings will default Table views to use Perspective Viewer and Dark UI theme for Data Grid and basic D3FC Charts display:
+
+```
+{
+	// Tabular Data Viewer settings for this workspace
+	"tabular.data.view": "Perspective",
+	"tabular.data.ui.theme": "dark"
+}
+```
+
 You can view Tabular Data Viewer 中 Configuration Settings via standard vscode `Preferences -> Settings -> Extensions -> Tabular Data Viewer` Settings view or use custom `Tabular Data: View Settings` command from `View -> Command Palette...` menu prompt by typing `Tabular` in it. Hit Reload ↺ button in open Table View 🀄 after you toggle Tabular Data Settings to activate your configuration changes for an open table view.
 
 **Note**: `tabular.data.view` type default and `tabular.data.ui.theme` setting changes might require you to close and reopen currently open Tabular Data Views for those settings to take effect.
