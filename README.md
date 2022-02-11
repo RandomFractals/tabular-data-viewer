@@ -135,10 +135,24 @@ Currently supported Tabular Data 中 Commands include:
 | `listDataPackages` | List Data Packages | Lists over 750 public Data GitHub Repositories with [`datapackage.json`](https://specs.frictionlessdata.io/data-package/#introduction) configuration files that ship with Tabular Data Viewer 中 v1.8.0 and above for exploring public datasets and Tabular Data Resources. Curated list of those Data Packages 📦 is configured in our [`packages.json`](https://github.com/RandomFractals/tabular-data-viewer/blob/main/src/configuration/packages.json) configuration file. |
 | `listDataResources` | List Data Resources | Lists Tabular Data 中 Resources for an open `datapackage.json` file in an active vscode editor or a public dataset GitHub repository selected from the Data Package 📦 Quick Pick List above.|
 | `openDataFile` | Open Data File | Prompts for a local `file:///` or remote `https://` Tabular Data Resource or a Data Package 📦 Url to load and view the Data Resource List or a Table View 🀄 for data files. |
-| `openTextDocument` | Open Text Document | Opens local Tabular Data Resource in bilt-in vscode Text Editor, or opens it in a browser for GitHub hosted data sources and other data files loaded via remote `https://` urls. |
+| `openTextDocument` | Open Text Document | Opens local Tabular Data Resource in built-in vscode Text Editor, or opens it in a browser for GitHub hosted data sources and other data files loaded via remote `https://` Urls. |
 | `viewTable` | View Table | Displays Table View 🀄 for an open Tabular Data file in vsode Editor or from context menus in built-in File Explorer. |
 | `viewDataFileOnGitHub` | View Data File on GitHub | Opens public GitHub Repository Data File or a Data Package in a browser. |
 | `viewSettings` | View Settings | Displays Tabular Data Viewer 中 Configuration Settings. |
+
+Tabular Data Viewer 中 v1.8.0 and above provides a custom [Uri Handler](https://github.com/RandomFractals/tabular-data-viewer/issues/96) for launching Table Views 🀄 and other `tabular.data` commands from a Url in a browser. All of the listed commands above can be launched from a browser using the following `vscode://` Url format:
+
+```
+vscode://RandomFractalsInc.tabular-data-viewer/<command>[#<dataUrl>|?dataUrl=<dataUrl>]
+```
+
+which instructs a browser to open VSCode IDE Desktop application, activate Tabular Data Viewer 中 extension, and execute one of the `tabular.data.` commands via system-wide Urls. Commands that require a data file or data package Url accept that parameter via fragment/anchor (#) portion of the Url, or via `dataUrl` query parameter.
+
+For example, the following `vscode://` Url will display Table View 🀄 for the public https://github.com/datasets/world-cities data repository. Copy and paste this Url in your browser to try it:
+
+```
+vscode://RandomFractalsInc.tabular-data-viewer/viewTable#https://raw.githubusercontent.com/datasets/world-cities/master/data/world-cities.csv
+```
 
 # Observable JS Notebook
 
