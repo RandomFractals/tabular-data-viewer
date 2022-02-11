@@ -162,6 +162,15 @@ Tabular Data Viewer 中 v1.8.0 and above ships with alpha support of https://fri
 ![Tabular Data 中 Packages 📦 ](https://github.com/RandomFractals/tabular-data-viewer/blob/main/docs/images/tabular-data-packages.png?raw=true 
  "Tabular Data 中 Packages 📦")
 
+Public GitHub repositories have over 12K `datapackage.json` configurations you can browse using this query:
+
+https://github.com/search?p=4&q=filename%3Adatapackage.json+language%3AJSON+language%3AJSON&type=Code
+
+You can load those Data Package 📦 configurations to view Tabular Data 中 Resources via `Tabular Data: Open Data File` command. For example, here is how to open Periodic Table `datapackage.json` example: https://github.com/frictionlessdata/examples/blob/main/periodic-table/datapackage.json
+
+![Tabular Data 中 Open Data Package 📦 ](https://github.com/RandomFractals/tabular-data-viewer/blob/main/docs/images/tabular-data-open-data-package.png?raw=true 
+ "Tabular Data 中 Open Data Package 📦")
+
 # Observable JS Notebook
 
 You can try [Tabular Data Viewer 🀄 Observable Notebook 📓](https://observablehq.com/@randomfractals/tabular-data-viewer) with public datasets and supported data formats in a browser:
