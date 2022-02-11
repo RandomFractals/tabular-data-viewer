@@ -25,7 +25,7 @@ See [Data Preview](https://github.com/RandomFractals/vscode-data-preview) 🈸 v
 
 - View large [`CSV`](https://en.wikipedia.org/wiki/Comma-separated_values) and [`TSV`](https://en.wikipedia.org/wiki/Tab-separated_values) data files in a custom [Tabulator](http://tabulator.info/) Table or [Perspective](https://perspective.finos.org) Data View 🀄
 - Open local `file:///` or remote `https://` Data File Table View 🀄 with quick Data File URL input prompt
-- Explore over 750 public datasets from the curated list of https://frictionlessdata.io/ Data Package 📦 JSON configs with Tabular Data Resources, and Table Views 🀄 to search, view, and graph in Chart Views 📊 📈
+- Explore over 750 public datasets from the curated list of https://frictionlessdata.io/ [Data Package](https://github.com/RandomFractals/tabular-data-viewer#data-packages) 📦 JSON configs with Tabular Data Resources, and Table Views 🀄 to search, view, and graph in Chart Views 📊 📈
 - Load large datasets with millions of rows and over 1GB of tabular data using [Papa Parse](https://www.papaparse.com/) CSV parser in a worker thread with data streaming and incremental loading into Table View 🀄
 - View data loading progress, local data file size, colulmns, rows and load time stats display in vscode status bar
 - Sort displayed table data by multiple columns
@@ -159,7 +159,7 @@ vscode://RandomFractalsInc.tabular-data-viewer/viewTable#https://raw.githubuserc
 
 Tabular Data Viewer 中 v1.8.0 and above ships with alpha support of https://frictionlessdata.io/ Data Package 📦 JSON format and over 750 built-in curated public datasets with Tabular Data 中 Resources for you to search and explore:
 
-![Tabular Data 中 Packages 📦 ](https://github.com/RandomFractals/tabular-data-viewer/blob/main/docs/images/tabular-data-commands.png?raw=true 
+![Tabular Data 中 Packages 📦 ](https://github.com/RandomFractals/tabular-data-viewer/blob/main/docs/images/tabular-data-packages.png?raw=true 
  "Tabular Data 中 Packages 📦")
 
 # Observable JS Notebook
