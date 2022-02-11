@@ -9,6 +9,8 @@ Add datapackage.json support to Tabular Data Viewer with a dropdown of listed da
 Add Installation section to README.md
 - [#96](https://github.com/RandomFractals/tabular-data-viewer/issues/96)
 Add UriHandler to open remote tabular data sources from vscode:// Urls in a browser
+- [#101](https://github.com/RandomFractals/tabular-data-viewer/issues/101)
+Document tabular-data-viewer commands
 - [#102](https://github.com/RandomFractals/tabular-data-viewer/issues/102)
 Create built-in Data Packages picker
 - [#103](https://github.com/RandomFractals/tabular-data-viewer/issues/103)
