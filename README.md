@@ -1,9 +1,9 @@
 # tabular-data-viewer
 
 [![Apache-2.0 License](https://img.shields.io/badge/license-Apache2-brightgreen.svg)](http://opensource.org/licenses/Apache-2.0)
-[![Version](https://vsmarketplacebadge.apphb.com/version-short/RandomFractalsInc.tabular-data-viewer.svg?color=orange)](https://marketplace.visualstudio.com/items?itemName=RandomFractalsInc.tabular-data-viewer)
-[![Installs](https://vsmarketplacebadge.apphb.com/installs/RandomFractalsInc.tabular-data-viewer.svg?color=orange)](https://marketplace.visualstudio.com/items?itemName=RandomFractalsInc.tabular-data-viewer)
-[![Downloads](https://vsmarketplacebadge.apphb.com/downloads/RandomFractalsInc.tabular-data-viewer.svg?color=orange)](https://marketplace.visualstudio.com/items?itemName=RandomFractalsInc.tabular-data-viewer)
+[![Version](https://img.shields.io/visual-studio-marketplace/v/RandomFractalsInc.tabular-data-viewer.svg?color=orange&&style=?style=for-the-badge&logo=visual-studio-code)](https://marketplace.visualstudio.com/items?itemName=RandomFractalsInc.tabular-data-viewer)
+[![Installs](https://img.shields.io/visual-studio-marketplace/i/RandomFractalsInc.tabular-data-viewer.svg?color=orange)](https://marketplace.visualstudio.com/items?itemName=RandomFractalsInc.tabular-data-viewer)
+[![Downloads](https://img.shields.io/visual-studio-marketplace/d/RandomFractalsInc.tabular-data-viewer.svg?color=orange)](https://marketplace.visualstudio.com/items?itemName=RandomFractalsInc.tabular-data-viewer)
 <a href='https://ko-fi.com/dataPixy' target='_blank' title='support: https://ko-fi.com/dataPixy'>
   <img height='24' style='border:0px;height:20px;' src='https://az743702.vo.msecnd.net/cdn/kofi3.png?v=2' alt='https://ko-fi.com/dataPixy' /></a>
 
@@ -19,7 +19,7 @@ See [Data Preview](https://github.com/RandomFractals/vscode-data-preview) 🈸 v
 
 [Tabular Data Viewer](https://marketplace.visualstudio.com/items?itemName=RandomFractalsInc.tabular-data-viewer) provides fast [`DSV`](https://en.wikipedia.org/wiki/Delimiter-separated_values) data loading and custom Table Views 🀄 for very large (1-8 GB) local and remote `.csv`, `.tsv` and `.tab` data files with <a title="Tabulator" href="http://tabulator.info"><img width="95" height="20" src="docs/images/tabulator.png" /></a> table, <a title="Perspective" href="https://perspective.finos.org"><img width="116" height="10" src="docs/images/perspective.png" /></a> View, [D3FC](https://d3fc.io) Chart Views 📊📈, [Papa Parse](https://www.papaparse.com/) CSV parser, [NodeJS File Streams](https://nodejs.dev/learn/nodejs-streams) and [Worker threads](https://nodejs.org/api/worker_threads.html):
 
-![Tabular Data View 中](https://github.com/RandomFractals/tabular-data-viewer/blob/main/docs/images/tabular-data-view.png?raw=true 
+![Tabular Data View 中](https://github.com/RandomFractals/tabular-data-viewer/blob/main/docs/images/tabular-data-view.png?raw=true
  "Tabular Data View 中")
 # Features
 
@@ -40,7 +40,7 @@ See [Data Preview](https://github.com/RandomFractals/vscode-data-preview) 🈸 v
 - Save displayed table data in `CSV` (`,` or `;` delimited), `TSV`, `HTML` table, or `JSON` data array format from Tabulator Table View
 - Save displayed table data in [Apache Arrow ⋙](https://arrow.apache.org/) data format from Perspective View:
 
-![Data Perspective View 中](https://github.com/RandomFractals/tabular-data-viewer/blob/main/docs/images/tabular-data-perspective-view.png?raw=true 
+![Data Perspective View 中](https://github.com/RandomFractals/tabular-data-viewer/blob/main/docs/images/tabular-data-perspective-view.png?raw=true
  "Data Perspective View 中")
 
 # Limitations
@@ -51,21 +51,21 @@ Large CSV/TSV data files streaming and display is very alpha and has the followi
 - Columns sort only works for the paged data loaded and displayed in Table View 🀄 and doesn't sort data for the whole dataset
 - Save data is also limited to max 100k rows for the currently displayed tabular data in Table View 🀄
 
-![Tabular Data View 中 Large Dataset](https://github.com/RandomFractals/tabular-data-viewer/blob/main/docs/images/tabular-data-view-large-dataset.png?raw=true 
+![Tabular Data View 中 Large Dataset](https://github.com/RandomFractals/tabular-data-viewer/blob/main/docs/images/tabular-data-view-large-dataset.png?raw=true
  "Tabular Data View 中 Large Dataset")
 
 # Installation
 
 Install Tabular Data Viewer 中 from VSCode Extensions tab (`ctrl+shift+x`) by searching for `tabular data` in `Extensions: Marketplace` sidebar view, or install it directly from VS Code Marketplace [Tabular Data Viewer 中](https://marketplace.visualstudio.com/items?itemName=RandomFractalsInc.tabular-data-viewer) extension page in a browser.
 
-![Tabular Data Viewer 中 Installation](https://github.com/RandomFractals/tabular-data-viewer/blob/main/docs/images/tabular-data-viewer-installation.png?raw=true 
+![Tabular Data Viewer 中 Installation](https://github.com/RandomFractals/tabular-data-viewer/blob/main/docs/images/tabular-data-viewer-installation.png?raw=true
  "Tabular Data Viewer 中 Installation")
 
 ## Deployments
 
-Tabular Data Viewer 中 is designed to work with [VSCode Desktop](https://code.visualstudio.com/) IDE version and also works with [GitHub Codespaces](https://github.com/features/codespaces) in a browser: 
+Tabular Data Viewer 中 is designed to work with [VSCode Desktop](https://code.visualstudio.com/) IDE version and also works with [GitHub Codespaces](https://github.com/features/codespaces) in a browser:
 
-![Tabular Data Viewer 中 in Github Codespaces](https://github.com/RandomFractals/tabular-data-viewer/blob/main/docs/images/tabular-data-viewer-codespaces.png?raw=true 
+![Tabular Data Viewer 中 in Github Codespaces](https://github.com/RandomFractals/tabular-data-viewer/blob/main/docs/images/tabular-data-viewer-codespaces.png?raw=true
  "Tabular Data Viewer 中 in Github Codespaces")
 
 Tabular Data Viewer 中 works in [VSCodium](https://vscodium.com/) too. However, VSCodium and other vscode extension compatible IDE flavors are not officially supported as they require additional testing in those IDE variants.
@@ -80,7 +80,7 @@ Currently, there are no plans to publish this extension to Open VSX Registry due
 
 Tabular Data Viewer 中 Settings, Commands, Languages, Custom Editors and Activation Events contributed to VSCode IDE:
 
-![Tabular Data Viewer 中 Feature Contributions](https://github.com/RandomFractals/tabular-data-viewer/blob/main/docs/images/tabular-data-viewer-feature-contributions.png?raw=true 
+![Tabular Data Viewer 中 Feature Contributions](https://github.com/RandomFractals/tabular-data-viewer/blob/main/docs/images/tabular-data-viewer-feature-contributions.png?raw=true
  "Tabular Data Viewer 中 Feature Contributions")
 
 ## Settings
@@ -109,7 +109,7 @@ You can set your Tabular Data Viewer 中 Configuration Settings by adding them t
 
 You can also view Tabular Data Viewer 中 Configuration Settings via standard vscode `Preferences -> Settings -> Extensions -> Tabular Data Viewer` Settings view or use custom `Tabular Data: View Settings` command from `View -> Command Palette...` menu prompt by typing `Tabular` in it.
 
-![Tabular Data Viewer 中 Configuration Settings](https://github.com/RandomFractals/tabular-data-viewer/blob/main/docs/images/tabular-data-viewer-settings.png?raw=true 
+![Tabular Data Viewer 中 Configuration Settings](https://github.com/RandomFractals/tabular-data-viewer/blob/main/docs/images/tabular-data-viewer-settings.png?raw=true
  "Tabular Data Viewer 中 Configuration Settings")
 
 Hit Reload ↺ button in an open Table View 🀄 after you toggle Tabular Data Settings to activate your configuration changes.
@@ -122,7 +122,7 @@ Tabular Data Viewer 中 provides a number of global and context specific command
 
 You can access custom Tabular Data Commands from `View -> Command Palette...` menu (`ctrl+shift+p`) by typing `Tabular` in the command search box:
 
-![Tabular Data 中 Commands](https://github.com/RandomFractals/tabular-data-viewer/blob/main/docs/images/tabular-data-commands.png?raw=true 
+![Tabular Data 中 Commands](https://github.com/RandomFractals/tabular-data-viewer/blob/main/docs/images/tabular-data-commands.png?raw=true
  "Tabular Data 中 Commands")
 
 All Tabular Data Commands start with `Tabular Data:` prefix, and exposed public Tabular Data Viewer 中 command Ids use `tabular.data.` prefix to enable other extensions to use Table View 🀄 and tabular data list commands.
@@ -159,26 +159,26 @@ vscode://RandomFractalsInc.tabular-data-viewer/viewTable#https://raw.githubuserc
 
 Tabular Data Viewer 中 v1.8.0 and above ships with alpha support of https://frictionlessdata.io/ Data Package 📦 JSON format and over 750 built-in curated public datasets with Tabular Data 中 Resources for you to search and explore:
 
-![Tabular Data 中 Packages 📦 ](https://github.com/RandomFractals/tabular-data-viewer/blob/main/docs/images/tabular-data-packages.png?raw=true 
+![Tabular Data 中 Packages 📦 ](https://github.com/RandomFractals/tabular-data-viewer/blob/main/docs/images/tabular-data-packages.png?raw=true
  "Tabular Data 中 Packages 📦")
 
 Public GitHub repositories have over 12K `datapackage.json` configurations you can browse using this query: https://github.com/search?p=4&q=filename%3Adatapackage.json+language%3AJSON+language%3AJSON&type=Code
 
 You can load those Data Package 📦 configurations to view Tabular Data 中 Resources via `Tabular Data: Open Data File` command. For example, here is how to open Periodic Table `datapackage.json` example: https://github.com/frictionlessdata/examples/blob/main/periodic-table/datapackage.json
 
-![Tabular Data 中 Open Data Package 📦 ](https://github.com/RandomFractals/tabular-data-viewer/blob/main/docs/images/tabular-data-open-data-package.png?raw=true 
+![Tabular Data 中 Open Data Package 📦 ](https://github.com/RandomFractals/tabular-data-viewer/blob/main/docs/images/tabular-data-open-data-package.png?raw=true
  "Tabular Data 中 Open Data Package 📦")
 
 # Observable JS Notebooks
 
 You can try [Tabular Data Viewer 🀄 Observable JS Notebook 📓](https://observablehq.com/@randomfractals/tabular-data-viewer) with public datasets and supported data formats in a browser:
 
-![Tabular Data Viewer 中 Observable Notebook 📓](https://github.com/RandomFractals/tabular-data-viewer/blob/main/docs/images/tabular-data-viewer-observable-notebook.png?raw=true 
+![Tabular Data Viewer 中 Observable Notebook 📓](https://github.com/RandomFractals/tabular-data-viewer/blob/main/docs/images/tabular-data-viewer-observable-notebook.png?raw=true
  "Tabular Data Viewer 中 Observable Notebook 📓")
 
 You can also experiment with some public Data Packages 📦 and [`datapackage-js`](https://github.com/frictionlessdata/datapackage-js) library in our [Data Package 📦 Observable JS Notebook 📓](https://observablehq.com/@randomfractals/data-package) in a browser:
 
-![Data Package 📦 Observable JS Notebook 📓](https://github.com/RandomFractals/tabular-data-viewer/blob/main/docs/images/tabular-data-viewer-data-package-notebook.png?raw=true 
+![Data Package 📦 Observable JS Notebook 📓](https://github.com/RandomFractals/tabular-data-viewer/blob/main/docs/images/tabular-data-viewer-data-package-notebook.png?raw=true
  "Data Package 📦 Observable JS Notebook 📓")
 
 # Recommended Extensions
@@ -223,6 +223,6 @@ Any and all test, code or feedback contributions are welcome. Open an [issue](ht
 
 <a href='https://ko-fi.com/dataPixy' target='_blank'>
   <img height='36' style='border:0px;height:36px;' border='0'
-    src='https://az743702.vo.msecnd.net/cdn/kofi3.png?v=2' 
+    src='https://az743702.vo.msecnd.net/cdn/kofi3.png?v=2'
     alt='support me on ko-fi.com' />
 </a>
